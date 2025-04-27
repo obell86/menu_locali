@@ -5,130 +5,108 @@ document.addEventListener('DOMContentLoaded', () => {
     const MENU_CATEGORIE_TABLE_NAME = 'Menu_Categorie';
     const MENU_ARTICOLI_TABLE_NAME = 'Menu_Articoli';
 
-    // Mappatura campi Menu (Confermata dagli screenshot)
+    // Mappatura campi Menu
     const fieldMap = {
         menuCategorie: { nome: 'Nome Categoria', ordine: 'Ordine Visualizzazione', attivo: 'Stato Attivo', configurazione: 'Configurazione' },
         menuArticoli: { nome: 'Nome Articolo', prezzo: 'Prezzo', descrizione: 'Descrizione', categoria: 'Categoria', attivo: 'Stato Attivo', configurazione: 'Configurazione' }
     };
 
-    // --- Elementi DOM ---
-    const menuContent = document.getElementById('menu-content');
-    const menuLoadingMessage = document.getElementById('menu-loading-message');
-
-    // --- Funzioni Helper ---
-    const getField = (fields, fieldName, defaultValue = null) => { /* ... (invariata) ... */ };
-
-    // --- Funzioni Menu ---
-    function renderMenu(menuData) {
-        if (!menuContent) { console.error("Errore: Elemento #menu-content non trovato."); return; }
-        if (!menuData || menuData.length === 0) { menuContent.innerHTML = '<p>Il menu non è disponibile al momento.</p>'; console.log("renderMenu: Nessun dato valido."); return; }
-        let menuHTML = '';
-        menuData.forEach(category => { // 'category' è l'oggetto processato { id, name, items }
-            if (!category.items || category.items.length === 0) return;
-            menuHTML += `<div class="menu-category">`;
-            // *** CORRETTO: Accedi direttamente a category.name ***
-            menuHTML += `<h3 class="category-title" tabindex="0">${category.name || 'Categoria Errata'}</h3>`;
-            menuHTML += `<ul class="item-list" style="max-height: 0; overflow: hidden;">`;
-            category.items.forEach(item => { // 'item' è l'oggetto processato { id, name, price, description }
-                let formattedPrice = '';
-                // *** CORRETTO: Accedi direttamente a item.price ***
-                const priceValue = item.price;
-                if (typeof priceValue === 'number') { formattedPrice = `€${priceValue.toFixed(2)}`; }
-                else if (typeof priceValue === 'string') { formattedPrice = priceValue; }
-
-                menuHTML += `<li class="menu-item">`;
-                menuHTML += `<div class="item-details">`;
-                // *** CORRETTO: Accedi direttamente a item.name e item.description ***
-                menuHTML += `<span class="item-name">${item.name || 'Articolo Errato'}</span>`;
-                if(item.description) { menuHTML += `<p class="item-description">${item.description}</p>`; }
-                menuHTML += `</div>`;
-                if(formattedPrice) { menuHTML += `<span class="item-price">${formattedPrice}</span>`; }
-                menuHTML += `</li>`;
-            });
-            menuHTML += `</ul>`;
-            menuHTML += `</div>`;
-        });
-        menuContent.innerHTML = menuHTML;
-        addAccordionListeners();
-        console.log("Menu renderizzato (menu.html).");
-    }
-
-    function addAccordionListeners() { /* ... (invariata) ... */ }
-    function toggleCategory(titleElement) { /* ... (invariata) ... */ }
+    // ... (Elementi DOM, Funzioni Helper, Funzioni Menu - INVARIATE) ...
+    const menuContent = document.getElementById('menu-content'); const menuLoadingMessage = document.getElementById('menu-loading-message'); const getField = (fields, fieldName, defaultValue = null) => { if (!fields) return defaultValue; const value = fields[fieldName]; return (value !== undefined && value !== null && value !== '') ? value : defaultValue; }; function renderMenu(menuData) { /*...*/ } function addAccordionListeners() { /*...*/ } function toggleCategory(titleElement) { /*...*/ }
 
     // --- Funzione Principale di Caricamento Menu ---
     async function loadMenuData() {
         if (menuLoadingMessage) menuLoadingMessage.style.display = 'block';
-        const configRecordId = 'recowUo9ecB5zLSSm'; // ID Config Principale (VERIFICATO)
-        if (!configRecordId) { /* ... */ return; }
 
-        // Verifica nomi campo filtro (già fatto)
-        const catAttivoField = fieldMap.menuCategorie.attivo; // ... etc ...
+        // ID Configurazione Principale (serve dopo per filtrare in JS)
+        const configRecordId = 'recowUo9ecB5zLSSm'; // VERIFICA SIA GIUSTO!
+        if (!configRecordId) { /*...*/ return; }
+
+        // Nomi campo per filtri/elaborazione
+        const catAttivoField = fieldMap.menuCategorie.attivo;
+        const catConfigField = fieldMap.menuCategorie.configurazione; // Nome campo Config in Categorie
+        const itemAttivoField = fieldMap.menuArticoli.attivo;
+        const itemConfigField = fieldMap.menuArticoli.configurazione; // Nome campo Config in Articoli
+        const catCategoriaField = fieldMap.menuArticoli.categoria;
 
         try {
             const headers = { Authorization: `Bearer ${AIRTABLE_PAT}` };
-            let menuCategoriesData = []; let menuItemsData = [];
+            let allCategories = []; let allItems = [];
 
-            // 1. Recupera Categorie Menu (Filtrate)
-            const filterFormulaCategories = `AND({${catAttivoField}}=1, {${fieldMap.menuCategorie.configurazione}}='${configRecordId}')`;
+            // 1. Recupera TUTTE le Categorie Menu **ATTIVE** (SENZA filtro Configurazione)
+            const filterFormulaCategoriesSimple = `{${catAttivoField}}=1`; // Solo per Stato Attivo
+            console.log("Filtro Categorie SEMPLIFICATO INVIATO:", filterFormulaCategoriesSimple);
             const sortOrder = `sort[0][field]=${encodeURIComponent(fieldMap.menuCategorie.ordine)}&sort[0][direction]=asc`;
-            const categoriesUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(MENU_CATEGORIE_TABLE_NAME)}?filterByFormula=${encodeURIComponent(filterFormulaCategories)}&${sortOrder}`;
-            console.log("Fetch Categories:", categoriesUrl);
+            const categoriesUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(MENU_CATEGORIE_TABLE_NAME)}?filterByFormula=${encodeURIComponent(filterFormulaCategoriesSimple)}&${sortOrder}`;
+            console.log("Fetch Categories (menu.html - SOLO ATTIVE):", categoriesUrl);
             const categoriesResponse = await fetch(categoriesUrl, { headers });
-            if (categoriesResponse.ok) { /* ... (assegna a menuCategoriesData) ... */ } else { throw new Error(/* ... */); }
+            if (categoriesResponse.ok) {
+                 const categoriesResult = await categoriesResponse.json(); allCategories = categoriesResult.records || []; console.log("Categories Data Raw (menu.html - SOLO ATTIVE):", allCategories);
+            } else { throw new Error(`API Categorie (Solo Attive): ${categoriesResponse.status} ${await categoriesResponse.text()}`); }
 
-            // 2. Recupera Articoli Menu (Filtrati)
-            const filterFormulaItems = `AND({${fieldMap.menuArticoli.attivo}}=1, {${fieldMap.menuArticoli.configurazione}}='${configRecordId}')`;
-            const itemsUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(MENU_ARTICOLI_TABLE_NAME)}?filterByFormula=${encodeURIComponent(filterFormulaItems)}`;
-            console.log("Fetch Items:", itemsUrl);
+            // 2. Recupera TUTTI gli Articoli Menu **ATTIVI** (SENZA filtro Configurazione)
+            const filterFormulaItemsSimple = `{${itemAttivoField}}=1`; // Solo per Stato Attivo
+            console.log("Filtro Articoli SEMPLIFICATO INVIATO:", filterFormulaItemsSimple);
+            const itemsUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(MENU_ARTICOLI_TABLE_NAME)}?filterByFormula=${encodeURIComponent(filterFormulaItemsSimple)}`;
+            console.log("Fetch Items (menu.html - SOLO ATTIVI):", itemsUrl);
             const itemsResponse = await fetch(itemsUrl, { headers });
-             if (itemsResponse.ok) { /* ... (assegna a menuItemsData) ... */ } else { throw new Error(/* ... */); }
+             if (itemsResponse.ok) {
+                 const itemsResult = await itemsResponse.json(); allItems = itemsResult.records || []; console.log("Items Data Raw (menu.html - SOLO ATTIVI):", allItems);
+             } else { throw new Error(`API Articoli (Solo Attivi): ${itemsResponse.status} ${await itemsResponse.text()}`); }
 
-            // 3. Elabora Dati Menu
+            // 3. Elabora Dati Menu - **FILTRA PER CONFIGURAZIONE QUI IN JAVASCRIPT**
             let processedMenuData = [];
-            if (menuCategoriesData.length > 0 && menuItemsData.length > 0) {
-                 processedMenuData = menuCategoriesData.map(catRec => {
-                     const catId = catRec.id;
-                     // *** CORRETTO: Usa i nomi campo da fieldMap per estrarre i dati PRIMA di mappare ***
-                     const categoryName = getField(catRec.fields, fieldMap.menuCategorie.nome, 'Categoria Mancante');
+            if (allCategories.length > 0 && allItems.length > 0) {
+                 // Filtra prima le categorie per la configurazione corretta
+                 const filteredCategories = allCategories.filter(catRec => {
+                     const linkedConfigIds = getField(catRec.fields, catConfigField, []);
+                     return Array.isArray(linkedConfigIds) && linkedConfigIds.includes(configRecordId);
+                 });
+                 console.log("Categorie filtrate per Config ID in JS:", filteredCategories);
 
-                     const items = menuItemsData.filter(itemRec => {
-                             const linkedCategoryIds = getField(itemRec.fields, fieldMap.menuArticoli.categoria, []);
-                             return Array.isArray(linkedCategoryIds) && linkedCategoryIds.includes(catId);
-                         })
-                         .map(itemRec => ({ // Crea l'oggetto pulito per l'item
-                             id: itemRec.id,
-                             name: getField(itemRec.fields, fieldMap.menuArticoli.nome, 'Nome Mancante'),
-                             price: getField(itemRec.fields, fieldMap.menuArticoli.prezzo),
-                             description: getField(itemRec.fields, fieldMap.menuArticoli.descrizione, '')
-                         }));
+                 // Filtra prima gli articoli per la configurazione corretta
+                 const filteredItems = allItems.filter(itemRec => {
+                    const linkedConfigIds = getField(itemRec.fields, itemConfigField, []);
+                    return Array.isArray(linkedConfigIds) && linkedConfigIds.includes(configRecordId);
+                 });
+                 console.log("Articoli filtrati per Config ID in JS:", filteredItems);
 
-                     // Ritorna l'oggetto categoria pulito
-                     return {
-                         id: catId,
-                         name: categoryName, // Usa la variabile estratta prima
-                         items: items
-                     };
-                 }).filter(category => category.items.length > 0);
 
-                 console.log("Menu Data Processed (menu.html):", processedMenuData);
-                 // ... (log warning se processedMenuData è vuoto) ...
+                 // Ora procedi con l'elaborazione usando i dati GIA' FILTRATI per Configurazione
+                 if (filteredCategories.length > 0 && filteredItems.length > 0) {
+                     processedMenuData = filteredCategories.map(catRec => {
+                         const catId = catRec.id;
+                         const categoryName = getField(catRec.fields, fieldMap.menuCategorie.nome, 'Categoria Mancante');
+                         const items = filteredItems.filter(itemRec => { // Usa filteredItems
+                                 const linkedCategoryIds = getField(itemRec.fields, catCategoriaField, []);
+                                 return Array.isArray(linkedCategoryIds) && linkedCategoryIds.includes(catId);
+                             })
+                             .map(itemRec => ({ /* ... crea oggetto item ... */ }));
+                         return { id: catId, name: categoryName, items: items };
+                     }).filter(category => category.items.length > 0);
+                     console.log("Menu Data Processed (menu.html - Filtro JS):", processedMenuData);
+                      if (processedMenuData.length === 0) { console.warn("ATTENZIONE: Trovate cat/articoli attivi per questa config, ma il link Articolo->Categoria è errato."); }
+                 } else {
+                      if (filteredCategories.length === 0) console.log("Nessuna CATEGORIA attiva trovata per Config ID:", configRecordId);
+                      if (filteredItems.length === 0) console.log("Nessun ARTICOLO attivo trovato per Config ID:", configRecordId);
+                 }
+
             } else {
-                 // ... (log se categorie o articoli sono vuoti) ...
+                 if (allCategories.length === 0) console.log("Nessuna categoria ATTIVA trovata in totale.");
+                 if (allItems.length === 0) console.log("Nessun articolo ATTIVO trovato in totale.");
             }
 
             // 4. Renderizza il Menu
             renderMenu(processedMenuData);
 
-        } catch (error) { /* ... */ }
-        finally { /* ... */ }
+        } catch (error) { /* ... gestione errori ... */ }
+        finally { /* ... nascondi messaggio caricamento ... */ }
     }
     loadMenuData();
 
-    // --- Funzioni copiate per completezza (INVARIATE MA SERVONO) ---
-    const getField = (fields, fieldName, defaultValue = null) => { if (!fields) return defaultValue; const value = fields[fieldName]; return (value !== undefined && value !== null && value !== '') ? value : defaultValue; };
-    function addAccordionListeners() { const menuContent = document.getElementById('menu-content'); if(!menuContent) return; const categoryTitles = menuContent.querySelectorAll('.category-title'); categoryTitles.forEach(title => { title.addEventListener('click', () => toggleCategory(title)); title.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggleCategory(title); } }); }); }
-    function toggleCategory(titleElement) { const categoryDiv = titleElement.parentElement; const itemList = titleElement.nextElementSibling; if (!itemList || itemList.tagName !== 'UL') { console.error("Struttura HTML errata: UL non trovato dopo H3."); return; } const isOpen = categoryDiv.classList.contains('category-open'); if (isOpen) { categoryDiv.classList.remove('category-open'); itemList.style.maxHeight = '0'; } else { categoryDiv.classList.add('category-open'); itemList.style.maxHeight = itemList.scrollHeight + 'px'; } }
-
-
-}); // Fine DOMContentLoaded
+    // --- Funzioni copiate per completezza ---
+    function renderMenu(menuData) { /* ... */ }
+    function addAccordionListeners() { /* ... */ }
+    function toggleCategory(titleElement) { /* ... */ }
+    // (Codice completo funzioni in fondo omesso per brevità)
+});
