@@ -148,4 +148,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Le funzioni helper NON VANNO COPIATE DI NUOVO QUI FUORI
 
-}); // Fine DOMContentLoaded - Assicurati che questa sia l'ultima parentesi graffa e tonda
+}) // Fine DOMContentLoaded - Assicurati che questa sia l'ultima parentesi graffa e tonda
