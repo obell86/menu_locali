@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Mappatura campi Menu
     const fieldMap = {
-        menuCategorie: { nome: 'Nome Categoria', ordine: 'Ordine Visualizzazione', attivo: 'Stato Attivo', configurazione: 'Configurazione', categoria: 'Categoria' }, // Aggiunto categoria qui per sicurezza map
-        menuArticoli: { nome: 'Nome Articolo', prezzo: 'Prezzo', descrizione: 'Descrizione', categoria: 'Categoria', attivo: 'Stato Attivo', configurazione: 'Configurazione' }
+        Menu_Categorie: { nome: 'Nome Categoria', ordine: 'Ordine Visualizzazione', attivo: 'Stato Attivo', configurazione: 'Configurazione', categoria: 'Categoria' }, // Aggiunto categoria qui per sicurezza map
+        Menu_Articoli: { nome: 'Nome Articolo', prezzo: 'Prezzo', descrizione: 'Descrizione', categoria: 'Categoria', attivo: 'Stato Attivo', configurazione: 'Configurazione' }
     };
 
     // --- Elementi DOM ---
