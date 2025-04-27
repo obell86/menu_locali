@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- Configurazione Airtable ---
-    const AIRTABLE_BASE_ID = 'appWu01VUobV0pbwS'; // Verifica ID Base Corretto!
+    const AIRTABLE_BASE_ID = 'appw09DNLfGZ6OONF'; // Verifica ID Base Corretto!
     // !!! USA IL NUOVO TOKEN !!!
     const AIRTABLE_PAT = 'patis2AK0YC19Zq7b.abd2a8095f2d7dc56dda2f2ae255813a6daaf57fab14372bd8b6915e4d10dd0b'; // !!! Ricorda di proteggere questo token in produzione
     const CONFIG_TABLE_NAME = 'Configurazione';
