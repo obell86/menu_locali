@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- Configurazione Airtable ---
-    const AIRTABLE_BASE_ID = 'appw09DNLfGZ6OONF'; // ID Base Corretto
-    const AIRTABLE_PAT = 'patis2AK0YC19Zq7b.abd2a8095f2d7dc56dda2f2ae255813a6daaf57fab14372bd8b6915e4d10dd0b'; // Token Corretto
+    const AIRTABLE_BASE_ID = 'appw09DNLfGZ6OONF'; // ID Base Corretto!
+    const AIRTABLE_PAT = 'patis2AK0YC19Zq7b.abd2a8095f2d7dc56dda2f2ae255813a6daaf57fab14372bd8b6915e4d10dd0b'; // Token Corretto!
     const CONFIG_TABLE_NAME = 'Configurazione';
     const LINKS_TABLE_NAME = 'Links';
-    const MENU_CATEGORIE_TABLE_NAME = 'Menu_Categorie';
-    const MENU_ARTICOLI_TABLE_NAME = 'Menu_Articoli';
+    // Nomi tabelle menu non servono più qui se la logica è separata
+    // const MENU_CATEGORIE_TABLE_NAME = 'Menu_Categorie';
+    // const MENU_ARTICOLI_TABLE_NAME = 'Menu_Articoli';
 
     // Mappatura campi Airtable -> nomi chiave script
     const fieldMap = {
@@ -27,31 +28,18 @@ document.addEventListener('DOMContentLoaded', () => {
             showCountdown: 'Mostra Countdown',
             countdownTarget: 'Data Target Countdown',
             countdownLabel: 'Etichetta Countdown',
-            linkedLinks: 'Link Attivi',
-            configurazione: 'Configurazione' // Assumendo che questo sia il nome del campo link nelle altre tabelle
+            linkedLinks: 'Link Attivi', // Link ai Links da mostrare
+            configurazione: 'Configurazione'
         },
         links: {
             label: 'Etichetta',
-            url: 'Scrivi URL',
+            url: 'Scrivi URL', // Qui ci sarà 'menu.html'
             color: 'Scrivi Colore Pulsante'
-        },
-        menuCategorie: {
-            nome: 'Nome Categoria',
-            ordine: 'Ordine Visualizzazione',
-            attivo: 'Stato Attivo',
-            configurazione: 'Configurazione' // Nome campo per filtro originale
-        },
-        menuArticoli: {
-            nome: 'Nome Articolo',
-            prezzo: 'Prezzo',
-            descrizione: 'Descrizione',
-            categoria: 'Categoria',
-            attivo: 'Stato Attivo',
-            configurazione: 'Configurazione' // Nome campo per filtro originale
         }
+        // Mappe menu rimosse da qui
     };
 
-    const defaultButtonColor = 'linear-gradient(45deg, #ccc, #eee)'; // Esempio grigio
+    const defaultButtonColor = 'linear-gradient(45deg, #ccc, #eee)';
 
     // --- Elementi DOM ---
     const titleElement = document.getElementById('page-title');
@@ -70,101 +58,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const secondsElement = document.getElementById('seconds');
     const countdownMessageElement = document.getElementById('countdown-message');
     let countdownIntervalId = null;
-    const menuSection = document.getElementById('menu-section');
-    const menuContent = document.getElementById('menu-content');
-
-    let processedMenuData = null;
-    let isMenuRendered = false;
+    // Sezione Menu non serve più qui
+    // const menuSection = document.getElementById('menu-section');
+    // const menuContent = document.getElementById('menu-content');
 
     // --- Funzioni Helper ---
     const getField = (fields, fieldName, defaultValue = null) => {
         if (!fields) return defaultValue;
-        return (fields[fieldName] !== undefined && fields[fieldName] !== null && fields[fieldName] !== '')
-               ? fields[fieldName]
-               : defaultValue;
+        return (fields[fieldName] !== undefined && fields[fieldName] !== null && fields[fieldName] !== '') ? fields[fieldName] : defaultValue;
     };
     const getAttachmentUrl = (fields, fieldName) => {
         const attachments = getField(fields, fieldName);
         if (Array.isArray(attachments) && attachments.length > 0) {
             const firstAttachment = attachments[0];
-            if (firstAttachment.thumbnails && firstAttachment.thumbnails.large) {
-                return firstAttachment.thumbnails.large.url;
-            }
+            if (firstAttachment.thumbnails && firstAttachment.thumbnails.large) { return firstAttachment.thumbnails.large.url; }
             return firstAttachment.url;
         }
         return null;
     };
 
-    // --- Funzioni Menu ---
-    function toggleMenu() {
-        if (!menuSection) { console.error("#menu-section non trovato."); return; }
-        const isMenuVisible = menuSection.style.display === 'block';
-        if (isMenuVisible) {
-            menuSection.style.display = 'none';
-        } else {
-            menuSection.style.display = 'block';
-            if (processedMenuData) {
-                renderMenu(processedMenuData);
-                isMenuRendered = true;
-                menuSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
-                if (menuContent) { menuContent.innerHTML = '<p class="error-message">Dati del menu non disponibili.</p>'; }
-                console.warn("ToggleMenu: Dati menu non pronti.");
-            }
-        }
-    }
-
-    function renderMenu(menuData) {
-        if (!menuContent) return;
-        if (!menuData || menuData.length === 0) {
-             menuContent.innerHTML = '<p>Il menu non è disponibile al momento.</p>';
-             return;
-        }
-        let menuHTML = '';
-        menuData.forEach(category => {
-            if (!category.items || category.items.length === 0) return;
-            menuHTML += `<div class="menu-category"><h3 class="category-title" tabindex="0">${category.name}</h3><ul class="item-list" style="max-height: 0; overflow: hidden;">`;
-            category.items.forEach(item => {
-                let formattedPrice = '';
-                if (typeof item.price === 'number') { formattedPrice = `€${item.price.toFixed(2)}`; }
-                else if (typeof item.price === 'string') { formattedPrice = item.price; }
-                menuHTML += `<li class="menu-item"><div class="item-details"><span class="item-name">${item.name}</span>${item.description ? `<p class="item-description">${item.description}</p>` : ''}</div>${formattedPrice ? `<span class="item-price">${formattedPrice}</span>` : ''}</li>`;
-            });
-            menuHTML += `</ul></div>`;
-        });
-        menuContent.innerHTML = menuHTML;
-        addAccordionListeners();
-        console.log("Menu renderizzato.");
-    }
-
-    function addAccordionListeners() {
-        const categoryTitles = menuContent.querySelectorAll('.category-title');
-        categoryTitles.forEach(title => {
-            title.addEventListener('click', () => toggleCategory(title));
-            title.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggleCategory(title); } });
-        });
-    }
-
-    function toggleCategory(titleElement) {
-        const categoryDiv = titleElement.parentElement;
-        const itemList = titleElement.nextElementSibling;
-        const isOpen = categoryDiv.classList.contains('category-open');
-        if (isOpen) {
-            categoryDiv.classList.remove('category-open');
-            itemList.style.maxHeight = '0';
-        } else {
-            categoryDiv.classList.add('category-open');
-            itemList.style.maxHeight = itemList.scrollHeight + 'px';
-        }
-    }
+    // Funzioni Menu (toggleMenu, renderMenu, addAccordionListeners) RIMOSSE da qui
 
     // --- Funzione Principale di Caricamento ---
     async function loadData() {
         if (loadingMessage) loadingMessage.style.display = 'block';
         if (linkContainer) linkContainer.innerHTML = '';
-        processedMenuData = null; isMenuRendered = false;
-        if (menuContent) menuContent.innerHTML = '<p>Caricamento menu...</p>';
-        if (menuSection) menuSection.style.display = 'none';
 
         try {
             const headers = { Authorization: `Bearer ${AIRTABLE_PAT}` };
@@ -178,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!configResult.records || configResult.records.length === 0) throw new Error("No config record found.");
             const configRecord = configResult.records[0];
             const configFields = configRecord.fields;
-            const configRecordId = configRecord.id; // ID Config Principale
+            const configRecordId = configRecord.id;
             console.log("Config Data:", configFields, "ID:", configRecordId);
 
             // 2. Recupera Links Collegati
@@ -199,76 +117,52 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             console.log("Links Data Processed:", linksData);
 
-            // 3. Recupera Categorie Menu
-            let menuCategoriesData = [];
-            // *** MODIFICA TEMPORANEA PER TEST ***
-            const filterFormulaCategories = `{${fieldMap.menuCategorie.attivo}}=1`; // Prende TUTTE le categorie attive
-            // const filterFormulaCategories = `AND({${fieldMap.menuCategorie.attivo}}=1, {${fieldMap.menuCategorie.configurazione}}='${configRecordId}')`; // FORMULA ORIGINALE
-            const sortOrder = `sort[0][field]=${encodeURIComponent(fieldMap.menuCategorie.ordine)}&sort[0][direction]=asc`;
-            const categoriesUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(MENU_CATEGORIE_TABLE_NAME)}?filterByFormula=${encodeURIComponent(filterFormulaCategories)}&${sortOrder}`;
-            console.log("Fetch Categories:", categoriesUrl);
-            const categoriesResponse = await fetch(categoriesUrl, { headers });
-            if (categoriesResponse.ok) {
-                const categoriesResult = await categoriesResponse.json();
-                menuCategoriesData = categoriesResult.records || [];
-                console.log("Categories Data Raw:", menuCategoriesData);
-            } else { console.warn(`API Categories Warning: ${categoriesResponse.status}`); }
+            // Chiamate Menu RIMOSSE da qui
 
-            // 4. Recupera Articoli Menu
-            let menuItemsData = [];
-            // *** MODIFICA TEMPORANEA PER TEST ***
-            const filterFormulaItems = `{${fieldMap.menuArticoli.attivo}}=1`; // Prende TUTTI gli articoli attivi
-            // const filterFormulaItems = `AND({${fieldMap.menuArticoli.attivo}}=1, {${fieldMap.menuArticoli.configurazione}}='${configRecordId}')`; // FORMULA ORIGINALE
-            const itemsUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(MENU_ARTICOLI_TABLE_NAME)}?filterByFormula=${encodeURIComponent(filterFormulaItems)}`;
-            console.log("Fetch Items:", itemsUrl);
-            const itemsResponse = await fetch(itemsUrl, { headers });
-             if (itemsResponse.ok) {
-                const itemsResult = await itemsResponse.json();
-                menuItemsData = itemsResult.records || [];
-                console.log("Items Data Raw:", menuItemsData);
-             } else { console.warn(`API Items Warning: ${itemsResponse.status}`); }
-
-            // 5. Elabora Dati Menu
-            // Questa logica ora processerà TUTTE le categorie attive e TUTTI gli articoli attivi trovati
-            if (menuCategoriesData.length > 0) {
-                processedMenuData = menuCategoriesData.map(categoryRecord => {
-                    const categoryId = categoryRecord.id;
-                    const items = menuItemsData
-                        .filter(itemRecord => getField(itemRecord.fields, fieldMap.menuArticoli.categoria, [])[0] === categoryId)
-                        .map(itemRecord => ({
-                            id: itemRecord.id,
-                            name: getField(itemRecord.fields, fieldMap.menuArticoli.nome, '?'),
-                            price: getField(itemRecord.fields, fieldMap.menuArticoli.prezzo),
-                            description: getField(itemRecord.fields, fieldMap.menuArticoli.descrizione, '')
-                        }));
-                    return { id: categoryId, name: getField(categoryRecord.fields, fieldMap.menuCategorie.nome, '?'), items: items };
-                }).filter(category => category.items.length > 0);
-                console.log("Menu Data Processed:", processedMenuData);
-            } else {
-                 console.log("Nessuna categoria attiva trovata (con filtro semplificato).");
-                 processedMenuData = [];
-            }
+            // Elaborazione Menu RIMOSSA da qui
 
             // --- Applica Configurazione Visiva ---
             // (Sfondo, Titolo, Countdown, Loader, Logo - codice omesso per brevità, è invariato)
              const backgroundUrl = getAttachmentUrl(configFields, fieldMap.config.backgroundUrl); if (backgroundUrl) { document.body.style.backgroundImage = `url('${backgroundUrl}')`; document.body.style.backgroundSize = 'cover'; document.body.style.backgroundPosition = 'center center'; document.body.style.backgroundRepeat = 'no-repeat'; document.body.style.backgroundAttachment = 'fixed';} else { document.body.style.backgroundImage = 'none'; }
              const pageTitle = getField(configFields, fieldMap.config.title, 'Menu'); document.title = pageTitle; if (titleElement) { titleElement.textContent = pageTitle; const ts = getField(configFields, fieldMap.config.titleSize); if(ts) titleElement.style.fontSize = ts; else titleElement.style.fontSize = ''; }
-             if (countdownIntervalId) clearInterval(countdownIntervalId); const showCD = getField(configFields, fieldMap.config.showCountdown, false); const cdTarget = getField(configFields, fieldMap.config.countdownTarget); const cdLabel = getField(configFields, fieldMap.config.countdownLabel, ''); if (countdownContainer && showCD === true && cdTarget) { const td = new Date(cdTarget); if(!isNaN(td)){ if(countdownLabelElement) countdownLabelElement.textContent = cdLabel; const updateCD = ()=>{}; updateCD(); countdownIntervalId = setInterval(updateCD, 1000); countdownContainer.style.display = 'block';} else {if(countdownContainer) countdownContainer.style.display = 'none';}} else {if(countdownContainer) countdownContainer.style.display = 'none';}
+             if (countdownIntervalId) clearInterval(countdownIntervalId); const showCD = getField(configFields, fieldMap.config.showCountdown, false); const cdTarget = getField(configFields, fieldMap.config.countdownTarget); const cdLabel = getField(configFields, fieldMap.config.countdownLabel, ''); if (countdownContainer && showCD === true && cdTarget) { const td = new Date(cdTarget); if(!isNaN(td)){ if(countdownLabelElement) countdownLabelElement.textContent = cdLabel; const updateCD = ()=>{/*logica*/}; updateCD(); countdownIntervalId = setInterval(updateCD, 1000); countdownContainer.style.display = 'block';} else {if(countdownContainer) countdownContainer.style.display = 'none';}} else {if(countdownContainer) countdownContainer.style.display = 'none';}
              const showL = getField(configFields, fieldMap.config.showLoader, false); if (loader) { if(showL){ loader.style.display = 'flex';} else { loader.style.display = 'none';}}
              const logoUrl = getAttachmentUrl(configFields, fieldMap.config.logoUrl); logoContainer.innerHTML = ''; if (logoUrl) { const logoImg = document.createElement('img'); logoImg.src = logoUrl; logoImg.alt = 'Logo'; logoContainer.appendChild(logoImg); }
 
-            // Pulsanti Link
+
+            // Pulsanti Link (Senza gestione #menu)
             linkContainer.innerHTML = '';
             if (linksData && linksData.length > 0) {
-                const btnFs = getField(configFields, fieldMap.config.buttonFontSize); const btnPad = getField(configFields, fieldMap.config.buttonPadding);
+                const buttonFontSize = getField(configFields, fieldMap.config.buttonFontSize);
+                const buttonPadding = getField(configFields, fieldMap.config.buttonPadding);
+
                 linksData.forEach(link => {
-                    if (link.url === '#menu') {
-                        const btn = document.createElement('button'); btn.textContent = link.label; btn.className = 'link-button menu-toggle-button'; btn.type = 'button'; btn.style.background = link.color || defaultButtonColor; if(btnFs) btn.style.fontSize = btnFs; if(btnPad) btn.style.padding = btnPad; btn.addEventListener('click', toggleMenu); linkContainer.appendChild(btn);
-                    } else if (link.url) {
-                        const a = document.createElement('a'); a.href = link.url; a.textContent = link.label; a.className = 'link-button'; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.style.background = link.color || defaultButtonColor; if(btnFs) a.style.fontSize = btnFs; if(btnPad) a.style.padding = btnPad; linkContainer.appendChild(a);
-                    } else { console.warn(`Link '${link.label}' skipped.`); }
+                    if (link.url) { // Controlla solo se l'URL esiste
+                        const button = document.createElement('a'); // Sempre <a> ora
+                        button.href = link.url; // Usa l'URL da Airtable (es. 'menu.html')
+                        button.textContent = link.label;
+                        button.className = 'link-button';
+
+                        // Apri menu.html nella stessa scheda, altri link in nuova scheda
+                        if (link.url.toLowerCase() === 'menu.html') {
+                            button.target = '_top';
+                        } else {
+                            button.target = '_blank';
+                            button.rel = 'noopener noreferrer';
+                        }
+
+                        button.style.background = link.color || defaultButtonColor;
+                        if (buttonFontSize) button.style.fontSize = buttonFontSize;
+                        if (buttonPadding) button.style.padding = buttonPadding;
+                        linkContainer.appendChild(button);
+                    } else {
+                        console.warn(`Link '${link.label}' skipped (no URL).`);
+                    }
                 });
-            } else { linkContainer.innerHTML = '<p>Nessun link attivo.</p>'; }
+            } else {
+                linkContainer.innerHTML = '<p>Nessun link attivo.</p>';
+            }
+
 
             // Immagine Footer
              const footerImageUrl = getAttachmentUrl(configFields, fieldMap.config.footerImageUrl); if (footerImageContainer) { footerImageContainer.innerHTML = ''; if(footerImageUrl){ const fImg=document.createElement('img'); fImg.src=footerImageUrl; fImg.alt=getField(configFields, fieldMap.config.footerImageAlt, ''); footerImageContainer.appendChild(fImg);}}
@@ -279,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('FATAL ERROR loading data:', error);
              if (linkContainer) linkContainer.innerHTML = `<p class="error-message">Impossibile caricare i dati: ${error.message}</p>`;
              if (titleElement) titleElement.textContent = 'Errore'; document.title = 'Errore';
-             if (loadingMessage) loadingMessage.style.display = 'none'; if (loader) loader.style.display = 'none'; if (menuSection) menuSection.style.display = 'none'; if (countdownIntervalId) clearInterval(countdownIntervalId); if (countdownContainer) countdownContainer.style.display = 'none'; document.body.classList.add('error-page');
+             if (loadingMessage) loadingMessage.style.display = 'none'; if (loader) loader.style.display = 'none'; /* Rimosso controllo menuSection */ if (countdownIntervalId) clearInterval(countdownIntervalId); if (countdownContainer) countdownContainer.style.display = 'none'; document.body.classList.add('error-page');
         }
     }
 
