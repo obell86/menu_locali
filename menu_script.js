@@ -35,7 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const configRecordId = 'METTI_QUI_ID_RECORD_CONFIGURAZIONE'; // <-- DEVI METTERE L'ID QUI!
         // =======================================================================================
 
-        if (!configRecordId || configRecordId === 'METTI_QUI_ID_RECORD_CONFIGURAZIONE') { console.error("ID Configurazione non specificato in menu_script.js!"); if (menuContent) menuContent.innerHTML = `<p class="error-message">Errore: ID Configurazione mancante.</p>`; if (menuLoadingMessage) menuLoadingMessage.style.display = 'none'; return; }
+        if (!configRecordId || configRecordId === '
+recK0pTqrdvJWLi9d') { console.error("ID Configurazione non specificato in menu_script.js!"); if (menuContent) menuContent.innerHTML = `<p class="error-message">Errore: ID Configurazione mancante.</p>`; if (menuLoadingMessage) menuLoadingMessage.style.display = 'none'; return; }
 
         const catAttivoField = fieldMap.menuCategorie.attivo; const catConfigField = fieldMap.menuCategorie.configurazione;
         const itemAttivoField = fieldMap.menuArticoli.attivo; const itemConfigField = fieldMap.menuArticoli.configurazione;
