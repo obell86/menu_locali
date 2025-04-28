@@ -1,7 +1,3 @@
-// Contenuto di menu_script.js (identico a quello fornito nel messaggio con "File: menu_script.js (CORREZIONE FINALE - Speriamo!)")
-// Assicurati che MENU_CATEGORIE_TABLE_NAME = 'Menu_Categorie' e MENU_ARTICOLI_TABLE_NAME = 'Menu_Articoli'
-// corrispondano ai nomi delle tabelle nella NUOVA base.
-// *** IMPORTANTE: Verifica e inserisci l'ID corretto del record Configurazione! ***
 document.addEventListener('DOMContentLoaded', () => {
     // --- Configurazione Airtable (NUOVI DATI) ---
     const AIRTABLE_BASE_ID = 'apppoL3fKAYnY0K1A'; // NUOVO ID BASE!
@@ -23,27 +19,45 @@ document.addEventListener('DOMContentLoaded', () => {
     const getField = (fields, fieldName, defaultValue = null) => { if (!fields) return defaultValue; const value = fields[fieldName]; return (value !== undefined && value !== null && value !== '') ? value : defaultValue; };
 
     // --- Funzioni Menu ---
-    function renderMenu(menuData) { /* ... (come ultima versione) ... */ }
-    function addAccordionListeners() { /* ... (come ultima versione) ... */ }
-    function toggleCategory(titleElement) { /* ... (come ultima versione) ... */ }
+    function renderMenu(menuData) {
+        if (!menuContent) { console.error("Errore: Elemento #menu-content non trovato."); return; }
+        if (!menuData || menuData.length === 0) { menuContent.innerHTML = '<p>Il menu non è disponibile al momento.</p>'; console.log("renderMenu: Nessun dato valido ricevuto."); return; }
+        let menuHTML = '';
+        menuData.forEach(category => {
+            if (!category.items || category.items.length === 0) return;
+            menuHTML += `<div class="menu-category"><h3 class="category-title" tabindex="0">${category.name || '?'}</h3><ul class="item-list" style="max-height: 0; overflow: hidden;">`;
+            category.items.forEach(item => {
+                let formattedPrice = ''; const priceValue = item.price; if (typeof priceValue === 'number') { formattedPrice = `€${priceValue.toFixed(2)}`; } else if (typeof priceValue === 'string') { formattedPrice = priceValue; }
+                menuHTML += `<li class="menu-item"><div class="item-details"><span class="item-name">${item.name || '?'}</span>`;
+                if(item.description) { menuHTML += `<p class="item-description">${item.description}</p>`; }
+                menuHTML += `</div>`; if(formattedPrice) { menuHTML += `<span class="item-price">${formattedPrice}</span>`; } menuHTML += `</li>`;
+            });
+            menuHTML += `</ul></div>`;
+        });
+        menuContent.innerHTML = menuHTML; addAccordionListeners(); console.log("Menu renderizzato (menu.html).");
+    }
+    function addAccordionListeners() { const titles = menuContent.querySelectorAll('.category-title'); titles.forEach(t => { t.addEventListener('click', () => toggleCategory(t)); t.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleCategory(t); } }); }); }
+    function toggleCategory(titleElement) { const div = titleElement.parentElement; const ul = titleElement.nextElementSibling; if (!ul || ul.tagName !== 'UL') return; const isOpen = div.classList.contains('category-open'); if (isOpen) { div.classList.remove('category-open'); ul.style.maxHeight = '0'; } else { div.classList.add('category-open'); ul.style.maxHeight = ul.scrollHeight + 'px'; } }
 
     // --- Funzione Principale di Caricamento Menu ---
     async function loadMenuData() {
         if (menuLoadingMessage) menuLoadingMessage.style.display = 'block';
 
-        // ====> !!! TROVA E INSERISCI QUI L'ID DEL RECORD 'Configurazione' NELLA NUOVA BASE !!! <====
-        const configRecordId = 'METTI_QUI_ID_RECORD_CONFIGURAZIONE'; // <-- DEVI METTERE L'ID QUI!
-        // =======================================================================================
+        // ====> ID DEL RECORD CONFIGURAZIONE CORRETTO INSERITO <====
+        const configRecordId = 'recK0pTqrdvJWLi9d'; // ID Confermato!
+        // ==========================================================
 
-        if (!configRecordId || configRecordId === '
-recK0pTqrdvJWLi9d') { console.error("ID Configurazione non specificato in menu_script.js!"); if (menuContent) menuContent.innerHTML = `<p class="error-message">Errore: ID Configurazione mancante.</p>`; if (menuLoadingMessage) menuLoadingMessage.style.display = 'none'; return; }
-
+        // Verifica nomi campo filtro
         const catAttivoField = fieldMap.menuCategorie.attivo; const catConfigField = fieldMap.menuCategorie.configurazione;
         const itemAttivoField = fieldMap.menuArticoli.attivo; const itemConfigField = fieldMap.menuArticoli.configurazione;
         const catCategoriaField = fieldMap.menuArticoli.categoria;
         console.log(`NOMI CAMPO USATI: Categoria[Attivo='${catAttivoField}', Config='${catConfigField}'], Articolo[Attivo='${itemAttivoField}', Config='${itemConfigField}', CategoriaLink='${catCategoriaField}']`);
 
-        if (!catAttivoField || !catConfigField || !itemAttivoField || !itemConfigField || !catCategoriaField) { /*...*/ return; }
+        if (!catAttivoField || !catConfigField || !itemAttivoField || !itemConfigField || !catCategoriaField) {
+             console.error("Errore nel fieldMap: uno o più nomi campo essenziali mancano!");
+             if (menuContent) menuContent.innerHTML = `<p class="error-message">Errore: Configurazione fieldMap nello script.</p>`;
+             if (menuLoadingMessage) menuLoadingMessage.style.display = 'none'; return;
+         }
 
         try {
             const headers = { Authorization: `Bearer ${AIRTABLE_PAT}` };
@@ -78,10 +92,4 @@ recK0pTqrdvJWLi9d') { console.error("ID Configurazione non specificato in menu_s
         finally { if (menuLoadingMessage) menuLoadingMessage.style.display = 'none'; }
     }
     loadMenuData();
-
-    // --- Funzioni copiate ---
-    function renderMenu(menuData){const menuContent=document.getElementById('menu-content');if(!menuContent){console.error("Errore: Elemento #menu-content non trovato.");return;}if(!menuData||menuData.length===0){menuContent.innerHTML='<p>Il menu non è disponibile al momento.</p>';console.log("renderMenu: Nessun dato valido ricevuto.");return;}let menuHTML='';menuData.forEach(category=>{if(!category.items||category.items.length===0)return;menuHTML+=`<div class="menu-category"><h3 class="category-title" tabindex="0">${category.name||'?'}</h3><ul class="item-list" style="max-height: 0; overflow: hidden;">`;category.items.forEach(item=>{let formattedPrice='';const priceValue=item.price;if(typeof priceValue==='number'){formattedPrice=`€${priceValue.toFixed(2)}`;}else if(typeof priceValue==='string'){formattedPrice=priceValue;}menuHTML+=`<li class="menu-item"><div class="item-details"><span class="item-name">${item.name||'?'}</span>`;if(item.description){menuHTML+=`<p class="item-description">${item.description}</p>`;}menuHTML+=`</div>`;if(formattedPrice){menuHTML+=`<span class="item-price">${formattedPrice}</span>`;}menuHTML+=`</li>`;});menuHTML+=`</ul></div>`;});menuContent.innerHTML=menuHTML;addAccordionListeners();console.log("Menu renderizzato (menu.html).");}
-    function addAccordionListeners(){const menuContent=document.getElementById('menu-content');if(!menuContent)return;const categoryTitles=menuContent.querySelectorAll('.category-title');categoryTitles.forEach(title=>{title.addEventListener('click',()=>toggleCategory(title));title.addEventListener('keydown',(event)=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCategory(title);}});});}
-    function toggleCategory(titleElement){const categoryDiv=titleElement.parentElement;const itemList=titleElement.nextElementSibling;if(!itemList||itemList.tagName!=='UL'){console.error("Struttura HTML errata: UL non trovato dopo H3.");return;}const isOpen=categoryDiv.classList.contains('category-open');if(isOpen){categoryDiv.classList.remove('category-open');itemList.style.maxHeight='0';}else{categoryDiv.classList.add('category-open');itemList.style.maxHeight=itemList.scrollHeight+'px';}}
-
-}); // Fine DOMContentLoaded
+});
