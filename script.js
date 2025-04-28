@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.body.style.backgroundRepeat = 'no-repeat';
                 document.body.style.backgroundAttachment = 'fixed';
             } else {
-                document.body.style.backgroundImage = 'none'; // Rimuove sfondo se non specificato
+                console.log("Nessuno sfondo in Airtable, mantenendo sfondo CSS.");
             }
 
             // Titolo Pagina
