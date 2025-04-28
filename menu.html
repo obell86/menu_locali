@@ -15,68 +15,7 @@
 
     <!-- Link allo STESSO foglio di stile CSS della pagina principale -->
     <link rel="stylesheet" href="style.css">
-
-    <!-- Stile aggiuntivo specifico per questa pagina (menu.html) -->
-    <style>
-        /* Stile base per il corpo della pagina menu */
-        body {
-            /* Rimuoviamo il padding globale di index.html se vogliamo che il contenitore del menu sia più largo o gestisca il suo padding */
-             padding: 2em 1em; /* Aggiungiamo un po' di padding per non attaccare ai bordi */
-             display: flex; /* Usiamo flex per centrare facilmente il contenitore */
-             justify-content: center;
-             align-items: flex-start; /* Allinea in alto */
-             min-height: 100vh;
-        }
-
-        /* Contenitore principale della pagina menu */
-        .menu-page-container {
-            width: 100%;
-            max-width: 700px; /* Larghezza massima del contenuto del menu */
-            /* margin: 2em auto; Rimosso margine auto perché usiamo flex sul body */
-            padding: 1.5em 2em; /* Padding interno */
-            background-color: #ffffff; /* Sfondo bianco */
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Ombra */
-            text-align: left; /* Testo allineato a sinistra */
-            border-top: 5px solid #5a463a; /* Bordo superiore decorativo */
-        }
-
-        /* Stile per il link "Torna Indietro" */
-        .back-link {
-            display: inline-block; /* Per poter dare margini */
-            margin-bottom: 1.5em;
-            color: #8a6d3b; /* Colore marrone/ocra */
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-        .back-link:hover {
-            text-decoration: underline;
-        }
-
-        /* Titolo principale della pagina Menu */
-        #menu-page-title {
-            text-align: center;
-            font-family: 'Oswald', sans-serif; /* Font specifico per titoli */
-            color: #4a3c31; /* Marrone scuro */
-            margin-bottom: 1.5em;
-            font-size: 2rem; /* Dimensione titolo */
-            border-bottom: 1px solid #eee; /* Separatore leggero */
-            padding-bottom: 0.5em;
-        }
-
-        /* Stile per il messaggio di caricamento specifico del menu */
-        #menu-loading-message {
-            text-align: center;
-            padding: 2em;
-            color: #777;
-            font-style: italic;
-        }
-
-        /* Gli stili per .menu-category, .category-title, .item-list, .menu-item
-           sono definiti nel file principale style.css */
-
-    </style>
+    
 </head>
 <body>
 
