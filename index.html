@@ -7,72 +7,58 @@
     <title>Caricamento...</title>
 
     <!-- === FONT === -->
-    <!-- Sostituisci/Aggiungi i font scelti per il nuovo stile "Pub" -->
+    <!-- Assicurati che siano gli stessi font usati in menu.html e style.css -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Esempio: Lato per corpo, Oswald per titoli/categorie -->
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
-    <!-- Rimuovi questo se non usi Orbitron -->
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet"> -->
     <!-- === FINE FONT === -->
 
     <!-- Link al foglio di stile CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Contenitore effetti sfondo (probabilmente non usato con nuovo stile) -->
-    <div class="background-effects">
-         <!-- Elementi effetti (es. stelle) da rimuovere -->
-    </div>
+    <!-- Contenitore per eventuali effetti di sfondo (attualmente nascosto da CSS) -->
+    <div class="background-effects"></div>
 
-    <!-- Contenitore principale -->
+    <!-- Contenitore principale per il contenuto visibile -->
     <div class="main-content">
 
-        <!-- Logo (popolato da JS) -->
+        <!-- Contenitore per il logo (popolato da JS) -->
         <div id="logo-container"></div>
 
-        <!-- Titolo (popolato da JS) -->
+        <!-- Titolo principale della pagina (popolato da JS) -->
         <h1 id="page-title"></h1>
 
-        <!-- Countdown Timer (gestito da JS) -->
+        <!-- Contenitore Countdown Timer (visibilità e contenuto gestiti da JS) -->
         <div id="countdown-container" style="display: none;">
             <p id="countdown-label"></p>
             <div id="countdown-timer">
+                 <!-- Il contenuto (numeri) verrà inserito da JS -->
                  <span id="days">00</span>:<span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
             </div>
              <p id="countdown-message" style="display: none;"></p>
         </div>
 
-        <!-- Loader (gestito da JS) -->
+        <!-- Loader animato (visibilità e contenuto gestiti da JS) -->
         <div class="loader-container" id="loader" style="display: none;">
-           <div class="loader-bar"></div> <!-- Probabilmente nascosto da CSS -->
+           <div class="loader-bar"></div> <!-- Nascosto da CSS -->
            <span id="loading-text-container"></span>
         </div>
 
-        <!-- Contenitore Link/Pulsanti (popolato da JS) -->
+        <!-- Contenitore per i pulsanti link (popolato da JS) -->
         <div class="link-container" id="link-container">
+            <!-- Messaggio mostrato durante il caricamento iniziale -->
             <p id="loading-message">Caricamento...</p>
         </div>
 
-        <!-- === SEZIONE MENU DINAMICO === -->
-        <!-- Visibilità gestita da JS, contenuto popolato da JS -->
-        <section id="menu-section" style="display: none;">
-            <!-- Titolo H2 opzionale -->
-            <!-- <h2 id="menu-title">Il Nostro Menu</h2> -->
-            <div id="menu-content">
-                <p>Caricamento menu...</p>
-            </div>
-            <!-- Pulsante chiusura opzionale -->
-            <!-- <button type="button" class="close-menu-button" onclick="document.getElementById('menu-section').style.display='none'">Chiudi Menu</button> -->
-        </section>
-        <!-- === FINE SEZIONE MENU === -->
+        <!-- La sezione del menu NON è più qui, è in menu.html -->
 
-        <!-- Immagine Footer (popolato da JS) -->
+        <!-- Contenitore per l'immagine a piè di pagina (popolato da JS) -->
         <div id="footer-image-container"></div>
 
     </div> <!-- Fine main-content -->
 
-    <!-- Link al file JavaScript -->
+    <!-- Link al file JavaScript per questa pagina -->
     <script src="script.js"></script>
 </body>
 </html>
