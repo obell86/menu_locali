@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // ====> !!! TROVA E INSERISCI QUI L'ID DEL RECORD 'Configurazione' NELLA NUOVA BASE !!! <====
         //      Puoi trovarlo creando temporaneamente un campo Formula = RECORD_ID() nella tabella Configurazione
-        const configRecordId = 'ID_RECORD_CONFIGURAZIONE_DA_INSERIRE'; // <-- DEVI METTERE L'ID QUI!
+        const configRecordId = 'recK0pTqrdvJWLi9d'; // <-- DEVI METTERE L'ID QUI!
         // =======================================================================================
 
         if (!configRecordId || configRecordId === 'ID_RECORD_CONFIGURAZIONE_DA_INSERIRE') {
