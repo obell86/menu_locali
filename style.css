@@ -2,429 +2,176 @@
 /* STYLE.CSS - Pub Menu Style v1.0     */
 /* =================================== */
 
-/* --- Import Font (Esempio: Lato & Oswald da Google Fonts) --- */
+/* --- Import Font (Lato & Oswald) --- */
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Oswald:wght@400;600&display=swap');
 
 /* --- Reset e Stili Globali --- */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  font-size: 16px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: smooth; /* Scroll più fluido */
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
 
 body {
-  font-family: 'Lato', sans-serif; /* Font base per il corpo */
+  font-family: 'Lato', sans-serif; /* Font base */
   line-height: 1.6;
-  background-color: #faf8f0; /* Crema chiaro come sfondo */
-  color: #333; /* Colore testo principale scuro */
-  padding: 3vw 5vw; /* Padding laterale e un po' sopra/sotto */
+  background-color: #faf8f0; /* Sfondo crema chiaro */
+  color: #333; /* Testo scuro */
+  /* Il padding viene gestito diversamente per index.html e menu.html */
+  /* Stili comuni a entrambe le pagine */
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
 }
 
-/* --- Contenuto Principale --- */
+/* Stili specifici per il body di index.html (contenuto centrato) */
+body:has(.main-content) { /* Selettore per applicare solo a index.html */
+    padding: 3vw 5vw;
+}
+/* Stili specifici per il body di menu.html (padding diverso) */
+body:has(.menu-page-container) { /* Selettore per applicare solo a menu.html */
+     padding: 2em 1em;
+     justify-content: center; /* Centra il contenitore del menu */
+     align-items: flex-start; /* Allinea in alto */
+}
+
+
+/* --- Contenitore Principale (index.html) --- */
 .main-content {
   width: 100%;
-  max-width: 700px; /* Larghezza massima del contenuto principale */
+  max-width: 700px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center; /* Centra testo per elementi come titolo e logo */
+  text-align: center;
 }
 
-/* --- Rimuovi Effetti Sfondo Vecchi --- */
-.background-effects {
-  display: none; /* Nasconde contenitore e stelle cadenti */
-}
+/* --- Effetti Sfondo Vecchi (Nascosti) --- */
+.background-effects { display: none; }
 
-/* --- Stili Elementi Pagina --- */
+/* --- Stili Elementi Pagina (Comuni o per index.html) --- */
 
 /* Logo */
-#logo-container {
-  margin-bottom: 1.5em;
-}
-#logo-container img {
-  display: block;
-  max-width: 150px; /* Aumentata leggermente dimensione max */
-  height: auto;
-  margin: 0 auto; /* Centra orizzontalmente */
-  /* Rimossa animazione float */
-}
+#logo-container { margin-bottom: 1.5em; }
+#logo-container img { display: block; max-width: 150px; height: auto; margin: 0 auto; }
 
-/* Titolo H1 */
+/* Titolo H1 (index.html) */
 h1#page-title {
-  font-family: 'Oswald', sans-serif; /* Font per il titolo */
-  font-weight: 600;
-  font-size: 2.5rem; /* Dimensione base (JS può sovrascrivere) */
-  color: #4a3c31; /* Marrone scuro per il titolo */
-  margin-top: 0.5em;
-  margin-bottom: 1.5em;
-  line-height: 1.2;
-  word-wrap: break-word;
-  max-width: 100%;
-  /* Rimosse animazioni e text-shadow */
+  font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 2.5rem;
+  color: #4a3c31; margin-top: 0.5em; margin-bottom: 1.5em; line-height: 1.2;
+  word-wrap: break-word; max-width: 100%;
 }
 
-/* Countdown Timer (Stile Sobrio) */
-#countdown-container {
-  margin-top: 1em;
-  margin-bottom: 2em;
-  width: 100%;
-  max-width: 400px;
-  padding: 0.5em;
-  background-color: rgba(255, 255, 255, 0.5); /* Sfondo leggermente trasparente */
-  border-radius: 6px;
-}
+/* Countdown Timer */
+#countdown-container { margin-top: 1em; margin-bottom: 2em; width: 100%; max-width: 400px; padding: 0.5em; background-color: rgba(255, 255, 255, 0.5); border-radius: 6px; }
+#countdown-label { font-size: 0.9rem; color: #555; margin-bottom: 0.5em; display: block; }
+#countdown-timer { font-family: 'Lato', sans-serif; font-size: clamp(1.5rem, 5vw, 2rem); font-weight: 700; color: #333; letter-spacing: 1px; line-height: 1.1; white-space: nowrap; text-align: center; }
+#countdown-timer span { display: inline-block; padding: 0 0.1em; }
+#countdown-timer span#hours::before, #countdown-timer span#minutes::before, #countdown-timer span#seconds::before { content: ':'; color: #aaa; padding: 0 0.2em; font-size: 0.8em; vertical-align: middle; }
+#countdown-timer span#days::after, #countdown-timer span#hours::after, #countdown-timer span#minutes::after, #countdown-timer span#seconds::after { content: ''; } /* Nasconde d,h,m,s */
+#countdown-message { font-size: 1.1rem; font-weight: bold; color: #c0392b; margin-top: 0.7em; }
 
-#countdown-label {
-  font-size: 0.9rem;
-  color: #555;
-  margin-bottom: 0.5em;
-  display: block;
-}
+/* Loader (Solo Testo) */
+.loader-container { margin-bottom: 2.5em; padding: 0.8em 1.5em; background-color: rgba(0, 0, 0, 0.05); border-radius: 6px; display: flex; justify-content: center; align-items: center; }
+.loader-bar { display: none; }
+#loading-text-container { font-weight: bold; color: #555; letter-spacing: 1px; }
 
-#countdown-timer {
-  font-family: 'Lato', sans-serif; /* Font standard */
-  font-size: clamp(1.5rem, 5vw, 2rem); /* Dimensione responsive */
-  font-weight: 700; /* Bold */
-  color: #333; /* Colore scuro */
-  /* Rimosso text-shadow neon */
-  letter-spacing: 1px;
-  line-height: 1.1;
-  white-space: nowrap;
-  text-align: center;
-}
+/* Contenitore Link/Pulsanti (index.html) */
+.link-container { display: flex; flex-direction: column; align-items: center; gap: 1em; margin-top: 1.5em; width: 100%; max-width: 400px; }
+#loading-message, .link-container p { font-size: 1.1em; color: #777; }
 
-#countdown-timer span {
-  display: inline-block;
-  padding: 0 0.1em; /* Leggero spazio */
-}
-
-/* Rimuovi punti e lettere dal countdown (più pulito) */
-#countdown-timer span#hours::before,
-#countdown-timer span#minutes::before,
-#countdown-timer span#seconds::before {
-   content: ':'; /* Mantiene i due punti */
-   color: #aaa; /* Grigio chiaro */
-   padding: 0 0.2em;
-   font-size: 0.8em;
-   vertical-align: middle;
-}
-#countdown-timer span#days::after,
-#countdown-timer span#hours::after,
-#countdown-timer span#minutes::after,
-#countdown-timer span#seconds::after {
-   content: ''; /* Nasconde d, h, m, s */
-}
-
-#countdown-message {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #c0392b; /* Rosso scuro per messaggio scaduto */
-  margin-top: 0.7em;
-}
-
-/* Loader (Stile Semplice - Solo Testo) */
-.loader-container {
-  margin-bottom: 2.5em;
-  padding: 0.8em 1.5em;
-  background-color: rgba(0, 0, 0, 0.05); /* Sfondo grigio chiaro */
-  border-radius: 6px;
-  display: flex; /* Visibilità gestita da JS */
-  justify-content: center;
-  align-items: center;
-  /* Larghezza gestita da JS */
-}
-.loader-bar {
-  display: none; /* Nascondi la barra animata */
-}
-#loading-text-container {
-  font-weight: bold;
-  color: #555; /* Grigio scuro */
-  letter-spacing: 1px;
-  /* Rimosse animazioni e text-shadow neon */
-  /* Dimensione font gestita da JS */
-}
-
-/* Contenitore Pulsanti Link */
-.link-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1em; /* Spazio tra i pulsanti */
-  margin-top: 1.5em;
-  width: 100%;
-  max-width: 400px; /* Larghezza massima per i pulsanti */
-}
-#loading-message, .link-container p {
-  font-size: 1.1em;
-  color: #777; /* Grigio per messaggi */
-}
-
-/* Pulsante Link (Stile Pub) */
+/* Pulsante Link (Style Pub) - Applicato a <a> in index.html */
 .link-button {
-  display: block;
-  width: 100%;
-  padding: 0.8em 1em; /* Padding base (JS può sovrascrivere) */
-  color: #fff; /* Testo bianco di default */
-  text-decoration: none;
-  text-align: center;
-  font-weight: 700; /* Bold */
-  font-size: 1rem; /* Dimensione base (JS può sovrascrivere) */
-  border-radius: 5px; /* Angoli leggermente arrotondati */
-  border: none; /* Nessun bordo di default */
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-  /* Background gestito da JS, impostiamo un default sobrio */
-  background: linear-gradient(180deg, #8a6d3b 0%, #6a512f 100%); /* Esempio gradiente marrone */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombra leggera */
-  /* Rimosse animazioni e text-shadow neon */
+  display: block; width: 100%; padding: 0.8em 1em; color: #fff; text-decoration: none;
+  text-align: center; font-weight: 700; font-size: 1rem; border-radius: 5px; border: none;
+  cursor: pointer; transition: background-color 0.2s ease, transform 0.1s ease;
+  background: linear-gradient(180deg, #8a6d3b 0%, #6a512f 100%); /* Default marrone */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-/* Stile specifico se usiamo <button> per il menu */
-button.link-button {
-    font-family: inherit; /* Assicura che usi il font corretto */
-}
-
-.link-button:hover {
-  /* Scurisce leggermente al passaggio del mouse */
-  filter: brightness(90%);
-  transform: translateY(-1px); /* Leggero sollevamento */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-}
-.link-button:active {
-  transform: translateY(0px); /* Torna giù al click */
-  filter: brightness(80%);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
+.link-button:hover { filter: brightness(90%); transform: translateY(-1px); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); }
+.link-button:active { transform: translateY(0px); filter: brightness(80%); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
 
 /* Immagine Footer */
-#footer-image-container {
-  width: 100%;
-  margin-top: 3em;
-  margin-bottom: 1em;
-}
-#footer-image-container img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 90%; /* Leggermente più grande */
-  max-height: 150px; /* Limita altezza */
-  height: auto;
-  border-radius: 6px; /* Angoli arrotondati */
-  object-fit: contain; /* Evita distorsioni */
+#footer-image-container { width: 100%; margin-top: 3em; margin-bottom: 1em; }
+#footer-image-container img { display: block; margin: auto; max-width: 90%; max-height: 150px; height: auto; border-radius: 6px; object-fit: contain; }
+
+/* Messaggio Errore Generico */
+.error-message { color: #c0392b; font-weight: bold; margin-top: 1.5em; border: 1px solid #e74c3c; padding: 1em; background-color: rgba(231, 76, 60, 0.1); border-radius: 6px; text-align: center; }
+body.error-page h1 { color: #c0392b; }
+
+/* ===================================== */
+/* === STILI PER IL MENU (menu.html) === */
+/* ===================================== */
+
+/* Contenitore Pagina Menu (Definito inline in menu.html, ma si può spostare qui) */
+/* .menu-page-container { ... } */
+
+/* Link Torna Indietro (Definito inline in menu.html, ma si può spostare qui) */
+/* .back-link { ... } */
+
+/* Titolo Pagina Menu (Definito inline in menu.html, ma si può spostare qui) */
+/* #menu-page-title { ... } */
+
+/* Messaggio Caricamento Menu */
+#menu-loading-message { text-align: center; padding: 2em; color: #777; font-style: italic; }
+
+/* Contenitore delle categorie */
+#menu-content { /* Questo è il div dentro .menu-page-container */
+    margin-top: 1.5em;
 }
 
-/* Stili Errore Frontend */
-.error-message {
-  color: #c0392b; /* Rosso scuro */
-  font-weight: bold;
-  margin-top: 1.5em;
-  border: 1px solid #e74c3c; /* Bordo rosso */
-  padding: 1em;
-  background-color: rgba(231, 76, 60, 0.1); /* Sfondo rosso chiaro trasparente */
-  border-radius: 6px;
-  text-align: center;
-}
-body.error-page h1 {
-  color: #c0392b; /* Rosso scuro per titolo errore */
-  /* Rimosse animazioni */
-}
+.menu-category { margin-bottom: 2em; }
+.menu-category:last-child { margin-bottom: 0.5em; }
 
-
-/* =================================== */
-/* === STILI SEZIONE MENU DINAMICO === */
-/* =================================== */
-
-#menu-section {
-  display: none; /* Visibilità controllata da JS */
-  width: 100%;
-  max-width: 700px; /* Stessa larghezza del contenuto principale */
-  margin-top: 3em;
-  margin-bottom: 2em;
-  padding: 1.5em 2em; /* Padding interno */
-  background-color: #ffffff; /* Sfondo bianco per il menu */
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Ombra più definita */
-  text-align: left; /* Allinea a sinistra il contenuto del menu */
-  border-top: 5px solid #5a463a; /* Bordo superiore marrone scuro */
-}
-
-/* Titolo opzionale (se lo aggiungi in HTML) */
-#menu-section h2 {
-  text-align: center;
-  font-family: 'Oswald', sans-serif;
-  font-size: 1.8rem;
-  color: #5a463a;
-  margin-bottom: 1.5em;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 0.5em;
-}
-
-.menu-category {
-  margin-bottom: 2em;
-}
-.menu-category:last-child {
-  margin-bottom: 0.5em; /* Meno spazio dopo l'ultima categoria */
-}
-
-/* Titolo Categoria (cliccabile per accordion) */
+/* Titolo Categoria (Accordion Trigger) */
 .category-title {
-  font-family: 'Oswald', sans-serif;
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: #8a6d3b; /* Marrone più chiaro per le categorie */
-  padding: 0.6em 0;
-  border-bottom: 2px solid #e0d9c6; /* Bordo color crema scuro */
-  margin-bottom: 1em;
-  cursor: pointer;
-  position: relative; /* Necessario per posizionare l'icona +/- */
-  transition: color 0.2s ease;
-  outline: none; /* Rimuovi outline di default per focus */
+  font-family: 'Oswald', sans-serif; font-size: 1.6rem; font-weight: 600; color: #8a6d3b;
+  padding: 0.6em 0; border-bottom: 2px solid #e0d9c6; margin-bottom: 1em; cursor: pointer;
+  position: relative; transition: color 0.2s ease; outline: none;
+  user-select: none; /* Impedisce selezione testo al doppio click */
 }
-.category-title:hover,
-.category-title:focus { /* Stile anche per focus da tastiera */
-  color: #5a463a; /* Marrone scuro su hover/focus */
-}
+.category-title:hover, .category-title:focus { color: #5a463a; }
 
 /* Icona Accordion (+/-) */
 .category-title::after {
-  content: '+';
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.5rem; /* Dimensione icona */
-  font-weight: 400; /* Peso normale per l'icona */
-  color: #c8bda8; /* Colore icona */
-  transition: transform 0.3s ease, color 0.2s ease;
+  content: '+'; position: absolute; right: 5px; top: 50%; transform: translateY(-50%);
+  font-size: 1.5rem; font-weight: 400; color: #c8bda8; transition: transform 0.3s ease, color 0.2s ease;
 }
-.menu-category.category-open > .category-title::after {
-  content: '−'; /* Meno quando aperto */
-  transform: translateY(-50%) rotate(180deg); /* Ruota il meno (o solo content) */
-  color: #8a6d3b; /* Colore icona attiva */
-}
-.menu-category.category-open > .category-title {
-    border-bottom-color: transparent; /* Rimuovi bordo sotto il titolo quando aperto */
-}
+.menu-category.category-open > .category-title::after { content: '−'; transform: translateY(-50%) rotate(180deg); color: #8a6d3b; }
+.menu-category.category-open > .category-title { border-bottom-color: transparent; }
 
-/* Lista Articoli (nascosta/mostrata dall'accordion) */
+/* Lista Articoli (Accordion Content) */
 .item-list {
-  list-style: none;
-  padding-left: 0.5em; /* Leggero indent */
-  margin-top: 0;
-  max-height: 0; /* Stato iniziale chiuso */
-  overflow: hidden;
-  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Transizione fluida */
+  list-style: none; padding-left: 0.5em; margin-top: 0; max-height: 0;
+  overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-/* Stato aperto: JS imposta max-height in pixel */
 
-/* Singolo Articolo del Menu */
+/* Singolo Articolo */
 .menu-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start; /* Allinea in alto se descrizione lunga */
-  padding: 1em 0.5em; /* Padding verticale e laterale */
-  border-bottom: 1px dashed #e0d9c6; /* Separatore leggero tratteggiato */
-  gap: 1em; /* Spazio tra dettagli e prezzo */
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 1em 0.5em; border-bottom: 1px dashed #e0d9c6; gap: 1em;
 }
-.menu-item:last-child {
-  border-bottom: none; /* Nessun bordo per l'ultimo item */
-}
+.menu-item:last-child { border-bottom: none; }
 
-.item-details {
-  flex-grow: 1; /* Occupa spazio disponibile */
-}
-
-.item-name {
-  font-weight: 700; /* Nome in grassetto */
-  color: #444;
-  display: block; /* Va a capo prima della descrizione */
-  margin-bottom: 0.3em;
-  font-size: 1.05rem;
-}
-
-.item-description {
-  font-size: 0.9rem;
-  color: #666;
-  line-height: 1.4;
-}
-
-.item-price {
-  font-weight: 700; /* Prezzo in grassetto */
-  color: #333;
-  white-space: nowrap; /* Non mandare a capo */
-  margin-left: auto; /* Spinge a destra */
-  padding-left: 1em; /* Spazio a sinistra del prezzo */
-  font-size: 1rem;
-}
+.item-details { flex-grow: 1; }
+.item-name { font-weight: 700; color: #444; display: block; margin-bottom: 0.3em; font-size: 1.05rem; }
+.item-description { font-size: 0.9rem; color: #666; line-height: 1.4; }
+.item-price { font-weight: 700; color: #333; white-space: nowrap; margin-left: auto; padding-left: 1em; font-size: 1rem; }
 
 /* --- Responsive Design --- */
-
 @media (max-width: 768px) {
-  h1#page-title {
-    font-size: 2rem; /* Riduci titolo su schermi medi */
-  }
-  #menu-section {
-    padding: 1em 1.5em; /* Riduci padding menu */
-  }
-  .category-title {
-      font-size: 1.4rem; /* Riduci titolo categoria */
-  }
+  h1#page-title { font-size: 2rem; }
+  /* Potremmo ridurre padding di .menu-page-container qui se non fosse inline */
+  .category-title { font-size: 1.4rem; }
 }
-
 @media (max-width: 600px) {
-  body {
-    padding: 5vw; /* Riduci padding laterale body */
-  }
-  .main-content {
-     max-width: 100%; /* Occupa tutta larghezza */
-  }
-  #logo-container img {
-      max-width: 120px; /* Riduci logo */
-  }
-  .link-container {
-      max-width: 90%; /* Pulsanti più larghi */
-  }
-  #menu-section {
-      padding: 1em; /* Padding minimo menu */
-      border-top-width: 3px; /* Bordo superiore più sottile */
-  }
-  .category-title {
-      font-size: 1.3rem;
-      padding: 0.5em 0;
-  }
-  .category-title::after {
-      font-size: 1.3rem;
-      right: 0;
-  }
-
-  /* Metti prezzo sotto nome/descrizione su mobile */
-  .menu-item {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.4em;
-      padding: 0.8em 0;
-  }
-  .item-price {
-      padding-left: 0;
-      margin-left: 0;
-      margin-top: 0.2em;
-      font-size: 0.95rem;
-      /* Potresti aggiungere un colore di sfondo leggero o un bordo */
-      /* background-color: #f8f8f8; padding: 0.1em 0.4em; border-radius: 3px; */
-  }
-  .item-list {
-      padding-left: 0; /* Rimuovi indent su mobile */
-  }
+  /* body:has(.main-content) { padding: 5vw; } */ /* Applica solo a index.html */
+  /* body:has(.menu-page-container) { padding: 1em; } */ /* Applica solo a menu.html */
+  .main-content { max-width: 100%; }
+  #logo-container img { max-width: 120px; }
+  .link-container { max-width: 90%; }
+  /* Stili menu mobile */
+  .category-title { font-size: 1.3rem; padding: 0.5em 0; }
+  .category-title::after { font-size: 1.3rem; right: 0; }
+  .menu-item { flex-direction: column; align-items: flex-start; gap: 0.4em; padding: 0.8em 0; }
+  .item-price { padding-left: 0; margin-left: 0; margin-top: 0.2em; font-size: 0.95rem; }
+  .item-list { padding-left: 0; }
 }
