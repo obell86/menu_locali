@@ -1,6 +1,6 @@
-/* =================================== */
-/* STYLE.CSS - Pub Neon Wood v1.0    */
-/* =================================== */
+/* ===================================== */
+/* STYLE.CSS - Pub Neon Wood Intense v1.1 */
+/* ===================================== */
 
 /* --- Import Font (Lato, Oswald, Bebas Neue) --- */
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Oswald:wght@400;600&family=Bebas+Neue&display=swap');
@@ -11,11 +11,8 @@
 @keyframes neon-flicker {
   0%, 100% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ffae00, 0 0 20px #ffae00, 0 0 25px #ffae00, 0 0 30px #ff7b00, 0 0 40px #ff7b00; opacity: 1; }
   50% { text-shadow: 0 0 3px #fff, 0 0 6px #eee, 0 0 10px #ffae00, 0 0 15px #ffae00, 0 0 20px #ffae00, 0 0 25px #ff7b00, 0 0 35px #ff7b00; opacity: 0.95; }
-  /* ... (altri passi flicker come prima) ... */
   5% { opacity: 0.8; } 8% { opacity: 1; } 15% { opacity: 0.7; } 18% { opacity: 1; } 30% { opacity: 0.9; } 40% { opacity: 1; } 60% { opacity: 0.85; } 63% { opacity: 1; } 75% { opacity: 0.95; } 85% { opacity: 1; } 92% { opacity: 0.8; } 95% { opacity: 1; }
 }
-/* Rimuoviamo o commentiamo la keyframe neon-flicker-cyan se non più usata */
-/* @keyframes neon-flicker-cyan { ... } */
 
 
 /* --- Reset e Stili Globali --- */
@@ -25,15 +22,15 @@ html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoot
 body {
   font-family: 'Lato', sans-serif;
   line-height: 1.6;
-  color: #e0e0e0;
+  color: #e0e0e0; /* Testo chiaro default */
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
 
-  /* NUOVO: Sfondo Legno Scuro */
-  background-color: #3a2d27; /* Fallback marrone scuro */
-  background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png'); /* Texture legno scuro */
+  /* Sfondo Legno Scuro */
+  background-color: #3a2d27; /* Fallback */
+  background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png');
   background-repeat: repeat;
 }
 /* Padding differenziato */
@@ -52,33 +49,34 @@ body:has(.menu-page-container) { padding: 2em 1em; }
 #logo-container { margin-bottom: 1.5em; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.4)); }
 #logo-container img { display: block; max-width: 160px; height: auto; margin: 0 auto; }
 
-/* Titolo H1 - Effetto Neon Giallo/Arancio */
+/* Titolo H1 - Effetto Neon Giallo/Arancio PIU' INTENSO */
 h1#page-title {
   font-family: 'Bebas Neue', sans-serif;
   font-weight: 400;
   font-size: clamp(3rem, 10vw, 5.5rem);
-  color: #ffdd88; /* Colore base giallo chiaro per il testo */
+  color: #fff; /* Testo base BIANCO */
   margin: 0.5em 0 1.5em 0;
   line-height: 1.1;
   word-wrap: break-word;
   max-width: 100%;
   text-transform: uppercase;
+  position: relative;
 
-  /* Effetto Neon Giallo/Arancio */
+  /* Effetto Neon Giallo/Arancio più diffuso */
   text-shadow:
-    0 0 5px #fff,       /* Interno bianco */
-    0 0 10px #fff,      /* Alone bianco */
-    0 0 15px #ffae00,   /* Glow arancio 1 */
-    0 0 20px #ffae00,   /* Glow arancio 2 */
-    0 0 25px #ffae00,
-    0 0 30px #ff7b00,   /* Glow arancio più scuro esterno 1 */
-    0 0 40px #ff7b00;   /* Glow arancio più scuro esterno 2 */
+    0 0 2px #fff,    0 0 5px #fff,    0 0 10px #fff, /* Interno bianco */
+    0 0 20px #ffdd00, /* Giallo acceso */
+    0 0 30px #ffae00, /* Arancio medio */
+    0 0 40px #ffae00,
+    0 0 55px #ff7b00, /* Arancio scuro */
+    0 0 75px #ff7b00; /* Alone esterno */
 
   /* Animazione Flicker Giallo/Arancio */
-  animation: neon-flicker 3s infinite alternate linear; /* Usiamo la keyframe originale */
+  animation: neon-flicker 3s infinite alternate linear;
 }
 
-/* Countdown Timer (Dark) - Invariato */
+
+/* Countdown Timer (Dark) */
 #countdown-container { margin: 1em 0 2em 0; width: 100%; max-width: 400px; padding: 0.8em; background-color: rgba(0, 0, 0, 0.3); border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.1); }
 #countdown-label { font-size: 0.9rem; color: #aaa; margin-bottom: 0.5em; display: block; text-transform: uppercase; letter-spacing: 1px;}
 #countdown-timer { font-family: 'Oswald', sans-serif; font-size: clamp(1.8rem, 6vw, 2.5rem); font-weight: 600; color: #eee; letter-spacing: 2px; line-height: 1.1; white-space: nowrap; text-align: center; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
@@ -87,28 +85,27 @@ h1#page-title {
 #countdown-timer span#days::after, #countdown-timer span#hours::after, #countdown-timer span#minutes::after, #countdown-timer span#seconds::after { content: ''; }
 #countdown-message { font-size: 1.1rem; font-weight: bold; color: #ffcc66; margin-top: 0.7em; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
 
-
-/* Loader (Dark) - Invariato */
+/* Loader (Dark) */
 .loader-container { margin-bottom: 2.5em; padding: 0.8em 1.5em; background-color: rgba(0, 0, 0, 0.4); border-radius: 6px; display: flex; justify-content: center; align-items: center; border: 1px solid rgba(255, 255, 255, 0.1); }
 .loader-bar { display: none; }
 #loading-text-container { font-weight: bold; color: #ccc; letter-spacing: 1px; }
 
-/* Contenitore Pulsanti Link (index.html) - Invariato */
+/* Contenitore Pulsanti Link (index.html) */
 .link-container { display: flex; flex-direction: column; align-items: center; gap: 1.2em; margin-top: 1.5em; width: 100%; max-width: 400px; }
 #loading-message, .link-container p { font-size: 1.1em; color: #aaa; }
 
-/* Pulsante Link (index.html) - Invariato */
+/* Pulsante Link (index.html) */
 .link-button { position: relative; display: block; width: 100%; padding: 0.9em 1.5em 0.9em 1em; color: #f0f0f0; text-decoration: none; text-align: center; font-weight: 700; font-size: 1rem; border-radius: 5px; border: 1px solid rgba(255, 255, 255, 0.15); cursor: pointer; transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease; background: #4a3c31; box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); text-shadow: 0 1px 1px rgba(0,0,0,0.4); }
 .link-button::after { content: '→'; position: absolute; right: 1em; top: 50%; transform: translateY(-50%); opacity: 0.6; transition: opacity 0.2s ease, right 0.2s ease; }
 .link-button:hover { filter: brightness(115%); transform: translateY(-2px); box-shadow: 0 5px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15); }
 .link-button:hover::after { opacity: 1; right: 0.8em; }
 .link-button:active { transform: translateY(0px); filter: brightness(90%); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
 
-/* Immagine Footer - Invariato */
+/* Immagine Footer */
 #footer-image-container { width: 100%; margin-top: 3em; margin-bottom: 1em; }
 #footer-image-container img { display: block; margin: auto; max-width: 90%; max-height: 150px; height: auto; border-radius: 6px; object-fit: contain; mix-blend-mode: luminosity; opacity: 0.7; }
 
-/* Messaggio Errore - Invariato */
+/* Messaggio Errore */
 .error-message { color: #ff8a80; font-weight: bold; margin-top: 1.5em; border: 1px solid #ff5252; padding: 1em; background-color: rgba(255, 82, 82, 0.1); border-radius: 6px; text-align: center; }
 body.error-page h1 { color: #ff8a80; animation: none; text-shadow: none; }
 
@@ -116,35 +113,35 @@ body.error-page h1 { color: #ff8a80; animation: none; text-shadow: none; }
 /* === STILI PAGINA E MENU (menu.html) === */
 /* ===================================== */
 
-/* Contenitore Pagina Menu (Sfondo Carta) - Invariato */
+/* Contenitore Pagina Menu */
 .menu-page-container { width: 100%; max-width: 750px; margin: 0 auto; padding: 2em 2.5em; border-radius: 5px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); text-align: left; border: 1px solid rgba(255, 255, 255, 0.1); background-color: #f5f1e8; background-image: url('https://www.transparenttextures.com/patterns/parchment.png'); background-repeat: repeat; color: #4a3c31; }
 
-/* Link Torna Indietro - Invariato */
+/* Link Torna Indietro */
 .back-link { display: inline-block; margin-bottom: 1.5em; color: #a0855c; text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: color 0.2s ease; }
 .back-link:hover { color: #bf9e71; text-decoration: underline;}
 
-/* Titolo Pagina Menu - Invariato */
+/* Titolo Pagina Menu */
 #menu-page-title { text-align: center; font-family: 'Oswald', sans-serif; color: #4a3c31; margin-bottom: 1.5em; font-size: 2.2rem; border-bottom: 2px solid #d1c7b4; padding-bottom: 0.5em; text-shadow: 0 1px 1px rgba(0,0,0,0.1); }
 
-/* Messaggio Caricamento Menu - Invariato */
+/* Messaggio Caricamento Menu */
 #menu-loading-message { text-align: center; padding: 2em; color: #7a6c5d; font-style: italic; }
 
-/* Contenuto Menu (categorie e articoli) - Invariato */
+/* Contenuto Menu (categorie e articoli) */
 #menu-content { margin-top: 1.5em; }
 .menu-category { margin-bottom: 2.5em; }
 .menu-category:last-child { margin-bottom: 0.5em; }
 
-/* Titolo Categoria (Accordion Trigger) - Invariato */
+/* Titolo Categoria (Accordion Trigger) */
 .category-title { font-family: 'Oswald', sans-serif; font-size: 1.8rem; font-weight: 600; color: #7a5e4a; padding: 0.6em 0; border-bottom: 3px double #c8bda8; margin-bottom: 1em; cursor: pointer; position: relative; transition: color 0.2s ease; outline: none; user-select: none; }
 .category-title:hover, .category-title:focus { color: #4a3c31; }
 .category-title::after { content: '+'; position: absolute; right: 5px; top: 50%; transform: translateY(-50%); font-size: 1.6rem; font-weight: 400; color: #a89a85; transition: transform 0.3s ease, color 0.2s ease; }
 .menu-category.category-open > .category-title::after { content: '−'; transform: translateY(-50%) rotate(180deg); color: #7a5e4a; }
 .menu-category.category-open > .category-title { border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: #e0d9c6;}
 
-/* Lista Articoli (Accordion Content) - Invariato */
+/* Lista Articoli (Accordion Content) */
 .item-list { list-style: none; padding-left: 0.5em; margin-top: 0; max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
 
-/* Singolo Articolo - Invariato */
+/* Singolo Articolo */
 .menu-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 1.2em 0.5em; border-bottom: 1px dotted #c8bda8; gap: 1em; }
 .menu-item:last-child { border-bottom: none; }
 .item-details { flex-grow: 1; }
@@ -152,7 +149,7 @@ body.error-page h1 { color: #ff8a80; animation: none; text-shadow: none; }
 .item-description { font-size: 0.95rem; color: #6b5b4d; line-height: 1.5; }
 .item-price { font-weight: 700; color: #4a3c31; white-space: nowrap; margin-left: auto; padding-left: 1em; font-size: 1.05rem; }
 
+
 /* --- Responsive Design --- */
-/* ... (Regole @media invariate) ... */
 @media(max-width:768px){h1#page-title{font-size:clamp(2.5rem, 8vw, 4rem);}#menu-page-title{font-size:1.8rem;}.category-title{font-size:1.5rem;}}
 @media(max-width:600px){.main-content{max-width:100%;padding:0 1em;}.menu-page-container{padding:1.5em;}#logo-container img{max-width:120px;}.link-container{max-width:90%;}.category-title{font-size:1.4rem;padding:0.5em 0;}.category-title::after{font-size:1.4rem;right:0;}.menu-item{flex-direction:column;align-items:flex-start;gap:0.4em;padding:1em 0;}.item-price{padding-left:0;margin-left:0;margin-top:0.3em;font-size:1rem;background-color:rgba(200,189,168,0.1);padding:0.1em 0.5em;border-radius:3px;display:inline-block;}.item-list{padding-left:0;}}
