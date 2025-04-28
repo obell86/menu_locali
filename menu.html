@@ -3,29 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Titolo della pagina specifica del menu -->
     <title>Il Nostro Menu</title>
+
     <!-- === FONT === -->
+    <!-- Assicurati che siano gli stessi font usati in index.html e style.css -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
     <!-- === FINE FONT === -->
+
+    <!-- Link allo STESSO foglio di stile CSS della pagina principale -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Stile aggiuntivo specifico per questa pagina (menu.html) -->
     <style>
-        body { background-color: #faf8f0; }
-        .menu-page-container { width: 100%; max-width: 700px; margin: 2em auto; padding: 1.5em 2em; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); text-align: left; border-top: 5px solid #5a463a; }
-        .back-link { display: inline-block; margin-bottom: 1.5em; color: #8a6d3b; text-decoration: none; font-weight: bold; }
-        .back-link:hover { text-decoration: underline; }
-        #menu-page-title { text-align:center; font-family: 'Oswald', sans-serif; color: #4a3c31; margin-bottom: 1.5em; }
+        /* Stile base per il corpo della pagina menu */
+        body {
+            background-color: #faf8f0; /* Sfondo crema chiaro coerente */
+            /* Rimuoviamo il padding globale di index.html se vogliamo che il contenitore del menu sia più largo o gestisca il suo padding */
+             padding: 2em 1em; /* Aggiungiamo un po' di padding per non attaccare ai bordi */
+             display: flex; /* Usiamo flex per centrare facilmente il contenitore */
+             justify-content: center;
+             align-items: flex-start; /* Allinea in alto */
+             min-height: 100vh;
+        }
+
+        /* Contenitore principale della pagina menu */
+        .menu-page-container {
+            width: 100%;
+            max-width: 700px; /* Larghezza massima del contenuto del menu */
+            /* margin: 2em auto; Rimosso margine auto perché usiamo flex sul body */
+            padding: 1.5em 2em; /* Padding interno */
+            background-color: #ffffff; /* Sfondo bianco */
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Ombra */
+            text-align: left; /* Testo allineato a sinistra */
+            border-top: 5px solid #5a463a; /* Bordo superiore decorativo */
+        }
+
+        /* Stile per il link "Torna Indietro" */
+        .back-link {
+            display: inline-block; /* Per poter dare margini */
+            margin-bottom: 1.5em;
+            color: #8a6d3b; /* Colore marrone/ocra */
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Titolo principale della pagina Menu */
+        #menu-page-title {
+            text-align: center;
+            font-family: 'Oswald', sans-serif; /* Font specifico per titoli */
+            color: #4a3c31; /* Marrone scuro */
+            margin-bottom: 1.5em;
+            font-size: 2rem; /* Dimensione titolo */
+            border-bottom: 1px solid #eee; /* Separatore leggero */
+            padding-bottom: 0.5em;
+        }
+
+        /* Stile per il messaggio di caricamento specifico del menu */
+        #menu-loading-message {
+            text-align: center;
+            padding: 2em;
+            color: #777;
+            font-style: italic;
+        }
+
+        /* Gli stili per .menu-category, .category-title, .item-list, .menu-item
+           sono definiti nel file principale style.css */
+
     </style>
 </head>
 <body>
+
+    <!-- Contenitore principale per gli elementi di questa pagina -->
     <div class="menu-page-container">
+
+        <!-- Link per tornare alla pagina index.html -->
         <a href="index.html" class="back-link">← Torna Indietro</a>
+
+        <!-- Titolo principale della pagina -->
         <h1 id="menu-page-title">Il Nostro Menu</h1>
+
+        <!-- Contenitore dove JavaScript inserirà dinamicamente il menu -->
         <div id="menu-content">
+            <!-- Messaggio visualizzato mentre i dati del menu vengono caricati -->
             <p id="menu-loading-message">Caricamento menu...</p>
         </div>
-    </div>
+
+    </div> <!-- Fine menu-page-container -->
+
+    <!-- Link al file JavaScript specifico per caricare il menu -->
     <script src="menu_script.js"></script>
+
 </body>
 </html>
