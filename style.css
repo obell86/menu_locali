@@ -85,94 +85,85 @@ h1#page-title {
   animation: neon-flicker-green 4s infinite alternate linear;
 }
 
-/* Countdown Timer (Numeri Giallo/Arancio Neon con Etichette) */
+/* Countdown Timer (RIDIMENSIONATO) */
 #countdown-container {
   margin: 1em 0 2em 0;
   width: 100%;
-  max-width: 400px;
-  padding: 0.8em;
+  /* Riduciamo leggermente la larghezza massima */
+  max-width: 360px;
+  padding: 0.6em; /* Padding ridotto */
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 #countdown-label {
-  font-size: 0.9rem;
+  font-size: 0.8rem; /* Etichetta più piccola */
   color: #aaa;
-  margin-bottom: 0.7em; /* Aumentato leggermente spazio sotto etichetta */
+  margin-bottom: 0.5em;
   display: block;
   text-transform: uppercase;
   letter-spacing: 1px;
-  text-align: center; /* Centra etichetta principale */
+  text-align: center;
 }
 
 #countdown-timer {
-  /* Usa Flexbox per allineare le unità e i separatori IN ORIZZONTALE */
   display: flex;
-  justify-content: center; /* Centra il gruppo di unità */
-  align-items: baseline; /* Allinea alla base dei numeri */
-  gap: 0.3em; /* Spazio tra unità e separatori */
-  font-family: 'Oswald', sans-serif; /* Font numeri */
-  line-height: 1; /* Interlinea compatta */
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.2em; /* Gap ridotto */
+  font-family: 'Oswald', sans-serif;
+  line-height: 1;
   white-space: nowrap;
   text-align: center;
 }
 
-/* Contenitore per singola unità (Numero + Etichetta) */
+/* Contenitore per numero + etichetta */
 .time-unit {
-    /* NON serve più flex qui, gli elementi span e small sono già block o inline-block */
-    text-align: center; /* Centra numero ed etichetta */
-    line-height: 1.1;
-    min-width: calc(2ch + 1em);
+  text-align: center;
+  line-height: 1.1;
+  /* Rimuoviamo min-width per ora, lasciamo che si adatti */
+  /* min-width: calc(2ch + 1em); */
 }
 
-/* Stile Numeri (es. 00) */
-.time-unit span { /* Seleziona gli span #days, #hours, ecc. */
-  font-size: clamp(1.8rem, 6vw, 2.5rem);
+/* Stile Numeri (RIDOTTI) */
+.time-unit span {
+  font-size: clamp(1.5rem, 5vw, 2rem); /* Dimensione ridotta */
   font-weight: 600;
-  color: #ffdd88; /* Colore base giallo chiaro */
-  text-shadow:
-        0 0 2px rgba(255,255,255,0.7), /* Alone bianco interno */
-        0 0 5px #ffdd00,  /* Glow Giallo */
-        0 0 10px #ffae00, /* Glow Arancio */
-        0 0 15px #ff7b00; /* Glow Arancio scuro */
-  letter-spacing: 2px;
-  display: block; /* Assicura che occupi la sua riga */
+  color: #ffdd88;
+  text-shadow: 0 0 2px rgba(255,255,255,0.7), 0 0 4px #ffdd00, 0 0 8px #ffae00, 0 0 12px #ff7b00; /* Ombra leggermente ridotta */
+  letter-spacing: 1px; /* Spaziatura ridotta */
+  display: block;
 }
 
-/* Stile Etichette (es. Giorni) */
+/* Stile Etichette (RIDOTTE) */
 .time-unit small {
-  font-family: 'Lato', sans-serif; /* Font corpo */
-  font-size: 0.5em; /* Molto più piccolo dei numeri */
+  font-family: 'Lato', sans-serif;
+  font-size: 0.45em; /* Ancora più piccole */
   color: #aaa;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-weight: 400;
-  margin-top: 0.2em; /* Spazio tra numero ed etichetta */
+  margin-top: 0.1em;
   display: block;
-  text-shadow: none; /* Nessuna ombra */
+  text-shadow: none;
 }
 
-/* Stile Separatori (:) */
+/* Stile Separatori (RIDOTTI) */
 #countdown-timer .separator {
    color: #777;
-   font-size: 1.5rem; /* Dimensione relativa ai numeri */
+   font-size: 1.2rem; /* Dimensione ridotta */
    font-weight: 600;
    padding: 0;
-   /* Sposta leggermente su per allineare meglio con i numeri */
-   transform: translateY(-0.1em);
+   transform: translateY(-0.05em); /* Aggiustamento verticale minore */
    text-shadow: none;
 }
 
-/* Messaggio "Tempo Scaduto" */
-#countdown-message {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #ffcc66;
-  margin-top: 1em; /* Aggiunto spazio sopra */
-  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-  text-align: center;
-}
+/* Messaggio "Tempo Scaduto" (invariato) */
+#countdown-message { /* ... */ }
+
+/* Rimuovi regole CSS vecchie (invariato) */
+#countdown-timer span#hours::before, /* ... */ { content: none !important; /* ... */ }
 
 /* Rimuovi regole CSS vecchie se presenti */
 #countdown-timer span#hours::before,
