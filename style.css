@@ -49,39 +49,28 @@ body:has(.menu-page-container) { padding: 2em 1em; }
 #logo-container { margin-bottom: 1.5em; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.4)); }
 #logo-container img { display: block; max-width: 160px; height: auto; margin: 0 auto; }
 
-/* Titolo H1 - Effetto Neon Giallo/Arancio v1.2 */
+/* Titolo H1 - Effetto Neon VERDE */
 h1#page-title {
   font-family: 'Bebas Neue', sans-serif;
   font-weight: 400;
   font-size: clamp(3rem, 10vw, 5.5rem);
-  /* Proviamo con un giallo pallido come base */
-  color: #fff5cc;
+  color: #ccffcc; /* Verde molto pallido come base */
   margin: 0.5em 0 1.5em 0;
-  line-height: 1.1;
-  word-wrap: break-word;
-  max-width: 100%;
-  text-transform: uppercase;
-  position: relative;
+  line-height: 1.1; word-wrap: break-word; max-width: 100%;
+  text-transform: uppercase; position: relative;
 
-  /* Effetto Neon Giallo/Arancio più complesso */
+  /* Effetto Neon Verde */
   text-shadow:
-    /* Contorno scuro leggero (simula tubo spento) */
-    0 0 1px rgba(0, 0, 0, 0.6),
-    /* Glow bianco interno */
-    0 0 3px #fff,
-    0 0 6px #fff,
-    0 0 10px #fff,
-    /* Glow giallo/arancio */
-    0 0 15px #ffdd00, /* Giallo acceso */
-    0 0 25px #ffae00,
-    0 0 35px #ffae00,
-    /* Alone esterno più ampio */
-    0 0 50px #ff7b00,
-    0 0 70px #ff7b00,
-    0 0 100px #ff5500; /* Aggiunto alone rossastro lontano */
+    0 0 4px #fff,       /* Interno bianco */
+    0 0 8px #fff,       /* Alone bianco */
+    0 0 12px #0f0,      /* Glow Verde 1 */
+    0 0 18px #0f0,      /* Glow Verde 2 */
+    0 0 25px #0f0,      /* Glow Verde 3 */
+    0 0 35px #00aa00,   /* Glow Verde Scuro esterno 1 */
+    0 0 50px #00aa00;   /* Glow Verde Scuro esterno 2 */
 
-  /* Animazione Flicker (invariata) */
-  animation: neon-flicker 3s infinite alternate linear;
+  /* Animazione Flicker Verde */
+  animation: neon-flicker-green 4s infinite alternate linear;
 }
 
 
