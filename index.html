@@ -31,32 +31,32 @@
         <h1 id="page-title"></h1>
 
                 <!-- Contenitore Countdown Timer -->
-        <div id="countdown-container" style="display: none;">
-            <p id="countdown-label"></p>
-            <div id="countdown-timer">
-                 <!-- Modifica: Aggiungi contenitori per numero + etichetta -->
-                 <div class="time-unit">
-                     <span id="days">00</span>
-                     <small>Giorni</small>
-                 </div>
-                 <span class="separator">:</span> <!-- Separatore fuori dai div -->
-                 <div class="time-unit">
-                     <span id="hours">00</span>
-                     <small>Ore</small>
-                 </div>
-                 <span class="separator">:</span> <!-- Separatore fuori dai div -->
-                 <div class="time-unit">
-                     <span id="minutes">00</span>
-                     <small>Min.</small>
-                 </div>
-                 <span class="separator">:</span> <!-- Separatore fuori dai div -->
-                 <div class="time-unit">
-                     <span id="seconds">00</span>
-                     <small>Sec.</small>
-                 </div>
-            </div>
-             <p id="countdown-message" style="display: none;"></p>
-        </div>
+<div id="countdown-container" style="display: none;">
+    <p id="countdown-label"></p>
+    <div id="countdown-timer">
+         <!-- STRUTTURA CORRETTA PER LAYOUT ORIZZONTALE -->
+         <div class="time-unit">
+             <span id="days">00</span>
+             <small>Giorni</small>
+         </div>
+         <span class="separator">:</span>
+         <div class="time-unit">
+             <span id="hours">00</span>
+             <small>Ore</small>
+         </div>
+         <span class="separator">:</span>
+         <div class="time-unit">
+             <span id="minutes">00</span>
+             <small>Min.</small>
+         </div>
+         <span class="separator">:</span>
+         <div class="time-unit">
+             <span id="seconds">00</span>
+             <small>Sec.</small>
+         </div>
+    </div>
+     <p id="countdown-message" style="display: none;"></p>
+</div>
 
         <!-- Loader animato (visibilità e contenuto gestiti da JS) -->
         <div class="loader-container" id="loader" style="display: none;">
