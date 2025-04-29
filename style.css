@@ -85,78 +85,95 @@ h1#page-title {
   animation: neon-flicker-green 4s infinite alternate linear;
 }
 
-/* Countdown Timer (RIDIMENSIONATO) */
+/* Countdown Timer (Layout Orizzontale Forzato) */
 #countdown-container {
   margin: 1em 0 2em 0;
   width: 100%;
-  /* Riduciamo leggermente la larghezza massima */
-  max-width: 360px;
-  padding: 0.6em; /* Padding ridotto */
+  max-width: 400px; /* O la larghezza che preferisci */
+  padding: 0.8em;
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 #countdown-label {
-  font-size: 0.8rem; /* Etichetta più piccola */
+  font-size: 0.9rem;
   color: #aaa;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.7em;
   display: block;
   text-transform: uppercase;
   letter-spacing: 1px;
   text-align: center;
 }
 
+/* Contenitore principale del timer: Flex Row */
 #countdown-timer {
-  display: flex;
-  justify-content: center;
-  align-items: baseline;
-  gap: 0.2em; /* Gap ridotto */
-  font-family: 'Oswald', sans-serif;
-  line-height: 1;
-  white-space: nowrap;
-  text-align: center;
+  display: flex;          /* Allinea gli elementi figli in riga */
+  justify-content: center; /* Centra il gruppo */
+  align-items: center;  /* Allinea verticalmente al centro */
+  gap: 0.5em;           /* Spazio tra unità e separatori */
+  text-align: center;   /* Centra testo all'interno delle unità */
 }
 
-/* Contenitore per numero + etichetta */
+/* Contenitore per Numero + Etichetta */
 .time-unit {
-  text-align: center;
-  line-height: 1.1;
-  /* Rimuoviamo min-width per ora, lasciamo che si adatti */
-  /* min-width: calc(2ch + 1em); */
+  /* Non serve display flex qui, gestiamo internamente */
+  line-height: 1; /* Riduci interlinea per compattare */
 }
 
-/* Stile Numeri (RIDOTTI) */
+/* Numeri (Span #days, #hours, etc.) */
 .time-unit span {
-  font-size: clamp(1.5rem, 5vw, 2rem); /* Dimensione ridotta */
+  display: block; /* Numero su riga propria */
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(1.8rem, 6vw, 2.5rem); /* Dimensioni originali */
   font-weight: 600;
   color: #ffdd88;
-  text-shadow: 0 0 2px rgba(255,255,255,0.7), 0 0 4px #ffdd00, 0 0 8px #ffae00, 0 0 12px #ff7b00; /* Ombra leggermente ridotta */
-  letter-spacing: 1px; /* Spaziatura ridotta */
-  display: block;
+  text-shadow: 0 0 2px rgba(255,255,255,0.7), 0 0 5px #ffdd00, 0 0 10px #ffae00, 0 0 15px #ff7b00;
+  letter-spacing: 2px;
 }
 
-/* Stile Etichette (RIDOTTE) */
+/* Etichette (Small: Giorni, Ore, etc.) */
 .time-unit small {
+  display: block; /* Etichetta su riga propria, sotto il numero */
   font-family: 'Lato', sans-serif;
-  font-size: 0.45em; /* Ancora più piccole */
+  font-size: 0.5em;
   color: #aaa;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-weight: 400;
-  margin-top: 0.1em;
-  display: block;
+  margin-top: 0.1em; /* Spazio minimo */
   text-shadow: none;
 }
 
-/* Stile Separatori (RIDOTTI) */
+/* Separatori (:) */
 #countdown-timer .separator {
    color: #777;
-   font-size: 1.2rem; /* Dimensione ridotta */
+   font-size: 1.5rem; /* Dimensione separatore */
    font-weight: 600;
-   padding: 0;
-   transform: translateY(-0.05em); /* Aggiustamento verticale minore */
+   padding: 0 0.1em; /* Leggero spazio laterale */
+   /* Non dovrebbe servire transform se usiamo align-items: center sul parent */
    text-shadow: none;
+}
+
+/* Messaggio "Tempo Scaduto" */
+#countdown-message {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ffcc66;
+  margin-top: 1em;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  text-align: center;
+}
+
+/* Rimuovi vecchi pseudo-elementi */
+#countdown-timer span#hours::before,
+#countdown-timer span#minutes::before,
+#countdown-timer span#seconds::before,
+#countdown-timer span#days::after,
+#countdown-timer span#hours::after,
+#countdown-timer span#minutes::after,
+#countdown-timer span#seconds::after {
+   content: none !important; display: none !important; padding: 0 !important;
 }
 
 /* Messaggio "Tempo Scaduto" (invariato) */
