@@ -107,25 +107,23 @@ h1#page-title {
 }
 
 #countdown-timer {
-  /* Usa Flexbox per allineare unità e separatori */
+  /* Usa Flexbox per allineare le unità e i separatori IN ORIZZONTALE */
   display: flex;
-  justify-content: center;
-  align-items: baseline; /* Allinea alla base dei numeri grandi */
+  justify-content: center; /* Centra il gruppo di unità */
+  align-items: baseline; /* Allinea alla base dei numeri */
   gap: 0.3em; /* Spazio tra unità e separatori */
-  font-family: 'Oswald', sans-serif; /* Font per i numeri */
+  font-family: 'Oswald', sans-serif; /* Font numeri */
   line-height: 1; /* Interlinea compatta */
   white-space: nowrap;
   text-align: center;
 }
 
-/* Contenitore per numero + etichetta (es. 00 Giorni) */
+/* Contenitore per singola unità (Numero + Etichetta) */
 .time-unit {
-    display: flex;
-    flex-direction: column; /* Numero sopra, etichetta sotto */
-    align-items: center;    /* Centrati orizzontalmente */
-    line-height: 1.1;       /* Compatta verticalmente */
-    min-width: calc(2ch + 1em); /* Larghezza minima basata su 2 caratteri + padding */
-    text-align: center;
+    /* NON serve più flex qui, gli elementi span e small sono già block o inline-block */
+    text-align: center; /* Centra numero ed etichetta */
+    line-height: 1.1;
+    min-width: calc(2ch + 1em);
 }
 
 /* Stile Numeri (es. 00) */
