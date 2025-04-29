@@ -30,12 +30,30 @@
         <!-- Titolo principale della pagina (popolato da JS) -->
         <h1 id="page-title"></h1>
 
-        <!-- Contenitore Countdown Timer (visibilità e contenuto gestiti da JS) -->
+                <!-- Contenitore Countdown Timer -->
         <div id="countdown-container" style="display: none;">
             <p id="countdown-label"></p>
             <div id="countdown-timer">
-                 <!-- Il contenuto (numeri) verrà inserito da JS -->
-                 <span id="days">00</span>:<span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
+                 <!-- Modifica: Aggiungi contenitori per numero + etichetta -->
+                 <div class="time-unit">
+                     <span id="days">00</span>
+                     <small>Giorni</small>
+                 </div>
+                 <span class="separator">:</span> <!-- Separatore fuori dai div -->
+                 <div class="time-unit">
+                     <span id="hours">00</span>
+                     <small>Ore</small>
+                 </div>
+                 <span class="separator">:</span> <!-- Separatore fuori dai div -->
+                 <div class="time-unit">
+                     <span id="minutes">00</span>
+                     <small>Min.</small>
+                 </div>
+                 <span class="separator">:</span> <!-- Separatore fuori dai div -->
+                 <div class="time-unit">
+                     <span id="seconds">00</span>
+                     <small>Sec.</small>
+                 </div>
             </div>
              <p id="countdown-message" style="display: none;"></p>
         </div>
