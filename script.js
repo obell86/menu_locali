@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingMessage = document.getElementById('loading-message');
     const loader = document.getElementById('loader'); // Contenitore loader
     const footerImageContainer = document.getElementById('footer-image-container');
-    // Countdown Elements (essenziali per la logica JS)
+    // Countdown Elements
     const countdownContainer = document.getElementById('countdown-container');
     const countdownLabelElement = document.getElementById('countdown-label');
     const countdownTimerDiv = document.getElementById('countdown-timer'); // Div per i numeri
@@ -66,152 +66,114 @@ document.addEventListener('DOMContentLoaded', () => {
             // 2. Recupera Links Collegati
             const linkedLinkIds = getField(configFields, fieldMap.config.linkedLinks, []);
             let linksData = []; let linksFieldsById = {};
-            if (linkedLinkIds.length > 0) { /* ... (logica fetch links invariata) ... */ }
+            if (linkedLinkIds.length > 0) {
+                const recordIdFilter = linkedLinkIds.map(id => `RECORD_ID()='${id}'`).join(',');
+                const filterFormulaLinks = `OR(${recordIdFilter})`;
+                const linksUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(LINKS_TABLE_NAME)}?filterByFormula=${encodeURIComponent(filterFormulaLinks)}`;
+                console.log("Fetch Links:", linksUrl);
+                const linksResponse = await fetch(linksUrl, { headers });
+                if (linksResponse.ok) { const linksResult = await linksResponse.json(); console.log("Links Data Raw:", linksResult.records); if (linksResult.records) { linksResult.records.forEach(rec => { linksFieldsById[rec.id] = { id: rec.id, label: getField(rec.fields, fieldMap.links.label, '?'), url: getField(rec.fields, fieldMap.links.url), color: getField(rec.fields, fieldMap.links.color, defaultButtonColor) }; }); } }
+                else { console.warn(`API Links Warning: ${linksResponse.status} ${await linksResponse.text()}`); }
+                linksData = linkedLinkIds.map(id => linksFieldsById[id]).filter(link => link !== undefined);
+            }
             console.log("Links Data Processed:", linksData);
 
             // --- Applica Configurazione Visiva ---
 
-            // Sfondo (Corretto)
+            // *** Sfondo (MODIFICATO per non sovrascrivere CSS) ***
             const backgroundUrl = getAttachmentUrl(configFields, fieldMap.config.backgroundUrl);
-            if (backgroundUrl) { /* Applica sfondo da Airtable */ document.body.style.backgroundImage = `url('${backgroundUrl}')`; /* ...etc */ }
-            else { console.log("Nessuno sfondo in Airtable, mantenendo sfondo CSS."); /* Non fa nulla */ }
+            if (backgroundUrl) {
+                console.log("Applicando sfondo da Airtable:", backgroundUrl);
+                document.body.style.backgroundImage = `url('${backgroundUrl}')`;
+                document.body.style.backgroundSize = 'cover';
+                document.body.style.backgroundPosition = 'center center';
+                document.body.style.backgroundRepeat = 'no-repeat';
+                document.body.style.backgroundAttachment = 'fixed';
+            } else {
+                console.log("Nessuno sfondo in Airtable, mantenendo sfondo CSS.");
+                // Non impostiamo nulla per mantenere lo sfondo del CSS
+            }
 
-            // Titolo Pagina (Invariato)
-            const pageTitle=getField(configFields,fieldMap.config.title,'Menu Pub');document.title=pageTitle;if(titleElement){titleElement.textContent=pageTitle;const ts=getField(configFields,fieldMap.config.titleSize);if(ts)titleElement.style.fontSize=ts;else titleElement.style.fontSize='';}
+            // Titolo Pagina (Invariato dalla tua versione funzionante)
+            const pageTitle = getField(configFields, fieldMap.config.title, 'Menu Pub');
+            document.title = pageTitle;
+            if (titleElement) {
+                titleElement.textContent = pageTitle;
+                const titleSize = getField(configFields, fieldMap.config.titleSize);
+                if (titleSize) titleElement.style.fontSize = titleSize;
+                else titleElement.style.fontSize = '';
+            }
 
-            // *** Countdown Timer (Logica Completa Ripristinata) ***
-            if (countdownIntervalId) clearInterval(countdownIntervalId); // Pulisce sempre prima
+            // *** Countdown Timer (Logica Completa INSERITA) ***
+            if (countdownIntervalId) clearInterval(countdownIntervalId);
             const showCountdown = getField(configFields, fieldMap.config.showCountdown, false);
             const countdownTargetStr = getField(configFields, fieldMap.config.countdownTarget);
             const countdownLabel = getField(configFields, fieldMap.config.countdownLabel, '');
 
-            // Verifica che tutti gli elementi DOM necessari esistano
             if (countdownContainer && countdownLabelElement && countdownTimerDiv && daysElement && hoursElement && minutesElement && secondsElement && countdownMessageElement) {
                 if (showCountdown === true && countdownTargetStr) {
-                    const targetDate = new Date(countdownTargetStr); // Prova a parsare la data da Airtable
-
-                    // Controlla se la data è valida E futura
+                    const targetDate = new Date(countdownTargetStr);
+                    // *** CONTROLLO CHIAVE: Data valida E FUTURA ***
                     if (!isNaN(targetDate) && targetDate.getTime() > Date.now()) {
                         console.log("Avvio Countdown verso:", targetDate);
                         countdownLabelElement.textContent = countdownLabel;
-                        countdownMessageElement.style.display = 'none'; // Nascondi messaggio "scaduto"
-                        countdownTimerDiv.style.display = 'block';      // Mostra i numeri del timer
-
+                        countdownMessageElement.style.display = 'none';
+                        countdownTimerDiv.style.display = 'block';
                         const updateCountdown = () => {
-                             const now = new Date().getTime();
-                             const distance = targetDate.getTime() - now;
-
-                             if (distance < 0) { // Se il tempo è scaduto
-                                 clearInterval(countdownIntervalId);
-                                 countdownTimerDiv.style.display = 'none';       // Nascondi numeri
-                                 countdownLabelElement.style.display = 'none';   // Nascondi etichetta
-                                 countdownMessageElement.textContent = "Tempo Scaduto!"; // Mostra messaggio
-                                 countdownMessageElement.style.display = 'block';
-                                 console.log("Countdown terminato.");
-                                 return;
-                             }
-                             // Calcola giorni, ore, minuti, secondi
-                             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                             // Aggiorna il testo degli elementi span
-                             daysElement.textContent = String(days).padStart(2, '0');
-                             hoursElement.textContent = String(hours).padStart(2, '0');
-                             minutesElement.textContent = String(minutes).padStart(2, '0');
-                             secondsElement.textContent = String(seconds).padStart(2, '0');
+                             const now = new Date().getTime(); const distance = targetDate.getTime() - now;
+                             if(distance < 0){ clearInterval(countdownIntervalId); countdownTimerDiv.style.display = 'none'; countdownLabelElement.style.display = 'none'; countdownMessageElement.textContent = "Tempo Scaduto!"; countdownMessageElement.style.display = 'block'; console.log("Countdown terminato."); return; }
+                             const days = Math.floor(distance / (1000*60*60*24)); const hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60)); const minutes = Math.floor((distance % (1000*60*60))/(1000*60)); const seconds = Math.floor((distance % (1000*60))/1000);
+                             daysElement.textContent = String(days).padStart(2,'0'); hoursElement.textContent = String(hours).padStart(2,'0'); minutesElement.textContent = String(minutes).padStart(2,'0'); secondsElement.textContent = String(seconds).padStart(2,'0');
                         };
+                        updateCountdown();
+                        countdownIntervalId = setInterval(updateCountdown, 1000);
+                        countdownContainer.style.display = 'block';
+                    } else { console.log("Countdown non avviato: data non valida o passata.", countdownTargetStr); if (countdownContainer) countdownContainer.style.display = 'none'; }
+                } else { console.log("Countdown disattivato nelle impostazioni."); if (countdownContainer) countdownContainer.style.display = 'none'; }
+            } else { console.warn("Elementi HTML del Countdown mancanti."); if (countdownContainer) countdownContainer.style.display = 'none'; }
 
-                        updateCountdown(); // Esegui subito per mostrare i valori iniziali
-                        countdownIntervalId = setInterval(updateCountdown, 1000); // Aggiorna ogni secondo
-                        countdownContainer.style.display = 'block'; // Mostra l'intero contenitore
-                    } else {
-                        // Se la data non è valida o è già passata
-                        console.log("Countdown non avviato: data non valida o passata.", countdownTargetStr);
-                        countdownContainer.style.display = 'none';
-                    }
-                } else {
-                    // Se 'Mostra Countdown' è false o manca la data target
-                    console.log("Countdown disattivato nelle impostazioni.");
-                    countdownContainer.style.display = 'none';
-                }
-            } else {
-                // Se manca qualche elemento HTML fondamentale
-                console.warn("Elementi HTML del Countdown mancanti. Il Countdown non può avviarsi.");
-                if (countdownContainer) countdownContainer.style.display = 'none'; // Nascondi comunque
-            }
-
-            // *** Loader (Logica Completa Ripristinata per Stili Dinamici) ***
+            // *** Loader (Logica Completa INSERITA per stili dinamici) ***
             const showLoader = getField(configFields, fieldMap.config.showLoader, false);
-            if (loader) { // Verifica che esista il contenitore #loader
+            if (loader) {
                  if (showLoader) {
-                     loader.style.display = 'flex'; // Mostra il contenitore
-
-                     // Trova gli elementi interni
+                     loader.style.display = 'flex';
                      const loaderTextElement = document.getElementById('loading-text-container');
-                     const loaderBarElement = loader.querySelector('.loader-bar'); // Selettore più specifico
+                     const loaderBarElement = loader.querySelector('.loader-bar'); // Cerca DENTRO il loader
 
-                     // Applica testo
-                     if (loaderTextElement) {
-                          loaderTextElement.textContent = getField(configFields, fieldMap.config.loaderText, 'Caricamento...'); // Testo di fallback
-                     }
-
-                     // Applica stili dinamici alla BARRA (se esiste l'elemento)
-                     if (loaderBarElement) {
+                     if (loaderTextElement) { loaderTextElement.textContent = getField(configFields, fieldMap.config.loaderText, 'Caricamento...'); }
+                     if (loaderBarElement) { // Applica stili solo se la barra esiste
                          const barColor = getField(configFields, fieldMap.config.loaderBarColor);
-                         const barSpeed = getField(configFields, fieldMap.config.loaderBarSpeed); // Deve essere numero
-                         if (barColor) {
-                             loaderBarElement.style.backgroundColor = barColor; // Imposta colore barra
-                             console.log("Colore barra loader impostato:", barColor);
-                         }
-                         if (typeof barSpeed === 'number' && barSpeed > 0) {
-                             loaderBarElement.style.animationDuration = barSpeed + 's'; // Imposta velocità animazione
-                             console.log("Velocità barra loader impostata:", barSpeed);
-                         }
-                     } else {
-                          console.warn("Elemento .loader-bar non trovato dentro #loader.");
-                     }
-
-                     // Applica stili dinamici al TESTO (se esiste l'elemento)
+                         const barSpeed = getField(configFields, fieldMap.config.loaderBarSpeed);
+                         if (barColor) { loaderBarElement.style.backgroundColor = barColor; console.log("Colore barra:", barColor); }
+                         if (typeof barSpeed === 'number' && barSpeed > 0) { loaderBarElement.style.animationDuration = barSpeed + 's'; console.log("Velocità barra:", barSpeed); }
+                         else { loaderBarElement.style.animationDuration = ''; } // Reset se non valido
+                     } else { console.warn("Elemento .loader-bar non trovato."); }
                      if (loaderTextElement) {
                           const textSize = getField(configFields, fieldMap.config.loaderTextSize);
-                          if (textSize) {
-                              loaderTextElement.style.fontSize = textSize; // Imposta dimensione testo
-                              console.log("Dimensione testo loader impostata:", textSize);
-                          }
+                          if (textSize) { loaderTextElement.style.fontSize = textSize; console.log("Dim txt loader:", textSize); }
+                          else { loaderTextElement.style.fontSize = ''; } // Reset
                      }
-
-                     // Applica stile dinamico LARGHEZZA al CONTENITORE
                      const loaderWidth = getField(configFields, fieldMap.config.loaderWidth);
-                     if (loaderWidth) {
-                         loader.style.width = loaderWidth; // Imposta larghezza contenitore
-                         loader.style.maxWidth = 'none'; // Rimuove eventuali limiti CSS
-                         console.log("Larghezza loader impostata:", loaderWidth);
-                     } else {
-                         loader.style.width = ''; // Resetta se non specificato
-                         loader.style.maxWidth = '';
-                     }
+                     if (loaderWidth) { loader.style.width = loaderWidth; loader.style.maxWidth = 'none'; console.log("Width loader:", loaderWidth); }
+                     else { loader.style.width = ''; loader.style.maxWidth = ''; } // Reset
 
                  } else {
-                     loader.style.display = 'none'; // Nascondi se non attivo
+                     loader.style.display = 'none';
                  }
-            } else {
-                console.warn("Elemento #loader non trovato nell'HTML.");
-            }
+            } else { console.warn("Elemento #loader non trovato."); }
 
-            // Logo (Invariato)
-            const logoUrl=getAttachmentUrl(configFields,fieldMap.config.logoUrl);logoContainer.innerHTML='';if(logoUrl){const li=document.createElement('img');li.src=logoUrl;li.alt='Logo';logoContainer.appendChild(li);}
+            // Logo (Invariato dalla tua versione funzionante)
+            const logoUrl = getAttachmentUrl(configFields, fieldMap.config.logoUrl); logoContainer.innerHTML = ''; if (logoUrl) { const li = document.createElement('img'); li.src = logoUrl; li.alt = 'Logo'; logoContainer.appendChild(li); }
 
-            // Pulsanti Link (Invariato - crea solo <a>)
+            // Pulsanti Link (Invariato dalla tua versione funzionante - crea solo <a>)
             linkContainer.innerHTML = ''; if (linksData && linksData.length > 0) { const btnFs = getField(configFields, fieldMap.config.buttonFontSize); const btnPad = getField(configFields, fieldMap.config.buttonPadding); linksData.forEach(link => { if (link.url) { const btn = document.createElement('a'); btn.href = link.url; btn.textContent = link.label; btn.className = 'link-button'; if (link.url.toLowerCase() === 'menu.html') { btn.target = '_top'; } else { btn.target = '_blank'; btn.rel = 'noopener noreferrer'; } btn.style.background = link.color || defaultButtonColor; if(btnFs) btn.style.fontSize = btnFs; if(btnPad) btn.style.padding = btnPad; linkContainer.appendChild(btn); } else { console.warn(`Link '${link.label}' skipped (no URL).`); } }); } else { linkContainer.innerHTML = '<p>Nessun link attivo collegato.</p>'; }
 
-            // Immagine Footer (Invariato)
+            // Immagine Footer (Invariato dalla tua versione funzionante)
             const footerImageUrl=getAttachmentUrl(configFields,fieldMap.config.footerImageUrl);if(footerImageContainer){footerImageContainer.innerHTML='';if(footerImageUrl){const fi=document.createElement('img');fi.src=footerImageUrl;fi.alt=getField(configFields,fieldMap.config.footerImageAlt,'');footerImageContainer.appendChild(fi);}}
 
             if (loadingMessage) loadingMessage.style.display = 'none';
 
-        } catch (error) { /* ... (Gestione Errore) ... */ }
+        } catch (error) { /* ... (Gestione Errore Invariata) ... */ }
     }
     loadData();
 });
