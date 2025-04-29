@@ -85,19 +85,109 @@ h1#page-title {
   animation: neon-flicker-green 4s infinite alternate linear;
 }
 
-/* Countdown Timer (Numeri Giallo/Arancio Neon) */
-#countdown-container { margin: 1em 0 2em 0; width: 100%; max-width: 400px; padding: 0.8em; background-color: rgba(0, 0, 0, 0.3); border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.1); }
-#countdown-label { font-size: 0.9rem; color: #aaa; margin-bottom: 0.5em; display: block; text-transform: uppercase; letter-spacing: 1px;}
-#countdown-timer {
-  font-family: 'Oswald', sans-serif; font-size: clamp(1.8rem, 6vw, 2.5rem); font-weight: 600;
-  color: #ffdd88; /* Colore base giallo chiaro */
-  text-shadow: 0 0 2px rgba(255,255,255,0.7), 0 0 5px #ffdd00, 0 0 10px #ffae00, 0 0 15px #ff7b00; /* Effetto Neon G/A */
-  letter-spacing: 2px; line-height: 1.1; white-space: nowrap; text-align: center;
+/* Countdown Timer (Numeri Giallo/Arancio Neon con Etichette) */
+#countdown-container {
+  margin: 1em 0 2em 0;
+  width: 100%;
+  max-width: 400px;
+  padding: 0.8em;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
-#countdown-timer span { display: inline-block; padding: 0 0.1em; }
-#countdown-timer span#hours::before, #countdown-timer span#minutes::before, #countdown-timer span#seconds::before { content: ':'; color: #aaa; padding: 0 0.3em; font-size: 0.8em; vertical-align: baseline; text-shadow: none; }
-#countdown-timer span#days::after, #countdown-timer span#hours::after, #countdown-timer span#minutes::after, #countdown-timer span#seconds::after { content: ''; }
-#countdown-message { font-size: 1.1rem; font-weight: bold; color: #ffcc66; margin-top: 0.7em; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+
+#countdown-label {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-bottom: 0.7em; /* Aumentato leggermente spazio sotto etichetta */
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center; /* Centra etichetta principale */
+}
+
+#countdown-timer {
+  /* Usa Flexbox per allineare unità e separatori */
+  display: flex;
+  justify-content: center;
+  align-items: baseline; /* Allinea alla base dei numeri grandi */
+  gap: 0.3em; /* Spazio tra unità e separatori */
+  font-family: 'Oswald', sans-serif; /* Font per i numeri */
+  line-height: 1; /* Interlinea compatta */
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* Contenitore per numero + etichetta (es. 00 Giorni) */
+.time-unit {
+    display: flex;
+    flex-direction: column; /* Numero sopra, etichetta sotto */
+    align-items: center;    /* Centrati orizzontalmente */
+    line-height: 1.1;       /* Compatta verticalmente */
+    min-width: calc(2ch + 1em); /* Larghezza minima basata su 2 caratteri + padding */
+    text-align: center;
+}
+
+/* Stile Numeri (es. 00) */
+.time-unit span { /* Seleziona gli span #days, #hours, ecc. */
+  font-size: clamp(1.8rem, 6vw, 2.5rem);
+  font-weight: 600;
+  color: #ffdd88; /* Colore base giallo chiaro */
+  text-shadow:
+        0 0 2px rgba(255,255,255,0.7), /* Alone bianco interno */
+        0 0 5px #ffdd00,  /* Glow Giallo */
+        0 0 10px #ffae00, /* Glow Arancio */
+        0 0 15px #ff7b00; /* Glow Arancio scuro */
+  letter-spacing: 2px;
+  display: block; /* Assicura che occupi la sua riga */
+}
+
+/* Stile Etichette (es. Giorni) */
+.time-unit small {
+  font-family: 'Lato', sans-serif; /* Font corpo */
+  font-size: 0.5em; /* Molto più piccolo dei numeri */
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 400;
+  margin-top: 0.2em; /* Spazio tra numero ed etichetta */
+  display: block;
+  text-shadow: none; /* Nessuna ombra */
+}
+
+/* Stile Separatori (:) */
+#countdown-timer .separator {
+   color: #777;
+   font-size: 1.5rem; /* Dimensione relativa ai numeri */
+   font-weight: 600;
+   padding: 0;
+   /* Sposta leggermente su per allineare meglio con i numeri */
+   transform: translateY(-0.1em);
+   text-shadow: none;
+}
+
+/* Messaggio "Tempo Scaduto" */
+#countdown-message {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ffcc66;
+  margin-top: 1em; /* Aggiunto spazio sopra */
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  text-align: center;
+}
+
+/* Rimuovi regole CSS vecchie se presenti */
+#countdown-timer span#hours::before,
+#countdown-timer span#minutes::before,
+#countdown-timer span#seconds::before,
+#countdown-timer span#days::after,
+#countdown-timer span#hours::after,
+#countdown-timer span#minutes::after,
+#countdown-timer span#seconds::after {
+   content: none !important;
+   padding: 0 !important;
+   display: none !important;
+}
 
 /* Loader (Barra e Testo Animati) */
 .loader-container {
