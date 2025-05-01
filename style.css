@@ -43,24 +43,28 @@ body:has(.menu-page-container){
     /* L'immagine di default (texture legno) verrà applicata da JS se necessario */
 }
 
-#background-video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    min-width: 100%; /* Assicura che copra almeno la larghezza */
-    min-height: 100%; /* Assicura che copra almeno l'altezza */
-    width: auto;   /* Permette al browser di calcolare la larghezza necessaria */
-    height: auto;  /* Permette al browser di calcolare l'altezza necessaria */
-
-    /* === RIPRISTINA QUI === */
-    /* 'cover': Copre TUTTA l'area, MANTIENE proporzioni, TAGLIA le eccedenze. */
-    object-fit: cover;
-    /* === FINE RIPRISTINO === */
-
-    display: none; /* Nascosto di default, mostrato da JS */
-    z-index: -1; /* Dietro al contenuto, sopra al colore di sfondo del container */
+#background-video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw; /* Forzato a larghezza viewport */
+    height: 100vh; /* Forzato a altezza viewport */
+    overflow: hidden;
+    z-index: -1;
+    display: none;
+    background-color: black;
 }
+
+#background-video {
+    display: block; /* Assicura che sia un blocco */
+    width: 100%; /* Riempi il container */
+    height: 100%; /* Riempi il container */
+    object-fit: cover; /* Scala mantenendo aspetto, coprendo area */
+    object-position: center center; /* Centra il video dentro l'area */
+    /* Rimuovere eventuali position: absolute o transform precedenti */
+    position: static; /* Assicura posizione di default nel flusso del container */
+}
+/* --- FINE STILI VIDEO BACKGROUND --- */
 
 /* --- Contenitore Principale (index.html) --- */
 .main-content{
