@@ -1,6 +1,6 @@
 /* ===================================== */
-/* STYLE.CSS - Pub Neon Wood Intense v2.5 */
-/* Icona Pulsante Menu -> Immagine Personalizzata Animata */
+/* STYLE.CSS - Pub Neon Wood Intense v2.8 */
+/* Icona Img Animata + Ripristino Sfondo Menu + Stile Btn Indietro */
 /* ===================================== */
 
 /* --- Import Font (Lato, Oswald, Bebas Neue) --- */
@@ -12,168 +12,147 @@
 @keyframes old-bar-flicker-dark{/*...*/ }
 @keyframes logo-float-gentle{/*...*/ }
 
-/* Keyframe per animazione pulse (Non usato) */
-/* @keyframes menu-button-pulse { ... } */
-
-/* Keyframe per shimmer (RIMOSSO) */
-/* @keyframes shimmer { ... } */
-
 /* Keyframe per l'icona del menu (ondeggiamento) - MANTENUTO */
 @keyframes menu-icon-sway {
-  0%, 100% {
-    transform: rotate(0deg) translateX(0);
-  }
-  25% {
-     transform: rotate(-8deg) translateX(-1px);
-  }
-  75% {
-     transform: rotate(8deg) translateX(1px);
-  }
+  0%, 100% { transform: rotate(0deg) translateX(0); }
+  25% { transform: rotate(-8deg) translateX(-1px); }
+  75% { transform: rotate(8deg) translateX(1px); }
 }
 
 /* --- Reset e Stili Globali --- */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;scroll-behavior:smooth}
-body{font-family:'Lato',sans-serif;line-height:1.6;color:#e0e0e0;display:flex;flex-direction:column;align-items:center;min-height:100vh;
-padding: 0;
-}
-body:has(.main-content) {}
-body:has(.menu-page-container){
-padding: 2em 1em;
-background-color: #3a2d27;
-background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png');
-background-repeat: repeat;
-}
+body{font-family:'Lato',sans-serif;line-height:1.6;color:#e0e0e0;display:flex;flex-direction:column;align-items:center;min-height:100vh; padding: 0;}
+
+/* Regola per sfondo body su pagina menu (RIMOSSA) */
+/* body:has(.menu-page-container){ ... } */
 
 /* --- Stili Sfondo Dinamico (Video/Immagine) - Versione Funzionante Utente --- */
-#background-container {
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    overflow: hidden; z-index: -2; background-color: black;
-}
-#background-video {
-    display: block; width: 100%; height: 100%; object-fit: cover;
-    object-position: center center; position: static; z-index: -1; display: none;
-}
+#background-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; overflow: hidden; z-index: -2; background-color: black; }
+#background-video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center center; position: static; z-index: -1; display: none; }
 /* --- FINE Stili Sfondo --- */
 
 
 /* --- Contenitore Principale (index.html) --- */
-.main-content{
-    width:100%; max-width:700px; display:flex; flex-direction:column;
-    align-items:center; text-align:center; position:relative; z-index:1;
-    padding: 3vw 5vw;
-}
+.main-content{ width:100%; max-width:700px; display:flex; flex-direction:column; align-items:center; text-align:center; position:relative; z-index:1; padding: 3vw 5vw; }
 
 /* --- Stili Elementi Pagina (index.html) --- */
 #logo-container{margin-bottom:1.5em;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4))}
-#logo-container img{
-    display:block; max-width: 240px; height:auto; margin:0 auto;
-    animation:logo-float-gentle 4s ease-in-out infinite
-}
+#logo-container img{ display:block; max-width: 240px; height:auto; margin:0 auto; animation:logo-float-gentle 4s ease-in-out infinite }
 h1#page-title{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3rem,10vw,5.5rem);color:#ccffcc;margin:.5em 0 1.5em 0;line-height:1.1;word-wrap:break-word;max-width:100%;text-transform:uppercase;position:relative;text-shadow:0 0 4px #fff,0 0 8px #fff,0 0 12px #0f0,0 0 18px #0f0,0 0 25px #0f0,0 0 35px #0a0,0 0 50px #0a0;animation:neon-flicker-green 4s infinite alternate linear}
 
 /* === SEZIONE COUNTDOWN === */
-#countdown-container{margin:1em 0 2em 0;width:100%;max-width:450px;padding:.8em;background-color:rgba(0,0,0,.3);border-radius:6px;border:1px solid rgba(255,255,255,.1);text-align:center}
-#countdown-label{font-size:.9rem;color:#aaa;margin-bottom:.8em;display:block;text-transform:uppercase;letter-spacing:1px}
-#countdown-timer{font-family:'Oswald',sans-serif;font-size:clamp(1.6rem,5.5vw,2.4rem);font-weight:700;line-height:1.2;white-space:nowrap;width:100%;box-sizing:border-box;text-align:center}
-#countdown-timer span{display:inline-block;vertical-align:baseline;padding:0 .1em;color:#ffdd88;text-shadow:0 0 2px rgba(255,255,255,.7),0 0 5px #ffdd00,0 0 10px #ffae00,0 0 15px #ff7b00;letter-spacing:1px}
-#countdown-timer span#hours::before,#countdown-timer span#minutes::before,#countdown-timer span#seconds::before{content:':';color:#aaa;padding:0 .3em;font-size:.7em;vertical-align:baseline;text-shadow:none;display:inline-block}
-#countdown-timer span::after{content:attr(id);display:inline-block;font-family:'Lato',sans-serif;font-size:.35em;color:#aaa;text-transform:lowercase;vertical-align:baseline;padding-left:.15em;text-shadow:none;letter-spacing:.5px;line-height:1}
-#countdown-timer span#days::after{content:'Giorni'}#countdown-timer span#hours::after{content:'Ore'}#countdown-timer span#minutes::after{content:'Min'}#countdown-timer span#seconds::after{content:'Sec'}
-#countdown-message{font-size:clamp(1rem,4vw,1.3rem);font-weight:700;color:#ffcc66;text-shadow:0 0 5px #ffae00;margin-top:.7em;text-align:center}
-.time-unit,#countdown-timer .separator{display:none!important}
+#countdown-container{ /* ... (invariato) ... */ }
+#countdown-label{ /* ... (invariato) ... */ }
+#countdown-timer{ /* ... (invariato) ... */ }
+#countdown-timer span{ /* ... (invariato) ... */ }
+#countdown-timer span#hours::before,#countdown-timer span#minutes::before,#countdown-timer span#seconds::before{ /* ... (invariato) ... */ }
+#countdown-timer span::after{ /* ... (invariato) ... */ }
+#countdown-timer span#days::after{/*...*/ }#countdown-timer span#hours::after{/*...*/ }#countdown-timer span#minutes::after{/*...*/ }#countdown-timer span#seconds::after{/*...*/ }
+#countdown-message{ /* ... (invariato) ... */ }
+.time-unit,#countdown-timer .separator{ /* ... (invariato) ... */ }
 
 /* Loader (Barra e Testo Animati) */
-.loader-container{position:relative;margin-bottom:2em;padding:0;background-color:rgba(0,0,0,.4);border-radius:6px;display:flex;justify-content:center;align-items:center;border:1px solid rgba(255,255,255,.1);overflow:hidden}
-.loader-bar{display:block;position:absolute;top:0;left:0;height:100%;width:0;opacity:.4;border-radius:6px;animation:loading-loop linear infinite;z-index:1;background:#ffae00;animation-duration:2s}
-#loading-text-container{position:relative;z-index:2;padding:.8em 1.5em;font-weight:700;color:#ddd;letter-spacing:1px;animation:old-bar-flicker-dark 2.5s linear infinite}
+.loader-container{ /* ... (invariato) ... */ }
+.loader-bar{ /* ... (invariato) ... */ }
+#loading-text-container{ /* ... (invariato) ... */ }
 
 /* Contenitore Pulsanti Link (index.html) */
-.link-container{display:flex;flex-direction:column;align-items:center;gap:1em;margin-top:1.5em;width:100%;max-width:380px}
-#loading-message,.link-container p{font-size:1.1em;color:#aaa}
+.link-container{ /* ... (invariato) ... */ }
+#loading-message,.link-container p{ /* ... (invariato) ... */ }
 
 /* Pulsante Link (index.html) */
-.link-button{
-    position:relative;
-    display:block;width:100%;padding:.8em 1.4em .8em 1em;color:#f0f0f0;text-decoration:none;text-align:center;font-weight:700;font-size:.95rem;border-radius:5px;border:1px solid rgba(255,255,255,.15);cursor:pointer;transition:background-color .2s ease,transform .1s ease,box-shadow .2s ease;background:#4a3c31;box-shadow:0 3px 5px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);text-shadow:0 1px 1px rgba(0,0,0,.4);
-}
-/* Freccia standard (usa ::after) */
-.link-button::after{content:'→';position:absolute;right:.8em;top:50%;transform:translateY(-50%);opacity:.6;transition:opacity .2s ease,right .2s ease}
+.link-button{ position:relative; display:block;width:100%;padding:.8em 1.4em .8em 1em;color:#f0f0f0;text-decoration:none;text-align:center;font-weight:700;font-size:.95rem;border-radius:5px;border:1px solid rgba(255,255,255,.15);cursor:pointer;transition:background-color .2s ease,transform .1s ease,box-shadow .2s ease;background:#4a3c31;box-shadow:0 3px 5px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);text-shadow:0 1px 1px rgba(0,0,0,.4); }
+.link-button::after{content:'→';position:absolute;right:.8em;top:50%;transform:translateY(-50%);opacity:.6;transition:opacity .2s ease,right .2s ease} /* Freccia standard */
 .link-button:hover{filter:brightness(115%);transform:translateY(-2px);box-shadow:0 5px 8px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.15)}
 .link-button:hover::after{opacity:1;right:.7em}
 .link-button:active{transform:translateY(0);filter:brightness(90%);box-shadow:0 1px 2px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1)}
 
-/* --- MODIFICATA: Regola per Immagine Personalizzata Animata --- */
+/* Regola per Immagine Personalizzata Animata sul Pulsante Menu */
 .link-button.menu-button-highlight::before {
-    content: ''; /* Necessario ma vuoto per usare background-image */
+    content: '';
     display: inline-block;
-
-    /* --- INSERISCI QUI IL TUO PERCORSO IMMAGINE --- */
-    background-image: url('Burger.png'); /* Esempio */
-    /* -------------------------------------------- */
-
-    width: 1.9em;  /* Dimensione icona (aggiusta) */
-    height: 1.9em; /* Dimensione icona (aggiusta) */
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
-
-    margin-right: 0.4em; /* Spazio tra icona e testo */
-    vertical-align: middle; /* Prova ad allineare con il testo */
-
-    /* Applica l'animazione di ondeggiamento (menu-icon-sway) */
+    background-image: url('Burger.png'); /* Assicurati che sia il nome corretto e nella stessa cartella */
+    width: 1.9em; height: 1.9em; background-size: contain;
+    background-repeat: no-repeat; background-position: center center;
+    margin-right: 0.4em; vertical-align: middle;
     animation: menu-icon-sway 2s infinite ease-in-out;
-    /* animation-delay: 0.5s; */
 }
-
-/* Opzionale: Ferma animazione icona durante l'hover */
-.link-button.menu-button-highlight:hover::before {
-  animation-play-state: paused;
-}
-
+.link-button.menu-button-highlight:hover::before { animation-play-state: paused; }
 
 /* Immagine Footer */
-#footer-image-container{width:100%;margin-top:2.5em;margin-bottom:1em}
-#footer-image-container img{display:block;margin:auto;max-width:85%;max-height:120px;height:auto;border-radius:6px;object-fit:contain;mix-blend-mode:luminosity;opacity:.7}
+#footer-image-container{ /* ... (invariato) ... */ }
+#footer-image-container img{ /* ... (invariato) ... */ }
 
 /* Messaggio Errore */
-.error-message{color:#ff8a80;font-weight:700;margin-top:1.5em;border:1px solid #ff5252;padding:1em;background-color:rgba(255,82,82,.1);border-radius:6px;text-align:center}
-body.error-page h1{color:#ff8a80;animation:none;text-shadow:none}
+.error-message{ /* ... (invariato) ... */ }
+body.error-page h1{ /* ... (invariato) ... */ }
 
 /* ===================================== */
 /* === STILI PAGINA E MENU (menu.html) === */
 /* ===================================== */
-.menu-page-container{ /* ... (invariato) ... */ }
-.back-link{ /* ... (invariato) ... */ }
-.back-link:hover{ /* ... (invariato) ... */ }
-#menu-page-title{ /* ... (invariato) ... */ }
-#menu-loading-message{ /* ... (invariato) ... */ }
-#menu-content{ /* ... (invariato) ... */ }
-.menu-category{ /* ... (invariato) ... */ }
-.menu-category:last-child{ /* ... (invariato) ... */ }
-.category-title{ /* ... (invariato) ... */ }
-.category-title:hover,.category-title:focus{ /* ... (invariato) ... */ }
-.category-title::after{ /* ... (invariato) ... */ }
-.menu-category.category-open > .category-title::after{ /* ... (invariato) ... */ }
-.menu-category.category-open > .category-title{ /* ... (invariato) ... */ }
-.item-list{ /* ... (invariato) ... */ }
-.menu-item{ /* ... (invariato) ... */ }
-.menu-item:last-child{ /* ... (invariato) ... */ }
-.item-details{ /* ... (invariato) ... */ }
-.item-name{ /* ... (invariato) ... */ }
-.item-description{ /* ... (invariato) ... */ }
-.item-price{ /* ... (invariato) ... */ }
+.menu-page-container{
+    width:100%; max-width:750px; margin:0 auto; padding:2em 2.5em; border-radius:5px; box-shadow:0 5px 20px rgba(0,0,0,.4); text-align:left; border:1px solid rgba(255,255,255,.1);
+    /* Assicura sfondo pergamena */
+    background-color:#f5f1e8;
+    background-image:url('https://www.transparenttextures.com/patterns/parchment.png');
+    background-repeat:repeat;
+    color:#4a3c31;
+    position: relative; z-index: 1;
+}
+
+/* --- NUOVO STILE Pulsante/Link "Torna Indietro" --- */
+.back-link {
+    display: inline-block;
+    margin-bottom: 1.5em;
+    padding: 0.5em 1em;
+    color: #7a5e4a;
+    background-color: rgba(210, 199, 180, 0.4);
+    border: 1px solid rgba(122, 94, 74, 0.3);
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: .9rem;
+    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    line-height: 1;
+}
+.back-link:hover {
+    color: #4a3c31;
+    background-color: rgba(210, 199, 180, 0.6);
+    text-decoration: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+/* --- FINE NUOVO STILE --- */
+
+#menu-page-title{ text-align:center;font-family:'Oswald',sans-serif;color:#4a3c31;margin-bottom:1.5em;font-size:2.2rem;border-bottom:2px solid #d1c7b4;padding-bottom:.5em;text-shadow:0 1px 1px rgba(0,0,0,.1) }
+#menu-loading-message{ text-align:center;padding:2em;color:#7a6c5d;font-style:italic }
+#menu-content{ margin-top:1.5em }
+.menu-category{ margin-bottom:2.5em }
+.menu-category:last-child{ margin-bottom:.5em }
+.category-title{ font-family:'Oswald',sans-serif;font-size:1.8rem;font-weight:600;color:#7a5e4a;padding:.6em 0;border-bottom:3px double #c8bda8;margin-bottom:1em;cursor:pointer;position:relative;transition:color .2s ease;outline:none;user-select:none }
+.category-title:hover,.category-title:focus{ color:#4a3c31 }
+.category-title::after{ content:'+';position:absolute;right:5px;top:50%;transform:translateY(-50%);font-size:1.6rem;font-weight:400;color:#a89a85;transition:transform .3s ease,color .2s ease }
+.menu-category.category-open > .category-title::after{ content:'−';transform:translateY(-50%) rotate(180deg);color:#7a5e4a }
+.menu-category.category-open > .category-title{ border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#e0d9c6 }
+.item-list{ list-style:none;padding-left:.5em;margin-top:0;max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1) }
+.menu-item{ display:flex;justify-content:space-between;align-items:flex-start;padding:1.2em .5em;border-bottom:1px dotted #c8bda8;gap:1em }
+.menu-item:last-child{ border-bottom:none }
+.item-details{ flex-grow:1 }
+.item-name{ font-weight:700;color:#5a463a;display:block;margin-bottom:.3em;font-size:1.1rem }
+.item-description{ font-size:.95rem;color:#6b5b4d;line-height:1.5 }
+.item-price{ font-weight:700;color:#4a3c31;white-space:nowrap;margin-left:auto;padding-left:1em;font-size:1.05rem }
 
 /* --- Responsive Design --- */
 @media(max-width:768px){
-    /* ... (invariato) ... */
     h1#page-title{font-size:clamp(2.5rem, 8vw, 4rem);}
     #menu-page-title{font-size:1.8rem;}
     .category-title{font-size:1.5rem;}
     .main-content { padding: 5vw 3vw; }
+    /* Aggiusta stile .back-link se necessario per mobile */
+    .back-link { padding: 0.4em 0.8em; font-size: 0.85rem; }
 }
 
 @media(max-width: 600px){
-    /* ... (invariato) ... */
   .main-content{ max-width: 100%; padding: 5vw 1em 8vw 1em; }
   #logo-container { margin-bottom: 1em; }
   #logo-container img{ max-width: 150px; }
@@ -189,8 +168,11 @@ body.error-page h1{color:#ff8a80;animation:none;text-shadow:none}
   .link-button:hover::after { right: 0.6em; }
   #footer-image-container { margin-top: 2.5em; }
   #footer-image-container img{ max-width: 80%; max-height: 100px; }
+  /* Menu Page (mobile) */
   .menu-page-container{padding:1.5em;}
   #menu-page-title{font-size:1.8rem;}
+  /* Aggiusta stile .back-link se necessario per mobile piccolo */
+  .back-link { margin-bottom: 1.2em; }
   .category-title{font-size:1.4rem;padding:0.5em 0;}
   .category-title::after{font-size:1.4rem;right:0;}
   .menu-item{flex-direction:column;align-items:flex-start;gap:0.4em;padding:1em 0;}
