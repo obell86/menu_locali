@@ -1,6 +1,6 @@
 /* ===================================== */
-/* STYLE.CSS - Pub Neon Wood Intense v2.3 */
-/* Applicata animazione Shimmer al Btn Menu */
+/* STYLE.CSS - Pub Neon Wood Intense v2.4 */
+/* SOSTITUITO Shimmer con Icona 🍴 Animata (Sway) */
 /* ===================================== */
 
 /* --- Import Font (Lato, Oswald, Bebas Neue) --- */
@@ -12,13 +12,23 @@
 @keyframes old-bar-flicker-dark{0%,100%{opacity:1;text-shadow:0 0 2px rgba(255,255,255,.7),0 0 5px rgba(200,200,200,.5)}50%{opacity:.6;text-shadow:0 0 2px rgba(255,255,255,.4)}5%{opacity:.7}8%{opacity:1}15%{opacity:.5}18%{opacity:1}30%{opacity:.8}40%{opacity:1}60%{opacity:.6}63%{opacity:1}75%{opacity:.8}85%{opacity:1}92%{opacity:.7}95%{opacity:1}}
 @keyframes logo-float-gentle{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
 
-/* Keyframe per animazione pulse (RIMOSSO perché sostituito da shimmer) */
+/* Keyframe per animazione pulse (Non usato) */
 /* @keyframes menu-button-pulse { ... } */
 
-/* NUOVO Keyframe per lo shimmer */
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+/* Keyframe per shimmer (RIMOSSO) */
+/* @keyframes shimmer { ... } */
+
+/* NUOVO Keyframe per l'icona del menu (ondeggiamento) */
+@keyframes menu-icon-sway {
+  0%, 100% {
+    transform: rotate(0deg) translateX(0);
+  }
+  25% {
+     transform: rotate(-8deg) translateX(-1px);
+  }
+  75% {
+     transform: rotate(8deg) translateX(1px);
+  }
 }
 
 /* --- Reset e Stili Globali --- */
@@ -83,52 +93,48 @@ h1#page-title{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clam
 
 /* Pulsante Link (index.html) */
 .link-button{
-    position:relative; /* Necessario per pseudo-elementi come ::after */
-    overflow: hidden;  /* Necessario per contenere l'effetto shimmer */
+    position:relative; /* Mantenuto per ::after */
+    /* overflow: hidden; <-- Rimosso, non serve più per shimmer */
     display:block;width:100%;padding:.8em 1.4em .8em 1em;color:#f0f0f0;text-decoration:none;text-align:center;font-weight:700;font-size:.95rem;border-radius:5px;border:1px solid rgba(255,255,255,.15);cursor:pointer;transition:background-color .2s ease,transform .1s ease,box-shadow .2s ease;background:#4a3c31;box-shadow:0 3px 5px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);text-shadow:0 1px 1px rgba(0,0,0,.4);
 }
+/* Freccia standard (usa ::after) */
 .link-button::after{content:'→';position:absolute;right:.8em;top:50%;transform:translateY(-50%);opacity:.6;transition:opacity .2s ease,right .2s ease}
 .link-button:hover{filter:brightness(115%);transform:translateY(-2px);box-shadow:0 5px 8px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.15)}
 .link-button:hover::after{opacity:1;right:.7em}
 .link-button:active{transform:translateY(0);filter:brightness(90%);box-shadow:0 1px 2px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1)}
 
 /* Regole Animazione Pulsante Menu precedente (RIMOSSE) */
-/*
-.link-button.menu-button-highlight {
-    animation: menu-button-pulse 2.5s infinite ease-in-out;
-}
-.link-button.menu-button-highlight:hover {
-  animation-play-state: paused;
-}
-*/
+/* .link-button.menu-button-highlight { ... } */
+/* .link-button.menu-button-highlight:hover { ... } */
 
-/* NUOVA Regola per Animazione Shimmer sul Pulsante Menu */
-.link-button.menu-button-highlight::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0; /* Parte da sinistra */
-    width: 50%; /* Larghezza della luce */
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.2) 50%, /* Bianco traslucido al centro */
-        rgba(255, 255, 255, 0) 100%
-    );
-    transform: translateX(-100%); /* Inizia fuori dal pulsante a sinistra */
-    animation: shimmer 2s infinite linear; /* Applica animazione */
-     animation-delay: 1s; /* Ritardo opzionale prima di iniziare */
-    pointer-events: none; /* Non blocca il click sul pulsante */
-    /* Assicurati che sia sopra lo sfondo ma sotto il testo */
-    /* z-index: 1; (Potrebbe non essere necessario se il testo non ha z-index) */
+/* Regola per Shimmer (RIMOSSA) */
+/* .link-button.menu-button-highlight::after { ... } */
+/* .link-button.menu-button-highlight:hover::after { ... } */
+
+/* NUOVA Regola per Icona Animata sul Pulsante Menu (usa ::before) */
+.link-button.menu-button-highlight::before {
+    /* --- CAMBIA QUI L'ICONA SE VUOI --- */
+    content: '🍴'; /* Esempio: Posate. Altre opzioni: '📜', '🍺', '🍔', '⭐' */
+    display: inline-block; /* Permette transform e margin */
+    margin-right: 0.4em; /* Spazio tra icona e testo */
+    /* Aggiusta la dimensione se necessario */
+    font-size: 1em; /* Relativa al font del pulsante */
+    /* Aggiusta allineamento verticale se necessario */
+    /* vertical-align: middle; */
+    /* Applica l'animazione di ondeggiamento */
+    animation: menu-icon-sway 2s infinite ease-in-out;
+    /* Metti un piccolo ritardo se vuoi */
+    /* animation-delay: 0.5s; */
+    /* Diamo un colore all'icona? */
+    /* color: #ffdd88; */
 }
 
-/* Opzionale: Ferma animazione shimmer durante l'hover */
-.link-button.menu-button-highlight:hover::after {
+/* Opzionale: Ferma animazione icona durante l'hover */
+.link-button.menu-button-highlight:hover::before {
   animation-play-state: paused;
-  /* Nascondi l'effetto shimmer durante hover per non sovrapporsi ad altri effetti? */
-  /* background: none; */
+  /* Assicurati che l'icona rimanga visibile (opacity: 1;) */
+  /* Se l'animazione cambiasse opacità, resettala qui */
+  /* opacity: 1; */
 }
 
 
@@ -189,12 +195,9 @@ body.error-page h1{color:#ff8a80;animation:none;text-shadow:none}
   .loader-container { margin-bottom: 1.8em; padding: 0.6em 1em; max-width: 90%; }
   .link-container{ max-width: 95%; margin-top: 1.2em; gap: 0.8em; }
   .link-button { padding: 0.8em 1.3em 0.8em 1em; font-size: 0.95rem; }
-  .link-button::after { right: 0.8em; } /* Freccia standard */
+  /* La freccia ::after verrà visualizzata normalmente anche sul pulsante menu */
+  .link-button::after { right: 0.8em; }
   .link-button:hover::after { right: 0.6em; }
-  /* NOTA: L'effetto shimmer usa lo pseudo-elemento ::after sul .menu-button-highlight,
-     questo significa che la freccia '→' standard NON apparirà su quel pulsante specifico.
-     Se vuoi mantenere la freccia standard E avere lo shimmer, dovresti
-     usare ::before per lo shimmer e lasciare ::after per la freccia. */
   #footer-image-container { margin-top: 2.5em; }
   #footer-image-container img{ max-width: 80%; max-height: 100px; }
   /* Menu Page (mobile) */
