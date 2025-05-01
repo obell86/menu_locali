@@ -47,14 +47,19 @@ body:has(.menu-page-container){
     position: absolute;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
     min-width: 100%;
     min-height: 100%;
     width: auto;
     height: auto;
-    transform: translate(-50%, -50%); /* Centra il video */
-    object-fit: cover; /* Copre l'area senza distorcersi */
+
+    /* === MODIFICA QUI === */
+    /* Cambia da 'cover' a 'contain' */
+    object-fit: contain;
+    /* === FINE MODIFICA === */
+
     display: none; /* Nascosto di default, mostrato da JS */
-    z-index: -1; /* Sopra il background-color del container, ma sotto il main-content */
+    z-index: -1;
 }
 
 /* --- Contenitore Principale (index.html) --- */
