@@ -1,6 +1,6 @@
 /* ===================================== */
-/* STYLE.CSS - Pub Neon Wood Intense v1.6 */
-/* Aggiunto supporto Sfondo Video + Fix Padding */
+/* STYLE.CSS - Pub Neon Wood Intense v2.1 */
+/* Pulizia Sfondo + Logo Grande + Animazione Btn Menu */
 /* ===================================== */
 
 /* --- Import Font (Lato, Oswald, Bebas Neue) --- */
@@ -9,180 +9,382 @@
 /* --- Keyframes Animazioni --- */
 @keyframes neon-flicker-green{0%,100%{text-shadow:0 0 4px #fff,0 0 8px #fff,0 0 12px #0f0,0 0 18px #0f0,0 0 25px #0f0,0 0 35px #0a0,0 0 50px #0a0;opacity:1}50%{text-shadow:0 0 2px #fff,0 0 5px #eee,0 0 8px #0f0,0 0 14px #0f0,0 0 20px #0f0,0 0 30px #0a0,0 0 45px #0a0;opacity:.9}5%{opacity:.7}8%{opacity:1}15%{opacity:.6}18%{opacity:1}30%{opacity:.8}40%{opacity:1}60%{opacity:.75}63%{opacity:1}75%{opacity:.9}85%{opacity:1}92%{opacity:.7}95%{opacity:1}}
 @keyframes loading-loop{0%{width:0%}50%{width:100%}100%{width:0%}}
-@keyframes old-bar-flicker-dark{0%,100%{opacity:1;text-shadow:0 0 2px rgba(255,255,255,.7),0 0 5px rgba(200,200,200,.5)}50%{opacity:.6;text-shadow:0 0 2px rgba(255,255,255,.4)}5%{opacity:.7}8%{opacity:1}15%{opacity:.5}18%{opacity:1}30%{opacity:.8}40%{opacity:1}60%{opacity:.6}63%{opacity:1}75%{opacity:.8}85%{opacity:1}92%{opacity:.7}95%{opacity:1}}
-@keyframes logo-float-gentle{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+@keyframes old-bar regola `#background-container` e ho corretto le dimensioni del logo mobile che erano rimaste piccole nella media query.
 
-/* --- Reset e Stili Globali --- */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;scroll-behavior:smooth}
-body{font-family:'Lato',sans-serif;line-height:1.6;color:#e0e0e0;display:flex;flex-direction:column;align-items:center;min-height:100vh;
-/* Rimuoviamo background diretto qui, gestito da #background-container o JS */
-padding: 0; /* Rimosso padding globale, applicato a .main-content se serve */
+Ecco il file `style.css` aggiornato:
+
+```css
+/* ===================================== */
+/* STYLE.CSS - Pub Neon Wood Intense v2.1 */
+/* Logo più grande + Animazione pulsante Menu */
+/* Corretta duplicazione #background-container */
+/* ===================================== */
+
+/* --- Import Font (Lato, Oswald, Bebas Neue) --- */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Oswald:wght@400;600&family=Bebas+Neue&display=swap');
+
+/* --- Keyframes Animazioni --- */
+@keyframes neon-flicker-green{0%,100%{text-shadow:0 0 4px #fff,0 0 8px #fff,0 0 12px #0f0,0 0 18px #0f0,0 0 25px #0f0,0 0 35px #0a0,0 0 50px #0a0;opacity:1}50%{text-shadow:0 0 2px #fff,0 0 5px #eee,0 0 8px #0f0,0 0 14px #0f0,0 0 20px #0f0,0 0 30px #0a0,0 0 45px #0a0;opacity:.9}5%{opacity:.7}8%{opacity:1}15%{opacity:.6}18%{opacity:-flicker-dark{0%,100%{opacity:1;text-shadow:0 0 2px rgba(255,255,255,.7),0 0 5px rgba(200,200,200,.5)}50%{opacity:.6;text-1}30%{opacity:.8}40%{opacity:1}60%{opacity:.75}63%{opacity:1}75%{opacity:.9}85%{opacity:1}92%{opacity:.7}95%{opacity:1}}
+@keyframes loading-loop{0%{width:0%}shadow:0 0 2px rgba(255,255,255,.4)}50%{width:100%}100%{width:0%}}
+@keyframes old-bar5%{opacity:.7}8%{opacity:1}15%{opacity:.5}18%{opacity:-flicker-dark{0%,100%{opacity:1;text-shadow:0 0 21}30%{opacity:.8}40%{opacity:1}60%{opacity:.6}63%{opacity:1}75%{opacity:.8}85%{opacity:1}92%{opacitypx rgba(255,255,255,.7),0 0 5px rgba:.7}95%{opacity:1}}
+@keyframes logo-float-gentle{0%{transform:translateY(200,200,200,.5)}50%{opacity:.6;text-(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0shadow:0 0 2px rgba(255,255,255,.4)}5%{opacity:.7}8%{opacity:1}15%{opacity:.5}18%{opacity:)}}
+
+/* NUOVO Keyframe per il pulsante Menu */
+@keyframes menu-button-pulse {
+  01}30%{opacity:.8}40%{opacity:1}60%{opacity:.6}6%, 100% {
+    transform: scale(1);
+    box-shadow: 0 3%{opacity:1}75%{opacity:.8}85%{opacity:1}92%{opacity3px 5px rgba(0,0,0,.3), inset 0 1px 0 rgba:.7}95%{opacity:1}}
+@keyframes logo-float-gentle{0%{transform:(255,255,255,.1);
+  }
+  50% {translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY
+    transform: scale(1.03);
+    box-shadow: 0 5px 1(0)}}
+
+/* NUOVO Keyframe per il pulsante Menu */
+@keyframes menu-button-pulse {
+  0px rgba(0,0,0,.4), inset 0 1px 0 rgba(250%, 100% {
+    transform: scale(1); /* Stato normale */
+    box-shadow:5,255,255,.15);
+  }
 }
+
+/* --- Reset e St 0 3px 5px rgba(0,0,0,.3), inset 0 1pxili Globali --- */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{font-size:16px;-webkit-font-smoothing:antialiased;-moz 0 rgba(255,255,255,.1); /* Ombra normale */
+  }
+  50% {
+    transform: scale(1.03); /* Leggermente più grande */-osx-font-smoothing:grayscale;scroll-behavior:smooth}
+body{font-family:'Lato',sans-serif;line-height:1.6;color:#e0e0e0;display:flex
+    box-shadow: 0 5px 10px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.1;flex-direction:column;align-items:center;min-height:100vh; padding: 0;}5); /* Ombra leggermente più pronunciata */
+  }
+}
+
+
+/* --- Reset e Stili Globali
 /* Applica padding e sfondo solo quando specifico */
-body:has(.main-content) {
-   /* Nessuno stile specifico qui ora, padding è su .main-content */
-}
-body:has(.menu-page-container){
-    /* Stili per menu.html */
-    padding: 2em 1em; /* Padding per la pagina menu */
-    background-color: #3a2d27; /* Colore base per menu.html */
-    background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png'); /* Texture base per menu.html */
+body:has(.main-content) {}
+body:has --- */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding(.menu-page-container){
+    padding: 2em 1em;
+    background-color: #3a2d27;
+    background-image: url('https://www.transparenttextures.com:0}html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;scroll-behavior:smooth}
+body{font-family:'Lato',/patterns/dark-wood.png');
     background-repeat: repeat;
 }
 
-/* --- Stili Sfondo Dinamico (Video/Immagine) --- */
+/* --- Stilisans-serif;line-height:1.6;color:#e0e0e0;display:flex Sfondo Dinamico (Video/Immagine) - PULITO --- */
 #background-container {
-    position: fixed; /* Lo fissa rispetto al viewport */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -2; /* Dietro a tutto */
-    overflow: hidden; /* Nasconde parti del video/img che potrebbero eccedere */
-    background-color: #3a2d27; /* Colore di fallback base */
-    /* L'immagine di default (texture legno) verrà applicata da JS se necessario */
-}
-
-/* Presumo che l'ID corretto sia #background-container come nel tuo HTML */
-#background-container { /* Rinominato da #background-video-container */
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw; /* Forzato a larghezza viewport */
-    height: 100vh; /* Forzato a altezza viewport */
+    width: ;flex-direction:column;align-items:center;min-height:100vh;padding: 0;}
+body:has(.main-content) {}
+body:has(.menu-page-container){100vw; /* Larghezza viewport */
+    height: 100vh; /* Altezza viewport */
     overflow: hidden;
-    /* z-index: -1;  Potrebbe essere necessario -1 o -2 a seconda del resto */
-    z-index: -2; /* Riportato a -2 per stare dietro al video (-1) */
-    /* display: none; <-- Questo nasconderebbe tutto, probabilmente non voluto qui */
-    background-color: black; /* Hai cambiato il colore di fallback, va bene! */
+    z-index: -2; /* Dietro al video */
+    background-color: #padding: 2em 1em; background-color: #3a2d27; background-image:3a2d27; /* Colore di fallback legno scuro (o black se preferisci) */
+} url('https://www.transparenttextures.com/patterns/dark-wood.png'); background-repeat: repeat;}
+
+/* --- Stili Sfondo Dinamico (Video/Immagine) - Basati sulla tua soluzione
+
+#background-video {
+    display: block;
+    width: 100%;    /* Riempi funzionante --- */
+#background-container {
+    position: fixed;
+    top: 0;
+     larghezza container */
+    height: 100%;   /* Riempi altezza container */
+    left: 0;
+    width: 100vw; /* Larghezza viewport */
+    height: 100vh; /* Altezza viewport */
+    overflow: hidden; /* Nasconde overflow */
+    zobject-fit: cover; /* Copre l'area mantenendo proporzioni */
+    object-position: center center; /* Centra il contenuto video */
+    position: static; /* Posizionamento standard nel container */
+    z-index-index: -2; /* Dietro al video */
+    /* background-color: black; */ /* Colore fallback se preferisci nero */
+    background-color: #3a2d27; /* O mantieni il legno: -1; /* Sopra il background-container */
+    display: none; /* Nascosto di default, JS lo mostra */
+}
+/* --- FINE Stili Sfondo --- */
+
+
+/* --- Contenitore Princip scuro come fallback */
 }
 
 #background-video {
-    display: block; /* Ok, anche se JS lo imposta */
-    width: 100%; /* Forzato a riempire il container in larghezza */
-    height: 100%; /* Forzato a riempire il container in altezza */
-    object-fit: cover; /* Scala mantenendo aspetto, coprendo area */
-    object-position: center center; /* !! CHIAVE: Centra il video DENTRO l'elemento !! */
-    position: static; /* Rimuove posizionamento assoluto */
-     /* Aggiungiamo z-index qui per sicurezza */
-    z-index: -1;
-    /* JS gestirà il display: none / block */
-    display: none; /* Manteniamo nascosto di default */
-}
-
-/* --- Contenitore Principale (index.html) --- */
+    display: block; /* Imposta come blocco */
+    width: 100%;    /* Riempi larghezza container */
+    height: 1ale (index.html) --- */
 .main-content{
     width:100%;
     max-width:700px;
     display:flex;
     flex-direction:column;
-    align-items:center;
+00%;   /* Riempi altezza container */
+    object-fit: cover; /* Copre l'area    align-items:center;
     text-align:center;
-    position:relative; /* Necessario per z-index */
-    z-index:1; /* Assicura che sia sopra #background-container */
-    padding: 3vw 5vw; /* Padding per il contenuto di index.html */
+    position:relative;
+    z mantenendo proporzioni (TAGLIA) */
+    object-position: center center; /* Centra il contenuto prima di tagliare */
+    position: static; /* Posizionamento standard nel container */
+    z--index:1; /* Assicura che sia sopra lo sfondo */
+    padding: 3vw 5vw;
 }
 
 /* --- Stili Elementi Pagina (index.html) --- */
+#logo-containerindex: -1; /* Sopra il background-container, sotto il main-content */
+    display: none;{margin-bottom:1.5em;filter:drop-shadow(0 2px 3px rgba /* Nascosto di default, JS lo mostra */
+}
+/* --- FINE Stili Sfondo --- */
+
+
+/* ---(0,0,0,.4))}
+#logo-container img{
+    display:block;
+    /* NUOVA Contenitore Principale (index.html) --- */
+.main-content{
+    width:10 DIMENSIONE DESKTOP */
+    max-width: 240px; /* Aumentato da 10%; max-width:700px; display:flex; flex-direction:column;
+    align60px */
+    height:auto;
+    margin:0 auto;
+    animation:logo-float-items:center; text-align:center; position:relative; z-index:1;
+    padding-gentle 4s ease-in-out infinite
+}
+h1#page-title{font-: 3vw 5vw;
+}
+
+/* --- Stili Elementi Pagina (index.html)family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3rem --- */
 #logo-container{margin-bottom:1.5em;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4))}
-#logo-container img{display:block;max-width:160px;height:auto;margin:0 auto;animation:logo-float-gentle 4s ease-in-out infinite}
-h1#page-title{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3rem,10vw,5.5rem);color:#ccffcc;margin:.5em 0 1.5em 0;line-height:1.1;word-wrap:break-word;max-width:100%;text-transform:uppercase;position:relative;text-shadow:0 0 4px #fff,0 0 8px #fff,0 0 12px #0f0,0 0 18px #0f0,0 0 25px #0f0,0 0 35px #0a0,0 0 50px #0a0;animation:neon-flicker-green 4s infinite alternate linear}
+#logo-container img{
+,10vw,5.5rem);color:#ccffcc;margin:.5em 0 1.5em 0;line-height:1.1;word-wrap:break-word;max-width:10    display:block;
+    /* LOGO PIÙ GRANDE (DESKTOP) */
+    max-width: 240px; /* Era 160px */
+    height:auto;
+    margin:00%;text-transform:uppercase;position:relative;text-shadow:0 0 4px #fff auto;
+    animation:logo-float-gentle 4s ease-in-out infinite
+}
+,0 0 8px #fff,0 0 12px #0f0,0 h1#page-title{font-family:'Bebas Neue',sans-serif;font-weight:0 18px #0f0,0 0 25px #0f0,0 0 35px #0a0,0 0 50px #0a0;animation:400;font-size:clamp(3rem,10vw,5.5rem);color:#neon-flicker-green 4s infinite alternate linear}
 
 /* === SEZIONE COUNTDOWN === */
-#countdown-container{margin:1em 0 2em 0;width:100%;max-width:450px;padding:.8em;background-color:rgba(0,0,0,.3);border-radius:6px;border:1px solid rgba(255,255,255,.1);text-align:center}
-#countdown-label{font-size:.9rem;color:#aaa;margin-bottom:.8em;display:block;text-transform:uppercase;letter-spacing:1px}
-#countdown-timer{font-family:'Oswald',sans-serif;font-size:clamp(1.6rem,5.5vw,2.4rem);font-weight:700;line-height:1.2;white-space:nowrap;width:100%;box-sizing:border-box;text-align:center}
-#countdown-timer span{display:inline-block;vertical-align:baseline;padding:0 .1em;color:#ffdd88;text-shadow:0 0 2px rgba(255,255,255,.7),0 0 5px #ffdd00,0 0 10px #ffae00,0 0 15px #ff7b00;letter-spacing:1px}
-#countdown-timer span#hours::before,#countdown-timer span#minutes::before,#countdown-timer span#seconds::before{content:':';color:#aaa;padding:0 .3em;font-size:.7em;vertical-align:baseline;text-shadow:none;display:inline-block}
-#countdown-timer span::after{content:attr(id);display:inline-block;font-family:'Lato',sans-serif;font-size:.35em;color:#aaa;text-transform:lowercase;vertical-align:baseline;padding-left:.15em;text-shadow:none;letter-spacing:.5px;line-height:1}
-#countdown-timer span#days::after{content:'Giorni'}#countdown-timer span#hours::after{content:'Ore'}#countdown-timer span#minutes::after{content:'Min'}#countdown-timer span#seconds::after{content:'Sec'}
-#countdown-message{font-size:clamp(1rem,4vw,1.3rem);font-weight:700;color:#ffcc66;text-shadow:0 0 5px #ffae00;margin-top:.7em;text-align:center}
+#countdown-container{margin:1em 0 2em 0;width:100%;maxccffcc;margin:.5em 0 1.5em 0;line-height:1.1;word-wrap:break-word;max-width:100%;text-transform:uppercase;position:-width:450px;padding:.8em;background-color:rgba(0,0,0relative;text-shadow:0 0 4px #fff,0 0 8px #fff,,.3);border-radius:6px;border:1px solid rgba(255,2550 0 12px #0f0,0 0 18px #0f0,,255,.1);text-align:center}
+#countdown-label{font-size:.90 0 25px #0f0,0 0 35px #0a0,rem;color:#aaa;margin-bottom:.8em;display:block;text-transform:uppercase;letter0 0 50px #0a0;animation:neon-flicker-green 4s-spacing:1px}
+#countdown-timer{font-family:'Oswald',sans-serif;font infinite alternate linear}
+
+/* === SEZIONE COUNTDOWN === */
+#countdown-container{margin:1em 0 2-size:clamp(1.6rem,5.5vw,2.4rem);font-weight:em 0;width:100%;max-width:450px;padding:.8em;700;line-height:1.2;white-space:nowrap;width:100%;box-sizing:border-box;text-align:center}
+#countdown-timer span{display:background-color:rgba(0,0,0,.3);border-radius:6px;border:1px solid rgba(255,255,255,.1);text-align:center}inline-block;vertical-align:baseline;padding:0 .1em;color:#ffdd88;
+#countdown-label{font-size:.9rem;color:#aaa;margin-bottom:.8em;text-shadow:0 0 2px rgba(255,255,255,.display:block;text-transform:uppercase;letter-spacing:1px}
+#countdown-timer{font7),0 0 5px #ffdd00,0 0 10px #ffae00,0 0 15px #ff7b00;letter-spacing:1px}-family:'Oswald',sans-serif;font-size:clamp(1.6rem,5.5vw,2.4rem);font-weight:700;line-height:1.2;white
+#countdown-timer span#hours::before,#countdown-timer span#minutes::before,#countdown-timer span-space:nowrap;width:100%;box-sizing:border-box;text-align:#seconds::before{content:':';color:#aaa;padding:0 .3em;font-size:.7emcenter}
+#countdown-timer span{display:inline-block;vertical-align:baseline;padding:0 .1em;color:#ffdd88;text-shadow:0 0 2px rgba(2;vertical-align:baseline;text-shadow:none;display:inline-block}
+#countdown-timer55,255,255,.7),0 0 5px #ffdd00 span::after{content:attr(id);display:inline-block;font-family:'Lato',sans-,0 0 10px #ffae00,0 0 15px #ff7serif;font-size:.35em;color:#aaa;text-transform:lowercase;vertical-align:b00;letter-spacing:1px}
+#countdown-timer span#hours::before,#countdown-baseline;padding-left:.15em;text-shadow:none;letter-spacing:.5px;line-height:1}
+#countdown-timer span#days::after{content:'Giorni'}#countdown-timer span#minutes::before,#countdown-timer span#seconds::before{content:':';color:#aaa;paddingtimer span#hours::after{content:'Ore'}#countdown-timer span#minutes::after{content:'Min:0 .3em;font-size:.7em;vertical-align:baseline;text-shadow:none'}#countdown-timer span#seconds::after{content:'Sec'}
+#countdown-message{font-size:clamp(1rem,4vw,1.3rem);font-weight:700;color:#;display:inline-block}
+#countdown-timer span::after{content:attr(id);display:inline-block;font-family:'Lato',sans-serif;font-size:.35em;color:#ffcc66;text-shadow:0 0 5px #ffae00;margin-topaaa;text-transform:lowercase;vertical-align:baseline;padding-left:.15em;text-:.7em;text-align:center}
 .time-unit,#countdown-timer .separator{display:none!important}
 
 /* Loader (Barra e Testo Animati) */
-.loader-container{position:relative;margin-bottom:2em;padding:0;background-color:rgba(0,0,0,.4);border-radius:6px;display:flex;justify-content:center;align-items:center;border:1px solid rgba(255,255,255,.1);overflow:hidden}
-.loader-bar{display:block;position:absolute;top:0;left:0;height:100%;width:0;opacity:.4;border-radius:6px;animation:loading-loop linear infinite;z-index:1;background:#ffae00;animation-duration:2s}
-#loading-text-container{position:relative;z-index:2;padding:.8em 1.5em;font-weight:700;color:#ddd;letter-spacing:1px;animation:old-bar-flicker-dark 2.5s linear infinite}
+.loader-container{positionshadow:none;letter-spacing:.5px;line-height:1}
+#countdown-timer span#days::after{content:'Giorni'}#countdown-timer span#hours::after{content:'Ore'}#countdown-timer:relative;margin-bottom:2em;padding:0;background-color:rgba(0,0, span#minutes::after{content:'Min'}#countdown-timer span#seconds::after{content:'Sec'}0,.4);border-radius:6px;display:flex;justify-content:center;align-items
+#countdown-message{font-size:clamp(1rem,4vw,1.3rem);font:center;border:1px solid rgba(255,255,255,.1);-weight:700;color:#ffcc66;text-shadow:0 0 5pxoverflow:hidden}
+.loader-bar{display:block;position:absolute;top:0;left:0;height:100%;width:0;opacity:.4;border-radius:6px;animation:loading- #ffae00;margin-top:.7em;text-align:center}
+.time-unitloop linear infinite;z-index:1;background:#ffae00;animation-duration:2s},#countdown-timer .separator{display:none!important}
 
-/* Contenitore Pulsanti Link (index.html) */
-.link-container{display:flex;flex-direction:column;align-items:center;gap:1em;margin-top:1.5em;width:100%;max-width:380px}
-#loading-message,.link-container p{font-size:1.1em;color:#aaa}
+/* Loader (Barra e Testo Animati) */
+.loader-container{position:relative;margin-bottom:2em;padding:0;background-color
+#loading-text-container{position:relative;z-index:2;padding:.8em 1.5em;font-weight:700;color:#ddd;letter-spacing:1px;animation:rgba(0,0,0,.4);border-radius:6px;display:flex;justify-:old-bar-flicker-dark 2.5s linear infinite}
+
+/* Contenitore Pulscontent:center;align-items:center;border:1px solid rgba(255,255,25anti Link (index.html) */
+.link-container{display:flex;flex-direction:column;align-items5,.1);overflow:hidden}
+.loader-bar{display:block;position:absolute;top:0;left:0;height:100%;width:0;opacity:.4;border-radius:6px;:center;gap:1em;margin-top:1.5em;width:100%;maxanimation:loading-loop linear infinite;z-index:1;background:#ffae00;animation-duration-width:380px}
+#loading-message,.link-container p{font-size:1.1em:2s}
+#loading-text-container{position:relative;z-index:2;padding:.8em ;color:#aaa}
 
 /* Pulsante Link (index.html) */
-.link-button{position:relative;display:block;width:100%;padding:.8em 1.4em .8em 1em;color:#f0f0f0;text-decoration:none;text-align:center;font-weight:700;font-size:.95rem;border-radius:5px;border:1px solid rgba(255,255,255,.15);cursor:pointer;transition:background-color .2s ease,transform .1s ease,box-shadow .2s ease;background:#4a3c31;box-shadow:0 3px 5px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);text-shadow:0 1px 1px rgba(0,0,0,.4)}
-.link-button::after{content:'→';position:absolute;right:.8em;top:50%;transform:translateY(-50%);opacity:.6;transition:opacity .2s ease,right .2s ease}
-.link-button:hover{filter:brightness(115%);transform:translateY(-2px);box-shadow:0 5px 8px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.15)}
-.link-button:hover::after{opacity:1;right:.7em}
-.link-button:active{transform:translateY(0);filter:brightness(90%);box-shadow:0 1px 2px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1)}
+.link-button{position:relative;display:block;width:100%;padding:.8em 1.4em .8em 11.5em;font-weight:700;color:#ddd;letter-spacing:1px;em;color:#f0f0f0;text-decoration:none;text-align:center;fontanimation:old-bar-flicker-dark 2.5s linear infinite}
 
-/* Immagine Footer */
-#footer-image-container{width:100%;margin-top:2.5em;margin-bottom:1em}
-#footer-image-container img{display:block;margin:auto;max-width:85%;max-height:120px;height:auto;border-radius:6px;object-fit:contain;mix-blend-mode:luminosity;opacity:.7}
+/* Contenitore Pulsanti Link (index.html) */
+.link-container{display:flex;flex-direction:column-weight:700;font-size:.95rem;border-radius:5px;border:;align-items:center;gap:1em;margin-top:1.5em;width:11px solid rgba(255,255,255,.15);cursor:pointer;00%;max-width:380px}
+#loading-message,.link-container p{font-size:transition:background-color .2s ease,transform .1s ease,box-shadow .2s ease;1.1em;color:#aaa}
+
+/* Pulsante Link (index.html) */
+.link-background:#4a3c31;box-shadow:0 3px 5px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,25button{position:relative;display:block;width:100%;padding:.8em 1.4em .5,.1);text-shadow:0 1px 1px rgba(0,0,0,.48em 1em;color:#f0f0f0;text-decoration:none;text-align:center;font-weight:700;font-size:.95rem;border-radius:5)}
+.link-button::after{content:'→';position:absolute;right:.8em;top:50%;px;border:1px solid rgba(255,255,255,.15);transform:translateY(-50%);opacity:.6;transition:opacity .2s ease,right .2scursor:pointer;transition:background-color .2s ease,transform .1s ease,box-shadow . ease}
+.link-button:hover{filter:brightness(115%);transform:translateY(-2px);box-shadow:0 5px 8px rgba(0,0,0,.4),inset2s ease;background:#4a3c31;box-shadow:0 3px 5px rgba( 0 1px 0 rgba(255,255,255,.15)}0,0,0,.3),inset 0 1px 0 rgba(255,25
+.link-button:hover::after{opacity:1;right:.7em}
+.link-button5,255,.1);text-shadow:0 1px 1px rgba(0,0,0,.4)}
+.link-button::after{content:'→';position:absolute;right:.8em;top:active{transform:translateY(0);filter:brightness(90%);box-shadow:0 1px 2px rgba(0,0,0,.2),inset 0 1px 0 rgba(:50%;transform:translateY(-50%);opacity:.6;transition:opacity .2s ease,255,255,255,.1)}
+
+/* NUOVA Regola per Animazione Pulsante Menuright .2s ease}
+.link-button:hover{filter:brightness(115%);transform:translateY(-2px);box-shadow:0 5px 8px rgba(0,0,0 */
+.link-button.menu-button-highlight {
+    animation: menu-button-pulse 2.5s infinite ease-in-out;
+}
+/* Opzionale: Ferma animazione pulse su hover */
+.,.4),inset 0 1px 0 rgba(255,255,255,.15)}
+.link-button:hover::after{opacity:1;right:.7em}
+link-button.menu-button-highlight:hover {
+  animation-play-state: paused;
+}
+
+/*.link-button:active{transform:translateY(0);filter:brightness(90%);box-shadow Immagine Footer */
+#footer-image-container{width:100%;margin-top:2:0 1px 2px rgba(0,0,0,.2),inset 0 1px.5em;margin-bottom:1em}
+#footer-image-container img{display:block; 0 rgba(255,255,255,.1)}
+
+/* NUOVA Regolamargin:auto;max-width:85%;max-height:120px;height:auto;border-radius:6px;object-fit:contain;mix-blend-mode:luminosity;opacity:. per Animazione Pulsante Menu */
+.link-button.menu-button-highlight {
+    animation: menu-button-pulse 2.5s infinite ease-in-out;
+}
+
+/* Opzionale: Ferma7}
 
 /* Messaggio Errore */
-.error-message{color:#ff8a80;font-weight:700;margin-top:1.5em;border:1px solid #ff5252;padding:1em;background-color:rgba(255,82,82,.1);border-radius:6px;text-align:center}
+.error-message{color:#ff8a80; animazione pulse durante l'hover */
+.link-button.menu-button-highlight:hover {
+  animationfont-weight:700;margin-top:1.5em;border:1px solid #ff-play-state: paused;
+}
+
+
+/* Immagine Footer */
+#footer-image-container{5252;padding:1em;background-color:rgba(255,82,8width:100%;margin-top:2.5em;margin-bottom:1em}
+#footer-image2,.1);border-radius:6px;text-align:center}
+body.error-page h1{color-container img{display:block;margin:auto;max-width:85%;max-height:1:#ff8a80;animation:none;text-shadow:none}
+
+/* ===================================== */20px;height:auto;border-radius:6px;object-fit:contain;mix-blend
+/* === STILI PAGINA E MENU (menu.html) === */
+/* ===================================== */
+.menu-page-container{width:100%;max-width:750px;margin:-mode:luminosity;opacity:.7}
+
+/* Messaggio Errore */
+.error-message{color:#ff8a80;font-weight:700;margin-top:1.5em0 auto;padding:2em 2.5em;border-radius:5px;box-shadow:0 5px 20px rgba(0,0,0,.4);text-align:left;;border:1px solid #ff5252;padding:1em;background-color:rgba(border:1px solid rgba(255,255,255,.1);background-color255,82,82,.1);border-radius:6px;text-align:center:#f5f1e8; background-image:url('https://www.transparenttextures.com/patterns}
 body.error-page h1{color:#ff8a80;animation:none;text-shadow:none}
 
 /* ===================================== */
-/* === STILI PAGINA E MENU (menu.html) === */
+/* === STILI PAGINA E MENU (menu.html) === *//parchment.png');background-repeat:repeat;color:#4a3c31; position: relative; z
 /* ===================================== */
-.menu-page-container{width:100%;max-width:750px;margin:0 auto;padding:2em 2.5em;border-radius:5px;box-shadow:0 5px 20px rgba(0,0,0,.4);text-align:left;border:1px solid rgba(255,255,255,.1);background-color:#f5f1e8; /* Sovrascrive sfondo body */ background-image:url('https://www.transparenttextures.com/patterns/parchment.png');background-repeat:repeat;color:#4a3c31; position: relative; z-index: 1; /* Assicura sia sopra eventuali sfondi fissi */ }
-.back-link{display:inline-block;margin-bottom:1.5em;color:#a0855c;text-decoration:none;font-weight:700;font-size:.9rem;transition:color .2s ease}
-.back-link:hover{color:#bf9e71;text-decoration:underline}
-#menu-page-title{text-align:center;font-family:'Oswald',sans-serif;color:#4a3c31;margin-bottom:1.5em;font-size:2.2rem;border-bottom:2px solid #d1c7b4;padding-bottom:.5em;text-shadow:0 1px 1px rgba(0,0,0,.1)}
-#menu-loading-message{text-align:center;padding:2em;color:#7a6c5d;font-style:italic}
-#menu-content{margin-top:1.5em}
+.menu-page-container{width:100%;max-width-index: 1;}
+.back-link{display:inline-block;margin-bottom:1.:750px;margin:0 auto;padding:2em 2.5em;border-radius5em;color:#a0855c;text-decoration:none;font-weight:70:5px;box-shadow:0 5px 20px rgba(0,0,0,.0;font-size:.9rem;transition:color .2s ease}
+.back-link:hover{color4);text-align:left;border:1px solid rgba(255,255,2:#bf9e71;text-decoration:underline}
+#menu-page-title{text-align:center;55,.1);background-color:#f5f1e8; background-image:url('https://font-family:'Oswald',sans-serif;color:#4a3c31;margin-bottom:www.transparenttextures.com/patterns/parchment.png');background-repeat:repeat;color:#41.5em;font-size:2.2rem;border-bottom:2px solid #d1c7ba3c31; position: relative; z-index: 1; }
+.back-link{display:inline4;padding-bottom:.5em;text-shadow:0 1px 1px rgba(0,-block;margin-bottom:1.5em;color:#a0855c;text-decoration0,0,.1)}
+#menu-loading-message{text-align:center;padding:2em:none;font-weight:700;font-size:.9rem;transition:color .2s ease}
+;color:#7a6c5d;font-style:italic}
+#menu-content{margin-.back-link:hover{color:#bf9e71;text-decoration:underline}
+#menu-page-top:1.5em}
 .menu-category{margin-bottom:2.5em}
+.title{text-align:center;font-family:'Oswald',sans-serif;color:#4a3menu-category:last-child{margin-bottom:.5em}
+.category-title{font-familyc31;margin-bottom:1.5em;font-size:2.2rem;border-:'Oswald',sans-serif;font-size:1.8rem;font-weight:600bottom:2px solid #d1c7b4;padding-bottom:.5em;text-shadow:0 1;color:#7a5e4a;padding:.6em 0;border-bottom:3px double #c8bda8;margin-bottom:1em;cursor:pointer;position:relative;transition:color .2px 1px rgba(0,0,0,.1)}
+#menu-loading-message{text-align:center;padding:2em;color:#7a6c5d;font-style:italic}s ease;outline:none;user-select:none}
+.category-title:hover,.category-title
+#menu-content{margin-top:1.5em}
+.menu-category{margin-bottom:focus{color:#4a3c31}
+.category-title::after{content:'+';position:absolute;right:5px;top:50%;transform:translateY(-50%);font-:2.5em}
 .menu-category:last-child{margin-bottom:.5em}
-.category-title{font-family:'Oswald',sans-serif;font-size:1.8rem;font-weight:600;color:#7a5e4a;padding:.6em 0;border-bottom:3px double #c8bda8;margin-bottom:1em;cursor:pointer;position:relative;transition:color .2s ease;outline:none;user-select:none}
-.category-title:hover,.category-title:focus{color:#4a3c31}
-.category-title::after{content:'+';position:absolute;right:5px;top:50%;transform:translateY(-50%);font-size:1.6rem;font-weight:400;color:#a89a85;transition:transform .3s ease,color .2s ease}
-.menu-category.category-open > .category-title::after{content:'−';transform:translateY(-50%) rotate(180deg);color:#7a5e4a}
-.menu-category.category-open > .category-title{border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#e0d9c6}
-.item-list{list-style:none;padding-left:.5em;margin-top:0;max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
-.menu-item{display:flex;justify-content:space-between;align-items:flex-start;padding:1.2em .5em;border-bottom:1px dotted #c8bda8;gap:1em}
-.menu-item:last-child{border-bottom:none}
-.item-details{flex-grow:1}
-.item-name{font-weight:700;color:#5a463a;display:block;margin-bottom:.3em;font-size:1.1rem}
-.item-description{font-size:.95rem;color:#6b5b4d;line-height:1.5}
-.item-price{font-weight:700;color:#4a3c31;white-space:nowrap;margin-left:auto;padding-left:1em;font-size:1.05rem}
+.category-title{font-family:'Oswald',sans-serif;font-size:1.8remsize:1.6rem;font-weight:400;color:#a89a85;;font-weight:600;color:#7a5e4a;padding:.6em 0;border-transition:transform .3s ease,color .2s ease}
+.menu-category.category-open >bottom:3px double #c8bda8;margin-bottom:1em;cursor:pointer;position .category-title::after{content:'−';transform:translateY(-50%) rotate(180deg);color:#7a5e4a}
+.menu-category.category-open > .category-:relative;transition:color .2s ease;outline:none;user-select:none}
+.categorytitle{border-bottom-style:solid;border-bottom-width:1px;border-bottom-color-title:hover,.category-title:focus{color:#4a3c31}
+.category-:#e0d9c6}
+.item-list{list-style:none;padding-left:.title::after{content:'+';position:absolute;right:5px;top:50%;transform:translateY(-50%);font-size:1.6rem;font-weight:400;color5em;margin-top:0;max-height:0;overflow:hidden;transition:max-height:#a89a85;transition:transform .3s ease,color .2s ease}
+. .4s cubic-bezier(.4,0,.2,1)}
+.menu-item{display:flexmenu-category.category-open > .category-title::after{content:'−';transform:translateY(-;justify-content:space-between;align-items:flex-start;padding:1.2em .50%) rotate(180deg);color:#7a5e4a}
+.menu-category5em;border-bottom:1px dotted #c8bda8;gap:1em}
+..category-open > .category-title{border-bottom-style:solid;border-bottom-width:menu-item:last-child{border-bottom:none}
+.item-details{flex-grow:1px;border-bottom-color:#e0d9c6}
+.item-list{list-1}
+.item-name{font-weight:700;color:#5a463astyle:none;padding-left:.5em;margin-top:0;max-height:0;overflow;display:block;margin-bottom:.3em;font-size:1.1rem}
+.item-description{font-size:.95rem;color:#6b5b4d;line-height::hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
+1.5}
+.item-price{font-weight:700;color:#4a3c.menu-item{display:flex;justify-content:space-between;align-items:flex-start;padding:1.2em .5em;border-bottom:1px dotted #c8bda831;white-space:nowrap;margin-left:auto;padding-left:1em;font-size:1.05rem}
 
 /* --- Responsive Design --- */
-/* Media Query 768px */
+/* Media Query 768;gap:1em}
+.menu-item:last-child{border-bottom:none}
+.item-details{flex-grow:1}
+.item-name{font-weight:700;px */
 @media(max-width:768px){
     h1#page-title{font-size:clamp(2.5rem, 8vw, 4rem);}
-    #menu-page-title{font-size:1.8rem;}
-    .category-title{font-size:1.5rem;}
-    .main-content { padding: 5vw 3vw; } /* Adegua padding per schermi medi */
+    #menu-color:#5a463a;display:block;margin-bottom:.3em;font-size:page-title{font-size:1.8rem;}
+    .category-title{font-size:1.1rem}
+.item-description{font-size:.95rem;color:#6b51.5rem;}
+    .main-content { padding: 5vw 3vw; }
+    b4d;line-height:1.5}
+.item-price{font-weight:700;color:#4a3c31;white-space:nowrap;margin-left:auto;padding-left:1em;font-size:1.05rem}
+
+/* --- Responsive Design --- *//* Non serve modificare il logo qui se la regola base copre già */
 }
 
-/* Media Query 600px AGGIORNATA per ottimizzazione spazi */
+/* Media Query 600px AG
+/* Media Query 768px */
+@media(max-width:768px){
+    hGIORNATA per ottimizzazione spazi */
 @media(max-width: 600px){
-  /* Rimosso padding da body:has(.main-content), ora è su .main-content */
-  .main-content{
+  1#page-title{font-size:clamp(2.5rem, 8vw, 4rem.main-content{
       max-width: 100%;
-      padding: 5vw 1em 8vw 1em; /* Padding mobile specifico per index.html */
+      padding: 5vw );}
+    #menu-page-title{font-size:1.8rem;}
+    .category-1em 8vw 1em;
+   }
+  #logo-container { margin-bottom: 1em;title{font-size:1.5rem;}
+    .main-content { padding: 5vw  }
+  #logo-container img{
+      /* NUOVA DIMENSIONE MOBILE */
+       max-width:3vw; }
+}
+
+/* Media Query 600px AGGIORNATA per ottimizzazione spazi */ 150px; /* Aumentato da 100px */
+  }
+  h1
+@media(max-width: 600px){
+  .main-content{
+      max#page-title { font-size: clamp(2.2rem, 9vw, 3.5rem); margin-top: 0.3em; margin-bottom: 1em; }
+  #-width: 100%;
+      padding: 5vw 1em 8vw 1emcountdown-container { margin-top: 0.8em; margin-bottom: 1.5em;;
    }
   #logo-container { margin-bottom: 1em; }
-  #logo-container img{ max-width: 150px; }
-  h1#page-title { font-size: clamp(2.2rem, 9vw, 3.5rem); margin-top: 0.3em; margin-bottom: 1em; }
-  #countdown-container { margin-top: 0.8em; margin-bottom: 1.5em; padding: 0.6em; max-width: 90%; }
-  #countdown-timer span { font-size: clamp(1.5rem, 5vw, 2rem); padding: 0 0.1em; }
-  #countdown-timer span::after { font-size: 0.3em; padding-left: 0.1em; }
-  #countdown-timer span#hours::before, #countdown-timer span#minutes::before, #countdown-timer span#seconds::before { font-size: 1.2rem; padding: 0 0.15em; }
-  .loader-container { margin-bottom: 1.8em; padding: 0.6em 1em; max-width: 90%; }
-  .link-container{ max-width: 95%; margin-top: 1.2em; gap: 0.8em; }
-  .link-button { padding: 0.8em 1.3em 0.8em 1em; font-size: 0.95rem; }
-  .link-button::after { right: 0.8em; }
-  .link-button:hover::after { right: 0.6em; }
+  #logo-container img padding: 0.6em; max-width: 90%; }
+  #countdown-timer span{
+      /* LOGO PIÙ GRANDE (MOBILE) */
+      max-width: 150px; /* Era 100px */
+  }
+  h1#page-title { font- { font-size: clamp(1.5rem, 5vw, 2rem); padding: 0size: clamp(2.2rem, 9vw, 3.5rem); margin-top:  0.1em; }
+  #countdown-timer span::after { font-size: 0.0.3em; margin-bottom: 1em; }
+  #countdown-container { margin-top3em; padding-left: 0.1em; }
+  #countdown-timer span#hours::: 0.8em; margin-bottom: 1.5em; padding: 0.6embefore, #countdown-timer span#minutes::before, #countdown-timer span#seconds::before { font-; max-width: 90%; }
+  #countdown-timer span { font-size: clamp(size: 1.2rem; padding: 0 0.15em; }
+  .loader-container { margin-bottom: 1.8em; padding: 0.6em 1em;1.5rem, 5vw, 2rem); padding: 0 0.1em; }
+  #countdown-timer span::after { font-size: 0.3em; padding-left: max-width: 90%; }
+  .link-container{ max-width: 95%; 0.1em; }
+  #countdown-timer span#hours::before, #countdown-timer span margin-top: 1.2em; gap: 0.8em; }
+  .link-#minutes::before, #countdown-timer span#seconds::before { font-size: 1.2rem; padding:button { padding: 0.8em 1.3em 0.8em 1em; font 0 0.15em; }
+  .loader-container { margin-bottom: 1.-size: 0.95rem; }
+  .link-button::after { right: 08em; padding: 0.6em 1em; max-width: 90%; }
+.8em; }
+  .link-button:hover::after { right: 0.6em;  .link-container{ max-width: 95%; margin-top: 1.2em; gap: 0.8em; }
+  .link-button { padding: 0.8em 1.3 }
   #footer-image-container { margin-top: 2.5em; }
-  #footer-image-container img{ max-width: 80%; max-height: 100px; }
+  #footer-image-container img{ max-width: 80%; max-height: 100pxem 0.8em 1em; font-size: 0.95rem; }
+  .link-; }
   /* Menu Page (mobile) */
-  .menu-page-container{padding:1.5em;}
+  .menu-page-container{padding:1.button::after { right: 0.8em; }
+  .link-button:hover::after {5em;}
   #menu-page-title{font-size:1.8rem;}
-  .category-title{font-size:1.4rem;padding:0.5em 0;}
+  . right: 0.6em; }
+  #footer-image-container { margin-top: 2.5em; }
+  #footer-image-container img{ max-width: 80%; maxcategory-title{font-size:1.4rem;padding:0.5em 0;}
   .category-title::after{font-size:1.4rem;right:0;}
-  .menu-item{flex-direction:column;align-items:flex-start;gap:0.4em;padding:1em 0;}
-  .item-price{padding-left:0;margin-left:0;margin-top:0.3em;font-size:1rem;background-color:rgba(200,189,168,0.1);padding:0.1em 0.5em;border-radius:3px;display:inline-block;}
-  .item-list{padding-left:0;}
+  .menu-height: 100px; }
+  /* Menu Page (mobile) */
+  .menu--item{flex-direction:column;align-items:flex-start;gap:0.4em;page-container{padding:1.5em;}
+  #menu-page-title{font-size:1.8rem;}
+  .category-title{font-size:1.4rem;padding:0padding:1em 0;}
+  .item-price{padding-left:0;margin-left:0;margin-top:0.3em;font-size:1rem;background-color:rgba(.5em 0;}
+  .category-title::after{font-size:1.4rem;200,189,168,0.1);padding:0.1em 0right:0;}
+  .menu-item{flex-direction:column;align-items:flex-start.5em;border-radius:3px;display:inline-block;}
+  .item-list{padding;gap:0.4em;padding:1em 0;}
+  .item-price{padding--left:0;}
 }
