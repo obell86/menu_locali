@@ -1,19 +1,18 @@
 /* ===================================== */
-/* STYLE.CSS - Pub Neon Wood Intense v2.8 */
-/* Icona Img Animata + Ripristino Sfondo Menu + Stile Btn Indietro */
+/* STYLE.CSS - Pub Neon Wood Intense v2.9 */
+/* Aumentato spazio verticale tra i pulsanti link */
 /* ===================================== */
 
 /* --- Import Font (Lato, Oswald, Bebas Neue) --- */
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Oswald:wght@400;600&family=Bebas+Neue&display=swap');
 
 /* --- Keyframes Animazioni --- */
+/* ... (tutti i keyframes invariati) ... */
 @keyframes neon-flicker-green{/*...*/ }
 @keyframes loading-loop{/*...*/ }
 @keyframes old-bar-flicker-dark{/*...*/ }
 @keyframes logo-float-gentle{/*...*/ }
-
-/* Keyframe per l'icona del menu (ondeggiamento) - MANTENUTO */
-@keyframes menu-icon-sway {
+@keyframes menu-icon-sway { /* Animazione icona mantenuta */
   0%, 100% { transform: rotate(0deg) translateX(0); }
   25% { transform: rotate(-8deg) translateX(-1px); }
   75% { transform: rotate(8deg) translateX(1px); }
@@ -23,45 +22,67 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;scroll-behavior:smooth}
 body{font-family:'Lato',sans-serif;line-height:1.6;color:#e0e0e0;display:flex;flex-direction:column;align-items:center;min-height:100vh; padding: 0;}
 
-/* Regola per sfondo body su pagina menu (RIMOSSA) */
-/* body:has(.menu-page-container){ ... } */
-
-/* --- Stili Sfondo Dinamico (Video/Immagine) - Versione Funzionante Utente --- */
+/* --- Stili Sfondo Dinamico (Video/Immagine) --- */
 #background-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; overflow: hidden; z-index: -2; background-color: black; }
 #background-video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center center; position: static; z-index: -1; display: none; }
 /* --- FINE Stili Sfondo --- */
-
 
 /* --- Contenitore Principale (index.html) --- */
 .main-content{ width:100%; max-width:700px; display:flex; flex-direction:column; align-items:center; text-align:center; position:relative; z-index:1; padding: 3vw 5vw; }
 
 /* --- Stili Elementi Pagina (index.html) --- */
+/* ... (logo, titolo, countdown, loader invariati) ... */
 #logo-container{margin-bottom:1.5em;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4))}
 #logo-container img{ display:block; max-width: 240px; height:auto; margin:0 auto; animation:logo-float-gentle 4s ease-in-out infinite }
 h1#page-title{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3rem,10vw,5.5rem);color:#ccffcc;margin:.5em 0 1.5em 0;line-height:1.1;word-wrap:break-word;max-width:100%;text-transform:uppercase;position:relative;text-shadow:0 0 4px #fff,0 0 8px #fff,0 0 12px #0f0,0 0 18px #0f0,0 0 25px #0f0,0 0 35px #0a0,0 0 50px #0a0;animation:neon-flicker-green 4s infinite alternate linear}
+#countdown-container{margin:1em 0 2em 0;width:100%;max-width:450px;padding:.8em;background-color:rgba(0,0,0,.3);border-radius:6px;border:1px solid rgba(255,255,255,.1);text-align:center}
+#countdown-label{font-size:.9rem;color:#aaa;margin-bottom:.8em;display:block;text-transform:uppercase;letter-spacing:1px}
+#countdown-timer{font-family:'Oswald',sans-serif;font-size:clamp(1.6rem,5.5vw,2.4rem);font-weight:700;line-height:1.2;white-space:nowrap;width:100%;box-sizing:border-box;text-align:center}
+#countdown-timer span{display:inline-block;vertical-align:baseline;padding:0 .1em;color:#ffdd88;text-shadow:0 0 2px rgba(255,255,255,.7),0 0 5px #ffdd00,0 0 10px #ffae00,0 0 15px #ff7b00;letter-spacing:1px}
+#countdown-timer span#hours::before,#countdown-timer span#minutes::before,#countdown-timer span#seconds::before{content:':';color:#aaa;padding:0 .3em;font-size:.7em;vertical-align:baseline;text-shadow:none;display:inline-block}
+#countdown-timer span::after{content:attr(id);display:inline-block;font-family:'Lato',sans-serif;font-size:.35em;color:#aaa;text-transform:lowercase;vertical-align:baseline;padding-left:.15em;text-shadow:none;letter-spacing:.5px;line-height:1}
+#countdown-timer span#days::after{content:'Giorni'}#countdown-timer span#hours::after{content:'Ore'}#countdown-timer span#minutes::after{content:'Min'}#countdown-timer span#seconds::after{content:'Sec'}
+#countdown-message{font-size:clamp(1rem,4vw,1.3rem);font-weight:700;color:#ffcc66;text-shadow:0 0 5px #ffae00;margin-top:.7em;text-align:center}
+.time-unit,#countdown-timer .separator{display:none!important}
+.loader-container{position:relative;margin-bottom:2em;padding:0;background-color:rgba(0,0,0,.4);border-radius:6px;display:flex;justify-content:center;align-items:center;border:1px solid rgba(255,255,255,.1);overflow:hidden}
+.loader-bar{display:block;position:absolute;top:0;left:0;height:100%;width:0;opacity:.4;border-radius:6px;animation:loading-loop linear infinite;z-index:1;background:#ffae00;animation-duration:2s}
+#loading-text-container{position:relative;z-index:2;padding:.8em 1.5em;font-weight:700;color:#ddd;letter-spacing:1px;animation:old-bar-flicker-dark 2.5s linear infinite}
 
-/* === SEZIONE COUNTDOWN === */
-#countdown-container{ /* ... (invariato) ... */ }
-#countdown-label{ /* ... (invariato) ... */ }
-#countdown-timer{ /* ... (invariato) ... */ }
-#countdown-timer span{ /* ... (invariato) ... */ }
-#countdown-timer span#hours::before,#countdown-timer span#minutes::before,#countdown-timer span#seconds::before{ /* ... (invariato) ... */ }
-#countdown-timer span::after{ /* ... (invariato) ... */ }
-#countdown-timer span#days::after{/*...*/ }#countdown-timer span#hours::after{/*...*/ }#countdown-timer span#minutes::after{/*...*/ }#countdown-timer span#seconds::after{/*...*/ }
-#countdown-message{ /* ... (invariato) ... */ }
-.time-unit,#countdown-timer .separator{ /* ... (invariato) ... */ }
-
-/* Loader (Barra e Testo Animati) */
-.loader-container{ /* ... (invariato) ... */ }
-.loader-bar{ /* ... (invariato) ... */ }
-#loading-text-container{ /* ... (invariato) ... */ }
 
 /* Contenitore Pulsanti Link (index.html) */
-.link-container{ /* ... (invariato) ... */ }
-#loading-message,.link-container p{ /* ... (invariato) ... */ }
+.link-container{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    /* --- AUMENTATO GAP --- */
+    gap: 1.5em; /* Era 1em */
+    margin-top:1.5em;
+    width:100%;
+    max-width:380px;
+}
+#loading-message,.link-container p{font-size:1.1em;color:#aaa}
 
 /* Pulsante Link (index.html) */
-.link-button{ position:relative; display:block;width:100%;padding:.8em 1.4em .8em 1em;color:#f0f0f0;text-decoration:none;text-align:center;font-weight:700;font-size:.95rem;border-radius:5px;border:1px solid rgba(255,255,255,.15);cursor:pointer;transition:background-color .2s ease,transform .1s ease,box-shadow .2s ease;background:#4a3c31;box-shadow:0 3px 5px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);text-shadow:0 1px 1px rgba(0,0,0,.4); }
+.link-button{
+    position:relative;
+    display:block;
+    width:100%;
+    padding:.8em 1.4em .8em 1em; /* Padding base */
+    /* --- AGGIUNTO MARGIN-BOTTOM --- */
+    margin-bottom: 0.5em; /* Aggiunge ulteriore spazio sotto ogni pulsante */
+    color:#f0f0f0;
+    text-decoration:none;
+    text-align:center;
+    font-weight:700;
+    font-size:.95rem; /* Dimensione font base */
+    border-radius:5px;
+    border:1px solid rgba(255,255,255,.15);
+    cursor:pointer;
+    transition:background-color .2s ease,transform .1s ease,box-shadow .2s ease;
+    background:#4a3c31;
+    box-shadow:0 3px 5px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);
+    text-shadow:0 1px 1px rgba(0,0,0,.4);
+}
 .link-button::after{content:'→';position:absolute;right:.8em;top:50%;transform:translateY(-50%);opacity:.6;transition:opacity .2s ease,right .2s ease} /* Freccia standard */
 .link-button:hover{filter:brightness(115%);transform:translateY(-2px);box-shadow:0 5px 8px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.15)}
 .link-button:hover::after{opacity:1;right:.7em}
@@ -69,9 +90,8 @@ h1#page-title{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clam
 
 /* Regola per Immagine Personalizzata Animata sul Pulsante Menu */
 .link-button.menu-button-highlight::before {
-    content: '';
-    display: inline-block;
-    background-image: url('Burger.png'); /* Assicurati che sia il nome corretto e nella stessa cartella */
+    content: ''; display: inline-block;
+    background-image: url('Burger.png'); /* Assicurati sia il nome/percorso corretto */
     width: 1.9em; height: 1.9em; background-size: contain;
     background-repeat: no-repeat; background-position: center center;
     margin-right: 0.4em; vertical-align: middle;
@@ -90,40 +110,14 @@ body.error-page h1{ /* ... (invariato) ... */ }
 /* ===================================== */
 /* === STILI PAGINA E MENU (menu.html) === */
 /* ===================================== */
-.menu-page-container{
-    width:100%; max-width:750px; margin:0 auto; padding:2em 2.5em; border-radius:5px; box-shadow:0 5px 20px rgba(0,0,0,.4); text-align:left; border:1px solid rgba(255,255,255,.1);
-    /* Assicura sfondo pergamena */
-    background-color:#f5f1e8;
-    background-image:url('https://www.transparenttextures.com/patterns/parchment.png');
-    background-repeat:repeat;
-    color:#4a3c31;
-    position: relative; z-index: 1;
-}
+.menu-page-container{ width:100%; max-width:750px; margin:0 auto; padding:2em 2.5em; border-radius:5px; box-shadow:0 5px 20px rgba(0,0,0,.4); text-align:left; border:1px solid rgba(255,255,255,.1); background-color:#f5f1e8; background-image:url('https://www.transparenttextures.com/patterns/parchment.png'); background-repeat:repeat; color:#4a3c31; position: relative; z-index: 1; }
 
-/* --- NUOVO STILE Pulsante/Link "Torna Indietro" --- */
-.back-link {
-    display: inline-block;
-    margin-bottom: 1.5em;
-    padding: 0.5em 1em;
-    color: #7a5e4a;
-    background-color: rgba(210, 199, 180, 0.4);
-    border: 1px solid rgba(122, 94, 74, 0.3);
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: .9rem;
-    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    line-height: 1;
-}
-.back-link:hover {
-    color: #4a3c31;
-    background-color: rgba(210, 199, 180, 0.6);
-    text-decoration: none;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-}
-/* --- FINE NUOVO STILE --- */
+/* --- Stile Pulsante/Link "Torna Indietro" --- */
+.back-link { display: inline-block; margin-bottom: 1.5em; padding: 0.5em 1em; color: #7a5e4a; background-color: rgba(210, 199, 180, 0.4); border: 1px solid rgba(122, 94, 74, 0.3); border-radius: 4px; text-decoration: none; font-weight: 700; font-size: .9rem; transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.1); line-height: 1; }
+.back-link:hover { color: #4a3c31; background-color: rgba(210, 199, 180, 0.6); text-decoration: none; box-shadow: 0 2px 4px rgba(0,0,0,0.15); }
+/* --- FINE Stile Torna Indietro --- */
 
+/* ... (stili menu accordion invariati) ... */
 #menu-page-title{ text-align:center;font-family:'Oswald',sans-serif;color:#4a3c31;margin-bottom:1.5em;font-size:2.2rem;border-bottom:2px solid #d1c7b4;padding-bottom:.5em;text-shadow:0 1px 1px rgba(0,0,0,.1) }
 #menu-loading-message{ text-align:center;padding:2em;color:#7a6c5d;font-style:italic }
 #menu-content{ margin-top:1.5em }
@@ -142,13 +136,14 @@ body.error-page h1{ /* ... (invariato) ... */ }
 .item-description{ font-size:.95rem;color:#6b5b4d;line-height:1.5 }
 .item-price{ font-weight:700;color:#4a3c31;white-space:nowrap;margin-left:auto;padding-left:1em;font-size:1.05rem }
 
+
 /* --- Responsive Design --- */
 @media(max-width:768px){
+    /* ... (stili titolo, ecc. invariati) ... */
     h1#page-title{font-size:clamp(2.5rem, 8vw, 4rem);}
     #menu-page-title{font-size:1.8rem;}
     .category-title{font-size:1.5rem;}
     .main-content { padding: 5vw 3vw; }
-    /* Aggiusta stile .back-link se necessario per mobile */
     .back-link { padding: 0.4em 0.8em; font-size: 0.85rem; }
 }
 
@@ -157,13 +152,24 @@ body.error-page h1{ /* ... (invariato) ... */ }
   #logo-container { margin-bottom: 1em; }
   #logo-container img{ max-width: 150px; }
   h1#page-title { font-size: clamp(2.2rem, 9vw, 3.5rem); margin-top: 0.3em; margin-bottom: 1em; }
+  /* ... (altri stili mobile invariati) ... */
   #countdown-container { margin-top: 0.8em; margin-bottom: 1.5em; padding: 0.6em; max-width: 90%; }
   #countdown-timer span { font-size: clamp(1.5rem, 5vw, 2rem); padding: 0 0.1em; }
   #countdown-timer span::after { font-size: 0.3em; padding-left: 0.1em; }
   #countdown-timer span#hours::before, #countdown-timer span#minutes::before, #countdown-timer span#seconds::before { font-size: 1.2rem; padding: 0 0.15em; }
   .loader-container { margin-bottom: 1.8em; padding: 0.6em 1em; max-width: 90%; }
-  .link-container{ max-width: 95%; margin-top: 1.2em; gap: 0.8em; }
-  .link-button { padding: 0.8em 1.3em 0.8em 1em; font-size: 0.95rem; }
+  .link-container{
+      max-width: 95%;
+      margin-top: 1.2em;
+      /* --- GAP MOBILE AGGIORNATO --- */
+      gap: 1.2em; /* Era 0.8em */
+  }
+  .link-button {
+      padding: 0.8em 1.3em 0.8em 1em;
+      font-size: 0.95rem;
+      /* --- MARGINE MOBILE (Opzionale, potrebbe non servire con il gap aumentato) --- */
+      /* margin-bottom: 0.4em; */ /* Se vuoi aggiungerlo anche qui */
+  }
   .link-button::after { right: 0.8em; }
   .link-button:hover::after { right: 0.6em; }
   #footer-image-container { margin-top: 2.5em; }
@@ -171,7 +177,6 @@ body.error-page h1{ /* ... (invariato) ... */ }
   /* Menu Page (mobile) */
   .menu-page-container{padding:1.5em;}
   #menu-page-title{font-size:1.8rem;}
-  /* Aggiusta stile .back-link se necessario per mobile piccolo */
   .back-link { margin-bottom: 1.2em; }
   .category-title{font-size:1.4rem;padding:0.5em 0;}
   .category-title::after{font-size:1.4rem;right:0;}
