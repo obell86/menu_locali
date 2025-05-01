@@ -43,28 +43,32 @@ body:has(.menu-page-container){
     /* L'immagine di default (texture legno) verrà applicata da JS se necessario */
 }
 
-#background-video-container {
+/* Presumo che l'ID corretto sia #background-container come nel tuo HTML */
+#background-container { /* Rinominato da #background-video-container */
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw; /* Forzato a larghezza viewport */
     height: 100vh; /* Forzato a altezza viewport */
     overflow: hidden;
-    z-index: -1;
-    display: none;
-    background-color: black;
+    /* z-index: -1;  Potrebbe essere necessario -1 o -2 a seconda del resto */
+    z-index: -2; /* Riportato a -2 per stare dietro al video (-1) */
+    /* display: none; <-- Questo nasconderebbe tutto, probabilmente non voluto qui */
+    background-color: black; /* Hai cambiato il colore di fallback, va bene! */
 }
 
 #background-video {
-    display: block; /* Assicura che sia un blocco */
-    width: 100%; /* Riempi il container */
-    height: 100%; /* Riempi il container */
+    display: block; /* Ok, anche se JS lo imposta */
+    width: 100%; /* Forzato a riempire il container in larghezza */
+    height: 100%; /* Forzato a riempire il container in altezza */
     object-fit: cover; /* Scala mantenendo aspetto, coprendo area */
-    object-position: center center; /* Centra il video dentro l'area */
-    /* Rimuovere eventuali position: absolute o transform precedenti */
-    position: static; /* Assicura posizione di default nel flusso del container */
+    object-position: center center; /* !! CHIAVE: Centra il video DENTRO l'elemento !! */
+    position: static; /* Rimuove posizionamento assoluto */
+     /* Aggiungiamo z-index qui per sicurezza */
+    z-index: -1;
+    /* JS gestirà il display: none / block */
+    display: none; /* Manteniamo nascosto di default */
 }
-/* --- FINE STILI VIDEO BACKGROUND --- */
 
 /* --- Contenitore Principale (index.html) --- */
 .main-content{
