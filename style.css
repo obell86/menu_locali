@@ -1,6 +1,6 @@
 /* ===================================== */
-/* STYLE.CSS - Pub Neon Wood Intense v2.2 */
-/* Corretto: Base funzionante + Logo Grande + Anim. Btn Menu */
+/* STYLE.CSS - Pub Neon Wood Intense v2.3 */
+/* Applicata animazione Shimmer al Btn Menu */
 /* ===================================== */
 
 /* --- Import Font (Lato, Oswald, Bebas Neue) --- */
@@ -12,82 +12,51 @@
 @keyframes old-bar-flicker-dark{0%,100%{opacity:1;text-shadow:0 0 2px rgba(255,255,255,.7),0 0 5px rgba(200,200,200,.5)}50%{opacity:.6;text-shadow:0 0 2px rgba(255,255,255,.4)}5%{opacity:.7}8%{opacity:1}15%{opacity:.5}18%{opacity:1}30%{opacity:.8}40%{opacity:1}60%{opacity:.6}63%{opacity:1}75%{opacity:.8}85%{opacity:1}92%{opacity:.7}95%{opacity:1}}
 @keyframes logo-float-gentle{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
 
-/* NUOVO Keyframe per il pulsante Menu */
-@keyframes menu-button-pulse {
-  0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 3px 5px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.1);
-  }
-  50% {
-    transform: scale(1.03);
-    box-shadow: 0 5px 10px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.15);
-  }
+/* Keyframe per animazione pulse (RIMOSSO perché sostituito da shimmer) */
+/* @keyframes menu-button-pulse { ... } */
+
+/* NUOVO Keyframe per lo shimmer */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 /* --- Reset e Stili Globali --- */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;scroll-behavior:smooth}
 body{font-family:'Lato',sans-serif;line-height:1.6;color:#e0e0e0;display:flex;flex-direction:column;align-items:center;min-height:100vh;
-/* Rimuoviamo background diretto qui, gestito da #background-container o JS */
-padding: 0; /* Rimosso padding globale, applicato a .main-content se serve */
+padding: 0;
 }
-/* Applica padding e sfondo solo quando specifico */
-body:has(.main-content) {
-/* Nessuno stile specifico qui ora, padding è su .main-content */
-}
+body:has(.main-content) {}
 body:has(.menu-page-container){
-/* Stili per menu.html */
-padding: 2em 1em; /* Padding per la pagina menu */
-background-color: #3a2d27; /* Colore base per menu.html */
-background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png'); /* Texture base per menu.html */
+padding: 2em 1em;
+background-color: #3a2d27;
+background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png');
 background-repeat: repeat;
 }
 
 /* --- Stili Sfondo Dinamico (Video/Immagine) - Versione Funzionante Utente --- */
-#background-container { /* Assicurati che l'ID corrisponda all'HTML */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw; /* Larghezza viewport */
-    height: 100vh; /* Altezza viewport */
-    overflow: hidden;
-    z-index: -2; /* Dietro al video */
-    background-color: black; /* Colore fallback impostato dall'utente */
+#background-container {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    overflow: hidden; z-index: -2; background-color: black;
 }
-
 #background-video {
-    display: block; /* Ok, anche se JS lo imposta */
-    width: 100%; /* Forzato a riempire il container in larghezza */
-    height: 100%; /* Forzato a riempire il container in altezza */
-    object-fit: cover; /* Scala mantenendo aspetto, coprendo area */
-    object-position: center center; /* Centra il video DENTRO l'elemento */
-    position: static; /* Rimuove posizionamento assoluto */
-    z-index: -1; /* Sopra il background-container */
-    display: none; /* Manteniamo nascosto di default, JS lo mostra */
+    display: block; width: 100%; height: 100%; object-fit: cover;
+    object-position: center center; position: static; z-index: -1; display: none;
 }
 /* --- FINE Stili Sfondo --- */
 
 
 /* --- Contenitore Principale (index.html) --- */
 .main-content{
-    width:100%;
-    max-width:700px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    text-align:center;
-    position:relative; /* Necessario per z-index */
-    z-index:1; /* Assicura che sia sopra #background-container */
-    padding: 3vw 5vw; /* Padding per il contenuto di index.html */
+    width:100%; max-width:700px; display:flex; flex-direction:column;
+    align-items:center; text-align:center; position:relative; z-index:1;
+    padding: 3vw 5vw;
 }
 
 /* --- Stili Elementi Pagina (index.html) --- */
 #logo-container{margin-bottom:1.5em;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4))}
 #logo-container img{
-    display:block;
-    /* LOGO PIÙ GRANDE (DESKTOP) */
-    max-width: 240px; /* Era 160px */
-    height:auto;
-    margin:0 auto;
+    display:block; max-width: 240px; height:auto; margin:0 auto;
     animation:logo-float-gentle 4s ease-in-out infinite
 }
 h1#page-title{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(3rem,10vw,5.5rem);color:#ccffcc;margin:.5em 0 1.5em 0;line-height:1.1;word-wrap:break-word;max-width:100%;text-transform:uppercase;position:relative;text-shadow:0 0 4px #fff,0 0 8px #fff,0 0 12px #0f0,0 0 18px #0f0,0 0 25px #0f0,0 0 35px #0a0,0 0 50px #0a0;animation:neon-flicker-green 4s infinite alternate linear}
@@ -113,20 +82,55 @@ h1#page-title{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clam
 #loading-message,.link-container p{font-size:1.1em;color:#aaa}
 
 /* Pulsante Link (index.html) */
-.link-button{position:relative;display:block;width:100%;padding:.8em 1.4em .8em 1em;color:#f0f0f0;text-decoration:none;text-align:center;font-weight:700;font-size:.95rem;border-radius:5px;border:1px solid rgba(255,255,255,.15);cursor:pointer;transition:background-color .2s ease,transform .1s ease,box-shadow .2s ease;background:#4a3c31;box-shadow:0 3px 5px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);text-shadow:0 1px 1px rgba(0,0,0,.4)}
+.link-button{
+    position:relative; /* Necessario per pseudo-elementi come ::after */
+    overflow: hidden;  /* Necessario per contenere l'effetto shimmer */
+    display:block;width:100%;padding:.8em 1.4em .8em 1em;color:#f0f0f0;text-decoration:none;text-align:center;font-weight:700;font-size:.95rem;border-radius:5px;border:1px solid rgba(255,255,255,.15);cursor:pointer;transition:background-color .2s ease,transform .1s ease,box-shadow .2s ease;background:#4a3c31;box-shadow:0 3px 5px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);text-shadow:0 1px 1px rgba(0,0,0,.4);
+}
 .link-button::after{content:'→';position:absolute;right:.8em;top:50%;transform:translateY(-50%);opacity:.6;transition:opacity .2s ease,right .2s ease}
 .link-button:hover{filter:brightness(115%);transform:translateY(-2px);box-shadow:0 5px 8px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.15)}
 .link-button:hover::after{opacity:1;right:.7em}
 .link-button:active{transform:translateY(0);filter:brightness(90%);box-shadow:0 1px 2px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1)}
 
-/* NUOVA Regola per Animazione Pulsante Menu */
+/* Regole Animazione Pulsante Menu precedente (RIMOSSE) */
+/*
 .link-button.menu-button-highlight {
     animation: menu-button-pulse 2.5s infinite ease-in-out;
 }
-/* Opzionale: Ferma animazione pulse durante l'hover */
 .link-button.menu-button-highlight:hover {
   animation-play-state: paused;
 }
+*/
+
+/* NUOVA Regola per Animazione Shimmer sul Pulsante Menu */
+.link-button.menu-button-highlight::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0; /* Parte da sinistra */
+    width: 50%; /* Larghezza della luce */
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.2) 50%, /* Bianco traslucido al centro */
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: translateX(-100%); /* Inizia fuori dal pulsante a sinistra */
+    animation: shimmer 2s infinite linear; /* Applica animazione */
+     animation-delay: 1s; /* Ritardo opzionale prima di iniziare */
+    pointer-events: none; /* Non blocca il click sul pulsante */
+    /* Assicurati che sia sopra lo sfondo ma sotto il testo */
+    /* z-index: 1; (Potrebbe non essere necessario se il testo non ha z-index) */
+}
+
+/* Opzionale: Ferma animazione shimmer durante l'hover */
+.link-button.menu-button-highlight:hover::after {
+  animation-play-state: paused;
+  /* Nascondi l'effetto shimmer durante hover per non sovrapporsi ad altri effetti? */
+  /* background: none; */
+}
+
 
 /* Immagine Footer */
 #footer-image-container{width:100%;margin-top:2.5em;margin-bottom:1em}
@@ -139,7 +143,7 @@ body.error-page h1{color:#ff8a80;animation:none;text-shadow:none}
 /* ===================================== */
 /* === STILI PAGINA E MENU (menu.html) === */
 /* ===================================== */
-.menu-page-container{width:100%;max-width:750px;margin:0 auto;padding:2em 2.5em;border-radius:5px;box-shadow:0 5px 20px rgba(0,0,0,.4);text-align:left;border:1px solid rgba(255,255,255,.1);background-color:#f5f1e8; /* Sovrascrive sfondo body */ background-image:url('https://www.transparenttextures.com/patterns/parchment.png');background-repeat:repeat;color:#4a3c31; position: relative; z-index: 1; /* Assicura sia sopra eventuali sfondi fissi */ }
+.menu-page-container{width:100%;max-width:750px;margin:0 auto;padding:2em 2.5em;border-radius:5px;box-shadow:0 5px 20px rgba(0,0,0,.4);text-align:left;border:1px solid rgba(255,255,255,.1);background-color:#f5f1e8; background-image:url('https://www.transparenttextures.com/patterns/parchment.png');background-repeat:repeat;color:#4a3c31; position: relative; z-index: 1; }
 .back-link{display:inline-block;margin-bottom:1.5em;color:#a0855c;text-decoration:none;font-weight:700;font-size:.9rem;transition:color .2s ease}
 .back-link:hover{color:#bf9e71;text-decoration:underline}
 #menu-page-title{text-align:center;font-family:'Oswald',sans-serif;color:#4a3c31;margin-bottom:1.5em;font-size:2.2rem;border-bottom:2px solid #d1c7b4;padding-bottom:.5em;text-shadow:0 1px 1px rgba(0,0,0,.1)}
@@ -161,27 +165,21 @@ body.error-page h1{color:#ff8a80;animation:none;text-shadow:none}
 .item-price{font-weight:700;color:#4a3c31;white-space:nowrap;margin-left:auto;padding-left:1em;font-size:1.05rem}
 
 /* --- Responsive Design --- */
-/* Media Query 768px */
 @media(max-width:768px){
     h1#page-title{font-size:clamp(2.5rem, 8vw, 4rem);}
     #menu-page-title{font-size:1.8rem;}
     .category-title{font-size:1.5rem;}
-    .main-content { padding: 5vw 3vw; } /* Adegua padding per schermi medi */
-    /* La dimensione del logo per 768px non era definita, erediterà 240px o possiamo aggiungerla */
-    /* #logo-container img { max-width: 200px; } */ /* Esempio se volessi un valore intermedio */
+    .main-content { padding: 5vw 3vw; }
 }
 
-/* Media Query 600px AGGIORNATA per ottimizzazione spazi */
 @media(max-width: 600px){
-  /* Rimosso padding da body:has(.main-content), ora è su .main-content */
   .main-content{
       max-width: 100%;
-      padding: 5vw 1em 8vw 1em; /* Padding mobile specifico per index.html */
+      padding: 5vw 1em 8vw 1em;
    }
   #logo-container { margin-bottom: 1em; }
   #logo-container img{
-      /* LOGO PIÙ GRANDE (MOBILE) */
-      max-width: 150px; /* Era 100px (corretto da richiesta precedente) */
+      max-width: 150px;
    }
   h1#page-title { font-size: clamp(2.2rem, 9vw, 3.5rem); margin-top: 0.3em; margin-bottom: 1em; }
   #countdown-container { margin-top: 0.8em; margin-bottom: 1.5em; padding: 0.6em; max-width: 90%; }
@@ -191,8 +189,12 @@ body.error-page h1{color:#ff8a80;animation:none;text-shadow:none}
   .loader-container { margin-bottom: 1.8em; padding: 0.6em 1em; max-width: 90%; }
   .link-container{ max-width: 95%; margin-top: 1.2em; gap: 0.8em; }
   .link-button { padding: 0.8em 1.3em 0.8em 1em; font-size: 0.95rem; }
-  .link-button::after { right: 0.8em; }
+  .link-button::after { right: 0.8em; } /* Freccia standard */
   .link-button:hover::after { right: 0.6em; }
+  /* NOTA: L'effetto shimmer usa lo pseudo-elemento ::after sul .menu-button-highlight,
+     questo significa che la freccia '→' standard NON apparirà su quel pulsante specifico.
+     Se vuoi mantenere la freccia standard E avere lo shimmer, dovresti
+     usare ::before per lo shimmer e lasciare ::after per la freccia. */
   #footer-image-container { margin-top: 2.5em; }
   #footer-image-container img{ max-width: 80%; max-height: 100px; }
   /* Menu Page (mobile) */
