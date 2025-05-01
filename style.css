@@ -108,7 +108,7 @@ h1#page-title{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clam
     display: inline-block;
 
     /* --- INSERISCI QUI IL TUO PERCORSO IMMAGINE --- */
-    background-image: url('IL_TUO_PERCORSO/icona-menu.svg'); /* Esempio */
+    background-image: url('Burger.svg'); /* Esempio */
     /* -------------------------------------------- */
 
     width: 1.1em;  /* Dimensione icona (aggiusta) */
