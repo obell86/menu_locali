@@ -48,18 +48,18 @@ body:has(.menu-page-container){
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
+    min-width: 100%; /* Assicura che copra almeno la larghezza */
+    min-height: 100%; /* Assicura che copra almeno l'altezza */
+    width: auto;   /* Permette al browser di calcolare la larghezza necessaria */
+    height: auto;  /* Permette al browser di calcolare l'altezza necessaria */
 
-    /* === MODIFICA QUI === */
-    /* Cambia da 'cover' a 'contain' */
-    object-fit: contain;
-    /* === FINE MODIFICA === */
+    /* === RIPRISTINA QUI === */
+    /* 'cover': Copre TUTTA l'area, MANTIENE proporzioni, TAGLIA le eccedenze. */
+    object-fit: cover;
+    /* === FINE RIPRISTINO === */
 
     display: none; /* Nascosto di default, mostrato da JS */
-    z-index: -1;
+    z-index: -1; /* Dietro al contenuto, sopra al colore di sfondo del container */
 }
 
 /* --- Contenitore Principale (index.html) --- */
