@@ -85,89 +85,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // --- Applica Configurazione Visiva ---
 
-            // *** NUOVA LOGICA: Sfondo Dinamico (Video o Immagine) ***
-            const backgroundAttachment = getField(configFields, fieldMap.config.backgroundUrl); // Prende l'array di allegati dal campo "Sfondo"
-
-            // Resetta sfondi precedenti e imposta fallback base
-            document.body.style.backgroundImage = ''; // Rimuove immagine dal body (se c'era)
+            // *** Sfondo Dinamico (Video o Immagine) *** (Logica invariata rispetto alla versione precedente funzionante)
+            const backgroundAttachment = getField(configFields, fieldMap.config.backgroundUrl);
+            document.body.style.backgroundImage = '';
             if (backgroundContainer) {
-                 backgroundContainer.style.backgroundImage = ''; // Rimuove immagine dal container
-                 backgroundContainer.style.backgroundColor = '#3a2d27'; // Imposta colore legno scuro base
+                 backgroundContainer.style.backgroundImage = '';
+                 backgroundContainer.style.backgroundColor = '#3a2d27';
             }
             if (backgroundVideoElement) {
-                backgroundVideoElement.style.display = 'none'; // Nasconde il video
-                backgroundVideoElement.removeAttribute('src'); // Rimuove la sorgente precedente
+                backgroundVideoElement.style.display = 'none';
+                backgroundVideoElement.removeAttribute('src');
             }
-
             if (Array.isArray(backgroundAttachment) && backgroundAttachment.length > 0) {
                 const firstAttachment = backgroundAttachment[0];
                 const attachmentUrl = firstAttachment.url;
-                const attachmentType = firstAttachment.type; // Es: 'video/mp4', 'image/jpeg'
-
+                const attachmentType = firstAttachment.type;
                 console.log("Trovato allegato Sfondo:", { url: attachmentUrl, type: attachmentType });
-
                 if (attachmentType && attachmentUrl) {
                     if (attachmentType.startsWith('video/')) {
-                        // È un video
                         console.log("Applicando sfondo VIDEO:", attachmentUrl);
                         if (backgroundVideoElement && backgroundContainer) {
                             backgroundVideoElement.src = attachmentUrl;
-                            backgroundVideoElement.style.display = 'block'; // Mostra il video
-                            document.body.style.backgroundImage = ''; // Assicura che non ci sia immagine di sfondo sul body
-                            backgroundContainer.style.backgroundImage = ''; // Assicura che non ci sia immagine sul container
-                            backgroundContainer.style.backgroundColor = '#3a2d27'; // Mantiene colore base dietro al video
-                        } else {
-                            console.error("Elemento #background-video o #background-container non trovato!");
-                        }
+                            backgroundVideoElement.style.display = 'block';
+                            document.body.style.backgroundImage = '';
+                            backgroundContainer.style.backgroundImage = '';
+                            backgroundContainer.style.backgroundColor = '#3a2d27';
+                        } else { console.error("Elemento #background-video o #background-container non trovato!"); }
                     } else if (attachmentType.startsWith('image/')) {
-                        // È un'immagine
-                        const imageUrl = getAttachmentUrl(configFields, fieldMap.config.backgroundUrl); // Usa la funzione per ottenere URL (gestisce thumbnail)
+                        const imageUrl = getAttachmentUrl(configFields, fieldMap.config.backgroundUrl);
                         console.log("Applicando sfondo IMMAGINE:", imageUrl);
                         if (imageUrl && backgroundContainer) {
-                             // Applica l'immagine al container invece che al body per coerenza
                             backgroundContainer.style.backgroundImage = `url('${imageUrl}')`;
                             backgroundContainer.style.backgroundSize = 'cover';
                             backgroundContainer.style.backgroundPosition = 'center center';
                             backgroundContainer.style.backgroundRepeat = 'no-repeat';
-                            // backgroundContainer.style.backgroundAttachment = 'fixed'; // Potrebbe non essere necessario se il container è fisso
-                            if (backgroundVideoElement) backgroundVideoElement.style.display = 'none'; // Nascondi video se c'è immagine
-                            document.body.style.backgroundImage = ''; // Rimuovi dal body
+                            if (backgroundVideoElement) backgroundVideoElement.style.display = 'none';
+                            document.body.style.backgroundImage = '';
                         } else {
                              console.warn("URL Immagine non trovato o container mancante.");
-                             // Fallback alla texture legno sul container
-                             if (backgroundContainer) {
-                                 backgroundContainer.style.backgroundImage = defaultBackgroundTexture;
-                                 backgroundContainer.style.backgroundRepeat = 'repeat';
-                             }
+                             if (backgroundContainer) { backgroundContainer.style.backgroundImage = defaultBackgroundTexture; backgroundContainer.style.backgroundRepeat = 'repeat'; }
                         }
                     } else {
-                        // Tipo di file non supportato come sfondo
                         console.warn("Tipo di file non supportato per lo sfondo:", attachmentType);
-                         // Applica texture legno di default al container
-                        if (backgroundContainer) {
-                            backgroundContainer.style.backgroundImage = defaultBackgroundTexture;
-                            backgroundContainer.style.backgroundRepeat = 'repeat';
-                        }
+                        if (backgroundContainer) { backgroundContainer.style.backgroundImage = defaultBackgroundTexture; backgroundContainer.style.backgroundRepeat = 'repeat'; }
                     }
                 } else {
-                     console.log("Allegato Sfondo non valido (manca URL o Tipo). Applicando sfondo di default.");
-                      // Applica texture legno di default al container
-                      if (backgroundContainer) {
-                          backgroundContainer.style.backgroundImage = defaultBackgroundTexture;
-                          backgroundContainer.style.backgroundRepeat = 'repeat';
-                      }
+                     console.log("Allegato Sfondo non valido. Applicando sfondo di default.");
+                      if (backgroundContainer) { backgroundContainer.style.backgroundImage = defaultBackgroundTexture; backgroundContainer.style.backgroundRepeat = 'repeat'; }
                 }
-
             } else {
-                // Nessun allegato nel campo Sfondo
-                console.log("Nessuno sfondo specificato in Airtable. Applicando sfondo di default.");
-                 // Applica texture legno di default al container
-                 if (backgroundContainer) {
-                    backgroundContainer.style.backgroundImage = defaultBackgroundTexture;
-                    backgroundContainer.style.backgroundRepeat = 'repeat';
-                 }
+                console.log("Nessuno sfondo specificato. Applicando sfondo di default.");
+                 if (backgroundContainer) { backgroundContainer.style.backgroundImage = defaultBackgroundTexture; backgroundContainer.style.backgroundRepeat = 'repeat'; }
             }
-            // *** FINE NUOVA LOGICA SFONDO ***
+            // *** FINE LOGICA SFONDO ***
 
 
             // Titolo Pagina (Logica Invariata)
@@ -185,7 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const showCountdown = getField(configFields, fieldMap.config.showCountdown, false);
             const countdownTargetStr = getField(configFields, fieldMap.config.countdownTarget);
             const countdownLabel = getField(configFields, fieldMap.config.countdownLabel, '');
-
             if (countdownContainer && countdownLabelElement && countdownTimerDiv && daysElement && hoursElement && minutesElement && secondsElement && countdownMessageElement) {
                 if (showCountdown === true && countdownTargetStr) {
                     const targetDate = new Date(countdownTargetStr);
@@ -193,8 +162,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         console.log("Avvio Countdown verso:", targetDate);
                         countdownLabelElement.textContent = countdownLabel;
                         countdownMessageElement.style.display = 'none';
-                        countdownTimerDiv.style.display = 'block'; // Mostra timer
-                        countdownContainer.style.display = 'block'; // Mostra contenitore
+                        countdownTimerDiv.style.display = 'block';
+                        countdownContainer.style.display = 'block';
                         const updateCountdown = () => {
                              const now = new Date().getTime(); const distance = targetDate.getTime() - now;
                              if(distance < 0){ clearInterval(countdownIntervalId); countdownTimerDiv.style.display = 'none'; countdownLabelElement.style.display = 'none'; countdownMessageElement.textContent = "Tempo Scaduto!"; countdownMessageElement.style.display = 'block'; console.log("Countdown terminato."); return; }
@@ -218,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
                      if (loaderBarElement) {
                          const barColor = getField(configFields, fieldMap.config.loaderBarColor);
                          const barSpeed = getField(configFields, fieldMap.config.loaderBarSpeed);
-                         if (barColor) { loaderBarElement.style.backgroundColor = barColor; console.log("Colore barra:", barColor); } else { loaderBarElement.style.backgroundColor = '';} // Reset colore
+                         if (barColor) { loaderBarElement.style.backgroundColor = barColor; console.log("Colore barra:", barColor); } else { loaderBarElement.style.backgroundColor = '';}
                          if (typeof barSpeed === 'number' && barSpeed > 0) { loaderBarElement.style.animationDuration = barSpeed + 's'; console.log("Velocità barra:", barSpeed); }
                          else { loaderBarElement.style.animationDuration = ''; }
                      } else { console.warn("Elemento .loader-bar non trovato."); }
@@ -238,8 +207,49 @@ document.addEventListener('DOMContentLoaded', () => {
             // Logo (Logica Invariata)
             const logoUrl = getAttachmentUrl(configFields, fieldMap.config.logoUrl); logoContainer.innerHTML = ''; if (logoUrl) { const li = document.createElement('img'); li.src = logoUrl; li.alt = 'Logo'; logoContainer.appendChild(li); }
 
-            // Pulsanti Link (Logica Invariata)
-            linkContainer.innerHTML = ''; if (linksData && linksData.length > 0) { const btnFs = getField(configFields, fieldMap.config.buttonFontSize); const btnPad = getField(configFields, fieldMap.config.buttonPadding); linksData.forEach(link => { if (link.url) { const btn = document.createElement('a'); btn.href = link.url; btn.textContent = link.label; btn.className = 'link-button'; if (link.url.toLowerCase() === 'menu.html') { btn.target = '_top'; } else { btn.target = '_blank'; btn.rel = 'noopener noreferrer'; } btn.style.background = link.color || defaultButtonColor; if(btnFs) btn.style.fontSize = btnFs; if(btnPad) btn.style.padding = btnPad; linkContainer.appendChild(btn); } else { console.warn(`Link '${link.label}' skipped (no URL).`); } }); } else { linkContainer.innerHTML = '<p>Nessun link attivo collegato.</p>'; }
+            // Pulsanti Link (MODIFICATO per aggiungere classe speciale al menu)
+            linkContainer.innerHTML = '';
+            if (linksData && linksData.length > 0) {
+                const btnFs = getField(configFields, fieldMap.config.buttonFontSize);
+                const btnPad = getField(configFields, fieldMap.config.buttonPadding);
+                linksData.forEach(link => {
+                    if (link.url) {
+                        const btn = document.createElement('a');
+                        btn.href = link.url;
+                        btn.textContent = link.label;
+                        btn.className = 'link-button'; // Classe base per tutti
+
+                        // --- MODIFICA INSERITA QUI ---
+                        // Controlla se questo è il link al menu e aggiungi una classe speciale
+                        if (link.url.toLowerCase() === 'menu.html') {
+                            btn.classList.add('menu-button-highlight');
+                            console.log("Aggiunta classe speciale al pulsante Menu:", link.label);
+                        }
+                        // --- FINE MODIFICA ---
+
+                        // Gestione target (invariata, ma messa dopo l'aggiunta della classe)
+                        if (link.url.toLowerCase() === 'menu.html') {
+                            btn.target = '_top'; // Apre nella stessa finestra/tab
+                        } else {
+                            btn.target = '_blank'; // Apre in nuova finestra/tab
+                            btn.rel = 'noopener noreferrer'; // Sicurezza per target _blank
+                        }
+
+                        // Applica stili (invariato)
+                        btn.style.background = link.color || defaultButtonColor;
+                        if(btnFs) btn.style.fontSize = btnFs;
+                        if(btnPad) btn.style.padding = btnPad;
+
+                        linkContainer.appendChild(btn);
+                    } else {
+                        console.warn(`Link '${link.label}' skipped (no URL).`);
+                    }
+                });
+            } else {
+                linkContainer.innerHTML = '<p>Nessun link attivo collegato.</p>';
+            }
+            // --- FINE LOGICA PULSANTI LINK ---
+
 
             // Immagine Footer (Logica Invariata)
             const footerImageUrl=getAttachmentUrl(configFields,fieldMap.config.footerImageUrl);if(footerImageContainer){footerImageContainer.innerHTML='';if(footerImageUrl){const fi=document.createElement('img');fi.src=footerImageUrl;fi.alt=getField(configFields,fieldMap.config.footerImageAlt,'');footerImageContainer.appendChild(fi);}}
@@ -249,16 +259,12 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
              console.error('ERRORE NEL CARICAMENTO DATI:', error);
              if (loadingMessage) loadingMessage.style.display = 'none';
-             // Mostra un messaggio di errore più generico all'utente
              const errorDiv = document.createElement('div');
              errorDiv.className = 'error-message';
              errorDiv.textContent = 'Oops! Qualcosa è andato storto nel caricare le informazioni. Riprova più tardi.';
-             // Inserisci l'errore in un punto visibile, es. prima dei link
              if(linkContainer) { linkContainer.parentNode.insertBefore(errorDiv, linkContainer); }
              else if (document.body) { document.body.appendChild(errorDiv); }
-             // Applica stile errore al titolo se possibile
              if (titleElement) { titleElement.textContent = 'Errore'; document.body.classList.add('error-page'); }
-             // Applica sfondo di default in caso di errore nel caricamento config
               if (backgroundContainer) {
                  backgroundContainer.style.backgroundImage = defaultBackgroundTexture;
                  backgroundContainer.style.backgroundRepeat = 'repeat';
